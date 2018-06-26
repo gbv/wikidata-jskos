@@ -1,0 +1,39 @@
+{
+  "name": "wikidata-jskos",
+  "version": "0.0.1",
+  "description": "web service to read/write JSKOS from/to Wikidata",
+  "main": "server.js",
+  "scripts": {
+    "start": "forever --minUptime 2000 --spinSleepTime 2000 -c 'nodemon --exitcrash' server.js",
+    "server": "node server.js",
+    "lint": "./node_modules/.bin/eslint ./*.js ./**/*.js",
+    "fix": "./node_modules/.bin/eslint --fix ./*.js ./**/*.js",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "pre-commit": "lint-staged",
+  "author": "Jakob Voß",
+  "license": "mit",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "lint-staged": "^7.1.2",
+    "pre-commit": "^1.2.2"
+  },
+  "dependencies": {
+    "bluereq": "^2.1.7",
+    "config": "^1.30.0",
+    "express": "^4.16.3",
+    "forever": "^0.15.3",
+    "nodemon": "^1.17.5",
+    "wikidata-sdk": "^5.11.2"
+  }
+}
