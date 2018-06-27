@@ -37,7 +37,7 @@ External identifiers are detected for Wikidata properties with statement
 
 ### /schemes
 
-*Not implemented yet*
+Return a list of supported concept schemes.
 
 ## See Also
 
