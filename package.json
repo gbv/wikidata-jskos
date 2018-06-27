@@ -51,6 +51,6 @@
     "mocha": "^5.2.0",
     "nodemon": "^1.17.5",
     "should": "^13.2.1",
-    "wikidata-sdk": "^5.11.2"
+    "wikidata-sdk": "^5.12.0"
   }
 }
