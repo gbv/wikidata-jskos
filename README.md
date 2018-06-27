@@ -1,5 +1,7 @@
 # Wikidata JSKOS Wrapper
 
+[![Build Status](https://travis-ci.org/gbv/wikidata-jskos.svg?branch=master)](https://travis-ci.org/gbv/wikidata-jskos)
+
 ## Build Setup
 
 ``` bash
@@ -27,17 +29,20 @@ must be given:
 * `from` (e.g. `?from=http://www.wikidata.org/entity/Q42`)
 * `to` (e.g. `?to=http://d-nb.info/gnd/119033364`)
 
-External identifiers are detected for Wikidata properties with statement
-[P1921], [P1793], and a subject item ([P1629]) with BARTOC-ID ([P2689]).
+Mapping relation types ([P4390]) are respected, if given, see for example
+mapping from Wikidata to <http://d-nb.info/gnd/7527800-5>.
 
 [P1921]: http://www.wikidata.org/entity/P1921
 [P1793]: http://www.wikidata.org/entity/P1793
 [P1629]: http://www.wikidata.org/entity/P1629
 [P2689]: http://www.wikidata.org/entity/P2689
+[P4390]: http://www.wikidata.org/entity/P2689
 
 ### /schemes
 
-Return a list of supported concept schemes.
+Return a list of supported concept schemes. These schemes need to have a
+BARTOC-ID ([P2689]), and be subject item ([P1629]) of an external identifier
+property with statements [P1921] and [P1793].
 
 ## See Also
 
