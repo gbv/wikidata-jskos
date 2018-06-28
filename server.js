@@ -6,14 +6,17 @@ var wrapper
 
 function errorHandler(res) {
   return (err) => {
+    console.error(err)
     res.status(err.status || 500).json({status: err.status, message: err.message})
   }
 }
 
 function addContext(set) {
-  set.forEach(item => {
-    item["@context"] = "https://gbv.github.io/jskos/context.json"
-  })
+  if (set instanceof Array) {
+    set.forEach(item => {
+      item["@context"] = "https://gbv.github.io/jskos/context.json"
+    })
+  }
   return set
 }
 
@@ -24,29 +27,31 @@ app.use(function (req, res, next) {
   next()
 })
 
-// provide mapping endpoint
-app.get("/mappings", (req, res) => {
-  wrapper.getMappings(req.query)
-    .then(addContext)
-    .then(jskos => res.json(jskos))
-    .catch(errorHandler(res))
-})
+const endpoints = {
+  "/concept": "getConcepts",
+  "/mapping": "getMappings",
+  "/scheme":  "getSchemes"
+}
 
-// provide schemes endpoint
-app.get("/schemes", (req, res) => {
-  wrapper.getSchemes(req.query)
-    .then(addContext)
-    .then(jskos => res.json(jskos))
-    .catch(errorHandler(res))
-})
-
-// load schemes and start application
+// load schemes
 WikidataWrapper.getMappingSchemes()
   .then( schemes => {
     wrapper = new WikidataWrapper(schemes)
-    console.log(`loaded ${schemes.length} mapping schemes, see endpoint /voc`)
+    console.log(`loaded ${schemes.length} mapping schemes`)
   })
   .then( () => {
+
+    // enable endpoints
+    for (let path in endpoints) {
+      app.get(path, (req, res) => {
+        wrapper[endpoints[path]](req.query)
+          .then(addContext)
+          .then(jskos => res.json(jskos))
+          .catch(errorHandler(res))
+      })
+    }
+
+    // start application
     app.listen(config.port, () => {
       console.log(`listening on port ${config.port}`)
     })
