@@ -1,5 +1,6 @@
 # Wikidata JSKOS Wrapper
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/gbv/wikidata-jskos.svg?branch=master)](https://travis-ci.org/gbv/wikidata-jskos)
 
 ## Build Setup
@@ -55,6 +56,20 @@ mapping from Wikidata to <http://d-nb.info/gnd/7527800-5>.
 Return a list of supported concept schemes. These schemes need to have a
 BARTOC-ID ([P2689]), and be subject item ([P1629]) of an external identifier
 property with statements [P1921] and [P1793].
+
+## JavaScript API
+
+NodeJS (*not enabled yet!*):
+
+```js
+const wds = require('wikidata-wds')
+```
+
+### Usage
+
+* **[Map Wikidata entities to JSKOS](docs/entities.md)**
+* ...
+
 
 ## See Also
 

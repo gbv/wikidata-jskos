@@ -4,7 +4,7 @@ const wds = require("../lib/wikidata-wrapper")
 describe("exported constants and functions", () => {
 
   [
-    "identifiers",
+    "identifier",
     "labels",
     "aliases",
     "descriptions",
