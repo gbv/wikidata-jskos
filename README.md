@@ -20,6 +20,12 @@ npm install
 npm run start
 ```
 
+For deployment for instance use pm2:
+
+```bash
+pm2 start server.js --name wikidata-jskos
+```
+
 The web service provides the following endpoints
 
 ### /concept?uri=...
