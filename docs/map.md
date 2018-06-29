@@ -48,7 +48,7 @@ jskos = wds.map.simplified.labels(entity.labels)
 ...
 ```
 
-[JSKOS]: https://gbv.github.io/jskos/
+[JSKOS data format]: https://gbv.github.io/jskos/
 [wbgetentities]: https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities
 [wikidata-sdk]: https://github.com/maxlath/wikidata-sdk
 [wikidata-filter]: https://github.com/maxlath/wikidata-filter
