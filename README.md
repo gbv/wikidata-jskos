@@ -67,7 +67,7 @@ const wds = require('wikidata-wds')
 
 ### Usage
 
-* **[Map Wikidata entities to JSKOS](docs/entities.md)**
+* **[Map Wikidata entities to JSKOS](docs/map.md)**
 * ...
 
 

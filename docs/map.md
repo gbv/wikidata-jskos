@@ -12,35 +12,41 @@ Wikidata database dumps. See JavaScript libraries [wikidata-sdk] and
 
 ## Map selected parts of a Wikidata entity
 
-```js
-jskos = wds.map.identifier(entity)
-// { uri: "http://www.wikidata.org/entity/..." }
-```
+All methods return a JSKOS item.
 
 ```js
-jskos = wds.map.labels(entity)
+jskos = wds.map.identifier(entity.id)
+// { uri: "http://www.wikidata.org/entity/..." }
+
+jskos = wds.map.labels(entity.labels)
 // { prefLabel: { ... } }
 
-jskos = wds.map.aliases(entity)
-// { altLabelel: { ... } }
+jskos = wds.map.aliases(entity.aliases)
+// { altLabel: { ... } }
 
-jskos = wds.map.descriptions(entity)
+jskos = wds.map.descriptions(entity.descriptions)
 // { scopeNote: { ... } }
 
-jskos = wds.map.sitelinks(entity)
+jskos = wds.map.sitelinks(entity.sitelinks)
+// ...
+
+jskos = wds.map.claims(entity.claims)
 // ...
 
 jskos = wds.map.info(entity)
-// ...
-
-jskos = wds.map.claims(entity)
 // ...
 ```
 
 ## Map simplified Wikidata entities
 
-*not implemented yet*
+Each method has a counterpart to map simplified Wikidata entities.
 
+```js
+jskos = wds.map.simplified.entity(entity)
+jskos = wds.map.simplified.identifier(entity.id)
+jskos = wds.map.simplified.labels(entity.labels)
+...
+```
 
 [JSKOS]: https://gbv.github.io/jskos/
 [wbgetentities]: https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities

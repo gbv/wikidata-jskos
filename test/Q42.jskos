@@ -1,0 +1,59 @@
+[
+  {
+    "@context": "https://gbv.github.io/jskos/context.json",
+    "altLabel": {
+      "-": [],
+      "de": [
+        "Douglas Noël Adams",
+        "Douglas Noel Adams"
+      ],
+      "en": [
+        "Douglas Noël Adams",
+        "Douglas Noel Adams",
+        "Douglas N. Adams"
+      ],
+      "ja": [
+        "ダグラス・アダムス"
+      ]
+    },
+    "broader": [
+      {
+        "uri": "http://www.wikidata.org/entity/Q5"
+      }
+    ],
+    "depiction": [
+      "http://commons.wikimedia.org/wiki/Special:FilePath/Douglas adams portrait cropped.jpg"
+    ],
+    "inScheme": [
+      {
+        "uri": "http://bartoc.org/en/node/1940"
+      }
+    ],
+    "modified": "2018-06-27T08:47:14Z",
+    "prefLabel": {
+      "-": "?",
+      "de": "Douglas Adams",
+      "en": "Douglas Adams",
+      "ja": "ダグラス・アダムズ"
+    },
+    "scopeNote": {
+      "-": [],
+      "de": [
+        "britischer Schriftsteller"
+      ],
+      "en": [
+        "author and humorist"
+      ],
+      "ja": [
+        "イングランドの作家"
+      ]
+    },
+    "startDate": "1952-03-11T00:00:00.000Z",
+    "type": [
+      "http://www.w3.org/2004/02/skos/core#Concept",
+      "http://wikiba.se/ontology#Item"
+    ],
+    "uri": "http://www.wikidata.org/entity/Q42",
+    "url": "http://douglasadams.com/"
+  }
+]

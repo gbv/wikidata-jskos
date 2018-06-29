@@ -16,6 +16,9 @@ describe("exported constants and functions", () => {
     it(`map.${func}`, () => {
       should(wds.map[func]).be.Function()
     })
+    it(`map.simplified.${func}`, () => {
+      should(wds.map.simplified[func]).be.Function()
+    })
   })
 
   it("entityTypes", () => {

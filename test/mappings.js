@@ -20,8 +20,7 @@ describe("getMappings", () => {
   it("returns no mappings from unknown URI", () => {
     return wds.getMappings({ from: "wtf" })
       .then(mappings => {
-        mappings.should.be.Array()
-        mappings.should.be.empty()
+        mappings.should.deepEqual([])
       })
   })
 
