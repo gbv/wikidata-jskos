@@ -49,6 +49,23 @@
       ]
     },
     "startDate": "1952-03-11T00:00:00.000Z",
+     "subjectOf": [
+       {
+         "url": "https://de.wikipedia.org/wiki/Douglas_Adams"
+       },
+       {
+         "url": "https://de.wikiquote.org/wiki/Douglas_Adams"
+       },
+       {
+         "url": "https://en.wikipedia.org/wiki/Douglas_Adams"
+       },
+       {
+         "url": "https://en.wikiquote.org/wiki/Douglas_Adams"
+       },
+       {
+         "url": "https://ja.wikipedia.org/wiki/%E3%83%80%E3%82%B0%E3%83%A9%E3%82%B9%E3%83%BB%E3%82%A2%E3%83%80%E3%83%A0%E3%82%BA"
+       }
+    ],
     "type": [
       "http://www.w3.org/2004/02/skos/core#Concept",
       "http://wikiba.se/ontology#Item"
