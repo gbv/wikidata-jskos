@@ -1,8 +1,6 @@
 const config = require("config")
 const app = require("express")()
-const WikidataWrapper = require("./lib/wikidata-wrapper")
-
-var wrapper
+const wds = require("./lib/wikidata-wrapper")
 
 function errorHandler(res) {
   return (err) => {
@@ -34,17 +32,17 @@ const endpoints = {
 }
 
 // load schemes
-WikidataWrapper.getMappingSchemes()
+wds.getMappingSchemes()
   .then( schemes => {
-    wrapper = new WikidataWrapper(schemes)
+
+    // initialize service
+    const service = new wds.service(schemes)
     console.log(`loaded ${schemes.length} mapping schemes`)
-  })
-  .then( () => {
 
     // enable endpoints
     for (let path in endpoints) {
       app.get(path, (req, res) => {
-        wrapper[endpoints[path]](req.query)
+        service[endpoints[path]](req.query)
           .then(addContext)
           .then(jskos => res.json(jskos))
           .catch(errorHandler(res))

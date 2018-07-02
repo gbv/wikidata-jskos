@@ -3,7 +3,7 @@
 Wikidata-JSKOS can be used to map Wikidata entities to [JSKOS data format]:
 
 ```js
-jskos = wds.map.entity(entity)
+jskos = wds.mapEntity(entity)
 ```
 
 Entity data can be retrieved via Wikidata API method [wbgetentities] and from
@@ -15,25 +15,25 @@ Wikidata database dumps. See JavaScript libraries [wikidata-sdk] and
 All methods return a JSKOS item.
 
 ```js
-jskos = wds.map.identifier(entity.id)
+jskos = wds.mapIdentifier(entity.id)
 // { uri: "http://www.wikidata.org/entity/..." }
 
-jskos = wds.map.labels(entity.labels)
+jskos = wds.mapLabels(entity.labels)
 // { prefLabel: { ... } }
 
-jskos = wds.map.aliases(entity.aliases)
+jskos = wds.mapAliases(entity.aliases)
 // { altLabel: { ... } }
 
-jskos = wds.map.descriptions(entity.descriptions)
+jskos = wds.mapDescriptions(entity.descriptions)
 // { scopeNote: { ... } }
 
-jskos = wds.map.sitelinks(entity.sitelinks)
+jskos = wds.mapSitelinks(entity.sitelinks)
 // ...
 
-jskos = wds.map.claims(entity.claims)
+jskos = wds.mapClaims(entity.claims)
 // ...
 
-jskos = wds.map.info(entity)
+jskos = wds.mapInfo(entity)
 // ...
 ```
 
@@ -42,9 +42,9 @@ jskos = wds.map.info(entity)
 Each method has a counterpart to map simplified Wikidata entities.
 
 ```js
-jskos = wds.map.simplified.entity(entity)
-jskos = wds.map.simplified.identifier(entity.id)
-jskos = wds.map.simplified.labels(entity.labels)
+jskos = wds.mapSimpleEntity(entity)
+jskos = wds.mapSimpleIdentifier(entity.id)
+jskos = wds.mapSimpleLabels(entity.labels)
 ...
 ```
 

@@ -4,20 +4,20 @@ const wds = require("../lib/wikidata-wrapper")
 describe("exported constants and functions", () => {
 
   [
-    "identifier",
-    "labels",
-    "aliases",
-    "descriptions",
-    "claims",
-    "sitelinks",
-    "info",
-    "entity"
-  ].forEach(func => {
-    it(`map.${func}`, () => {
-      should(wds.map[func]).be.Function()
+    "Identifier",
+    "Labels",
+    "Aliases",
+    "Descriptions",
+    "Claims",
+    "Sitelinks",
+    "Info",
+    "Entity"
+  ].forEach(what => {
+    it(`map${what}`, () => {
+      should(wds[`map${what}`]).be.Function()
     })
-    it(`map.simplified.${func}`, () => {
-      should(wds.map.simplified[func]).be.Function()
+    it(`mapSimple${what}`, () => {
+      should(wds[`mapSimple${what}`]).be.Function()
     })
   })
 
