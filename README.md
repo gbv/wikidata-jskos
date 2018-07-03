@@ -14,20 +14,9 @@ cd wikidata-jskos
 npm install
 ```
 
-## Usage as Webservice
-
-See **[Usage as Web Service](docs/webservice.md)**
-
-## JavaScript API
-
-NodeJS (*not enabled yet!*):
-
-```js
-const wds = require('wikidata-wds')
-```
-
 ### Usage
 
+* **[Usage as Web Service](docs/webservice.md)**
 * **[Query Wikidata for JSKOS data](docs/service.md)**
 * **[Map Wikidata entities to JSKOS](docs/map.md)**
 * ...
@@ -35,5 +24,6 @@ const wds = require('wikidata-wds')
 
 ## See Also
 
+* <https://coli-conc.gbv.de/>
 * <https://github.com/maxlath/wikidata-sdk>
 * <https://tools.wmflabs.org/hub/>

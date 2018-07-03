@@ -32,7 +32,7 @@ const endpoints = {
 }
 
 // load schemes
-wds.getMappingSchemes()
+wds.getMappingSchemes({language:"en"})
   .then( schemes => {
 
     // initialize service
