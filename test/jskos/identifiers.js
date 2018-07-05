@@ -5,7 +5,7 @@ const {
   mappingContentIdentifier,
   mappingMembersIdentifier,
   addMappingIdentifiers
-} = require("../lib/mapping-identifiers")
+} = require("../../lib/jskos/identifiers")
 
 describe("mapping identifiers", () => {
 
