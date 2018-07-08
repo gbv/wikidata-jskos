@@ -29,6 +29,13 @@
       }
     ],
     "modified": "2018-06-27T08:47:14Z",
+    "occurrences": [
+      {
+        "count": 5,
+        "database": "http://www.wikidata.org/entity/Q2013",
+        "relation": "http://schema.org/about"
+      }
+    ],
     "prefLabel": {
       "-": "?",
       "de": "Douglas Adams",
@@ -48,7 +55,7 @@
       ]
     },
     "startDate": "1952-03-11T00:00:00.000Z",
-     "subjectOf": [
+    "subjectOf": [
        {
          "url": "https://de.wikipedia.org/wiki/Douglas_Adams"
        },
