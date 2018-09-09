@@ -1,6 +1,5 @@
 const should = require("should")
 const wds = require("../lib/wikidata-wrapper")
-const jskos = require("../lib/jskos")
 
 describe("wikidata-wrapper exports", () => {
 
@@ -35,18 +34,4 @@ describe("wikidata-wrapper exports", () => {
     should(wds.getMappingSchemes).be.Function()
   })
 
-})
-
-describe("jskos exports", () => {
-  [
-    "mappingContent",
-    "mappingMembers",
-    "mappingContentIdentifier",
-    "mappingMembersIdentifier",
-    "addMappingIdentifiers"
-  ].forEach(name => {
-    it(name, () => {
-      should(jskos[name]).be.Function()
-    })
-  })
 })
