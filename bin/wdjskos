@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const pkg = require('../package.json')
+const { red } = require('chalk')
+const wds = require("../lib/wikidata-wrapper")
+
+program
+  .version(pkg.version)
+  .description('Access Wikidata in JSKOS format')
+  .option('-l, --lang <lang>', 'language(s), comma-separated')
+
+// TODO: option to not include subjectOf
+
+const error = (message, showHelp) => {
+  console.error(red(message))
+  if (showHelp) { program.help() }
+  process.exit(1)
+}
+
+const writeJSKOS = (data) => {
+  const jskos = Array.isArray(data) ? data : [data]
+  jskos.forEach( obj => console.log(JSON.stringify(obj)) )
+}
+
+const initService = (language) => {
+  return wds.getMappingSchemes({language: language || 'en'})
+  .then( schemes => new wds.service(schemes))
+}
+
+program
+  .command('concept <id...>').alias('c')
+  .description('get Wikidata entity as JSKOS concept')
+  .action( ids => {
+    const language = program.lang
+    initService(language)
+      .then( service => service.getConcepts({uri:ids, language}) )
+      .then( writeJSKOS )
+  })
+
+program
+  .command('schemes').alias('s')
+  .description('get mapping properties as concept schemes')
+  .action( () => {
+    const language = program.lang || 'en'
+    wds.getMappingSchemes({language}).then(writeJSKOS)
+  })
+
+program
+  .command('mappings [from] [to]').alias('m') // TODO: allow notation as 'to'
+  .description('get mappings between Wikidata and other schemes')
+  .action( (from, to) => {
+    const language = program.lang
+    from = from && from.length < 2 ? '' : from
+    to   = to && to.length < 2 ? '' : to
+    if (!from && !to) {
+      error('missing required argument `from\' and/or `to\'') 
+    }
+    initService(language)
+      .then( service => service.getMappings({from,to}) )
+      .then( writeJSKOS )
+  })
+
+// complain on unknown commands
+program
+  .on('command:*', () => error(`unknown command '${program.args[0]}'`, true))
+
+// execute
+program.parse(process.argv)
+
+// Show help by default
+if (!program.args.length) program.help()
+
+// Prevent logging an EPIPE error when piping the output
+process.stdout.on('error', err => {
+  if (err.code !== 'EPIPE') throw err
+})

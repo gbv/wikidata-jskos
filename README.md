@@ -14,9 +14,10 @@ cd wikidata-jskos
 npm install
 ```
 
-### Usage
+## Usage
 
 * **[Usage as Web Service](docs/webservice.md)**
+* **[Usage as Command Line Client](docs/cli.md)**
 * **[Query Wikidata for JSKOS data](docs/service.md)**
 * **[Map Wikidata entities to JSKOS](docs/map.md)**
 * ...

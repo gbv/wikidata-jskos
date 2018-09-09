@@ -11,7 +11,9 @@ For deployment for instance use pm2:
 pm2 start ecosystem.config.json
 ```
 
-The web service provides the following endpoints
+## API endpoints
+
+The web service provides the following endpoints:
 
 ### /concept?uri=...
 
@@ -46,5 +48,6 @@ labels. A comma separated list of language codes is used as preference list.
 
 Return a list of supported concept schemes. These schemes need to have a
 BARTOC-ID ([P2689]), and be subject item ([P1629]) of an external identifier
-property with statements [P1921] and [P1793].
+property with statements [P1921] (URI template) and [P1793] (regular
+expression).
 

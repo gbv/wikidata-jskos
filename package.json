@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "web service to read/write JSKOS from/to Wikidata",
   "main": "server.js",
+  "bin": {
+    "wdjskos": "./bin/wdjskos"
+  },
   "scripts": {
     "start": "forever --minUptime 2000 --spinSleepTime 2000 -c 'nodemon --exitcrash' server.js",
     "server": "node server.js",
@@ -37,7 +40,7 @@
     "skos"
   ],
   "author": "Jakob Voß",
-  "license": "mit",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^4.19.1",
     "lint-staged": "^7.1.2",
@@ -48,6 +51,7 @@
     "config": "^1.30.0",
     "express": "^4.16.3",
     "forever": "^0.15.3",
+    "jskos-tools": "^0.1.6",
     "mocha": "^5.2.0",
     "nodemon": "^1.17.5",
     "should": "^13.2.1",
