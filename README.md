@@ -84,6 +84,10 @@ must be given:
 * `from` (e.g. `?from=http://www.wikidata.org/entity/Q42`)
 * `to` (e.g. `?to=http://d-nb.info/gnd/119033364`)
 
+The optional parameter `toScheme` can limit result of query with `from` to a
+selected concept scheme, identified by BARTOC URI (e.g.
+<http://bartoc.org/en/node/430> or just `430`).
+
 Mapping relation types ([P4390]) are respected, if given, see for example
 mapping from Wikidata to <http://d-nb.info/gnd/7527800-5>.
 
@@ -117,8 +121,11 @@ service (see [usage as web service](webservice.md)).
     wdjskos m - http://viaf.org/viaf/113230702
 
 A single character (e.g. `-`) can be used to nullify argument `from` or `to`,
-respectively.
+respectively. Mappings can be limited to a target scheme. These are equivalent:
 
+    wdjskos --scheme P227 mappings Q42
+    wdjskos --scheme 430 mappings Q42
+    wdjskos --scheme http://bartoc.org/en/node/430 mappings Q42
 
 ## API
 

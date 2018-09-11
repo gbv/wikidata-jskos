@@ -9,6 +9,7 @@ program
   .version(pkg.version)
   .description('Access Wikidata in JSKOS format')
   .option('-l, --lang <lang>', 'language(s), comma-separated')
+  .option('-s, --scheme <id>', 'limit mappings to selected scheme')
 
 // TODO: option to not include subjectOf
 
@@ -54,10 +55,11 @@ program
     from = from && from.length < 2 ? '' : from
     to   = to && to.length < 2 ? '' : to
     if (!from && !to) {
-      error('missing required argument `from\' and/or `to\'') 
+      error('missing required argument `from\' and/or `to\'')
     }
+    let toScheme = (from && program.scheme) ? program.scheme : null
     initService(language)
-      .then( service => service.getMappings({from,to}) )
+      .then( service => service.getMappings({from,to,toScheme}) )
       .then( writeJSKOS )
   })
 
