@@ -4,8 +4,8 @@ const wds = require("../lib/wikidata-wrapper")
 const schemes = [{
   "uri": "http://bartoc.org/en/node/430",
   "PROPERTY": "P227",
-  "P1921": "http://d-nb.info/gnd/$1",
-  "P1793": "1[01]?\\d{7}[0-9X]|[47]\\d{6}-\\d|[1-9]\\d{0,7}-[0-9X]|3\\d{7}[0-9X]"
+  "PREFIX": "http://d-nb.info/gnd/$1",
+  "PATTERN": "1[01]?\\d{7}[0-9X]|[47]\\d{6}-\\d|[1-9]\\d{0,7}-[0-9X]|3\\d{7}[0-9X]"
 }]
 const service = new wds.service(schemes)
 
