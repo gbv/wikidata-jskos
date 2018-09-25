@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const program = require('commander')
+const { readFileSync } = require('fs')
 const pkg = require('../package.json')
 const { red } = require('chalk')
 const wds = require("../lib/wikidata-wrapper")
+const ndjson = require("../lib/ndjson")
 
 program
   .version(pkg.version)
@@ -19,14 +21,9 @@ const error = (message, showHelp) => {
   process.exit(1)
 }
 
-const writeJSKOS = (data) => {
-  const jskos = Array.isArray(data) ? data : [data]
-  jskos.forEach( obj => console.log(JSON.stringify(obj)) )
-}
-
 const initService = (language) => {
   return wds.getMappingSchemes({language: language || 'en'})
-  .then( schemes => new wds.service(schemes))
+  .then( schemes => new wds.service(schemes) )
 }
 
 program
@@ -36,7 +33,7 @@ program
     const language = program.lang
     initService(language)
       .then( service => service.getConcepts({uri:ids, language}) )
-      .then( writeJSKOS )
+      .then( ndjson.write )
   })
 
 program
@@ -44,7 +41,8 @@ program
   .description('get mapping properties as concept schemes')
   .action( () => {
     const language = program.lang || 'en'
-    wds.getMappingSchemes({language}).then(writeJSKOS)
+    wds.getMappingSchemes({language})
+    .then(ndjson.write)
   })
 
 program
@@ -60,7 +58,17 @@ program
     let toScheme = (from && program.scheme) ? program.scheme : null
     initService(language)
       .then( service => service.getMappings({from,to,toScheme}) )
-      .then( writeJSKOS )
+      .then( ndjson.write )
+  })
+
+program
+  .command('add [file]').alias('a')
+  .description('add or update a mapping')
+  .action( (file) => {
+      const json = readFileSync(file ? file : 0, 'utf-8')
+      const mapping = JSON.parse(json)
+      // TODO: validate, check whether uri exists
+      // then upateMapping, else insertMapping
   })
 
 // complain on unknown commands
