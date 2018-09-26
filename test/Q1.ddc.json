@@ -1,0 +1,43 @@
+{
+  "uri": "http://www.wikidata.org/entity/statement/Q1-f5d5115d-489a-7654-9a0a-5eea5be80d07",
+  "to": {
+    "memberSet": [
+      {
+        "uri": "http://dewey.info/class/113/",
+        "notation": [
+          "113"
+        ],
+        "inScheme": [
+          {
+            "uri": "http://bartoc.org/en/node/241",
+            "notation": [
+              "DDC"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "from": {
+    "memberSet": [
+      {
+        "uri": "http://www.wikidata.org/entity/Q1",
+        "notation": [
+          "Q1"
+        ],
+        "inScheme": [
+          {
+            "uri": "http://bartoc.org/en/node/1940",
+            "notation": [
+              "WD"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "identifier": [
+    "urn:jskos:mapping:content:c60be15ff8f5566aad912d0e1103bb92be5bc789",
+    "urn:jskos:mapping:members:e370fc739d51ac4f5ef8efceaad6be07bc88315c"
+  ]
+}

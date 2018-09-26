@@ -9,7 +9,7 @@
   "scripts": {
     "start": "forever --minUptime 2000 --spinSleepTime 2000 -c 'nodemon --exitcrash' server.js",
     "server": "node server.js",
-    "test": "mocha",
+    "test": "mocha --timeout 5000",
     "test-watch": "mocha --watch",
     "lint": "./node_modules/.bin/eslint ./*.js ./**/*.js",
     "fix": "./node_modules/.bin/eslint --fix ./*.js ./**/*.js",

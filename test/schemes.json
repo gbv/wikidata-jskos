@@ -1,0 +1,11 @@
+[
+  {
+    "uri": "http://bartoc.org/en/node/430",
+    "notation": [
+      "GND"
+    ],
+    "PROPERTY": "P227",
+    "PREFIX": "http://d-nb.info/gnd/$1",
+    "PATTERN": "1[01]?\\d{7}[0-9X]|[47]\\d{6}-\\d|[1-9]\\d{0,7}-[0-9X]|3\\d{7}[0-9X]"
+  }
+]

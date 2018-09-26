@@ -2,15 +2,14 @@ require("should")
 
 const wdk = require("wikidata-sdk")
 const wds = require("../lib/wikidata-wrapper")
-const fs = require("fs")
-const Q42 = JSON.parse(fs.readFileSync("./test/Q42.json"))
+const Q42 = require("./Q42.json")
 
 describe("mapEntity", () => {
 
   it("map(Simple)Entity", done => {
-    const expect = JSON.parse(fs.readFileSync("./test/Q42.jskos"))
-    should([wds.mapSimpleEntity(wdk.simplify.entity(Q42))]).deepEqual(expect)
-    should([wds.mapEntity(Q42)]).deepEqual(expect)
+    const expect = require("./Q42.jskos.json")
+    should(wds.mapSimpleEntity(wdk.simplify.entity(Q42))).deepEqual(expect)
+    should(wds.mapEntity(Q42)).deepEqual(expect)
     done()
   })
 
@@ -23,5 +22,5 @@ describe("mapEntity", () => {
 
     done()
   })
- 
+
 })

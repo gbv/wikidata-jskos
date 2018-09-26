@@ -1,12 +1,7 @@
 require("should")
 
 const wds = require("../lib/wikidata-wrapper")
-const schemes = [{
-  "uri": "http://bartoc.org/en/node/430",
-  "PROPERTY": "P227",
-  "PREFIX": "http://d-nb.info/gnd/$1",
-  "PATTERN": "1[01]?\\d{7}[0-9X]|[47]\\d{6}-\\d|[1-9]\\d{0,7}-[0-9X]|3\\d{7}[0-9X]"
-}]
+const schemes = require("./schemes.json")
 const service = new wds.service(schemes)
 
 describe("getMappings", () => {
@@ -25,12 +20,12 @@ describe("getMappings", () => {
   })
 
   it("returns mappings from Wikidata item", () => {
-    const from = "http://www.wikidata.org/entity/Q1"
+    const from = "http://www.wikidata.org/entity/Q42"
+    const toScheme = "http://bartoc.org/en/node/430"
 
-    return service.getMappings({ from })
+    return service.getMappings({ from, toScheme })
       .then(mappings => {
-        mappings.should.be.Array()
-        mappings.should.not.be.empty()
+        mappings.should.deepEqual([require("./Q42.gnd.json")])
       })
   })
 
