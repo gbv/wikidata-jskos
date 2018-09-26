@@ -12,6 +12,7 @@ program
   .description('Access Wikidata in JSKOS format')
   .option('-l, --lang <lang>', 'language(s), comma-separated')
   .option('-s, --scheme <id>', 'limit mappings to selected scheme')
+  .option('-f, --force', 'force reloading mapping schemes')
 
 // TODO: option to not include subjectOf
 
@@ -21,17 +22,19 @@ const error = (message, showHelp) => {
   process.exit(1)
 }
 
-const initService = (language) => {
-  return wds.getMappingSchemes({language: language || 'en'})
-  .then( schemes => new wds.service(schemes) )
+const getMappingSchemes = () => {
+  const language = program.language || 'en'
+  const maxAge = program.force ? 0 : 7*24*3600
+  return wds.getMappingSchemes({language, maxAge})
 }
 
 program
   .command('concept <id...>').alias('c')
   .description('get Wikidata entity as JSKOS concept')
   .action( ids => {
-    const language = program.lang
-    initService(language)
+    const language = program.language || 'en'
+    getMappingSchemes()
+      .then( schemes => new wds.service(schemes) )
       .then( service => service.getConcepts({uri:ids, language}) )
       .then( ndjson.write )
   })
@@ -40,23 +43,22 @@ program
   .command('schemes').alias('s')
   .description('get mapping properties as concept schemes')
   .action( () => {
-    const language = program.lang || 'en'
-    wds.getMappingSchemes({language})
-    .then(ndjson.write)
+    getMappingSchemes()
+      .then(ndjson.write)
   })
 
 program
   .command('mappings [from] [to]').alias('m') // TODO: allow notation as 'to'
   .description('get mappings between Wikidata and other schemes')
   .action( (from, to) => {
-    const language = program.lang
     from = from && from.length < 2 ? '' : from
     to   = to && to.length < 2 ? '' : to
     if (!from && !to) {
       error('missing required argument `from\' and/or `to\'')
     }
     let toScheme = (from && program.scheme) ? program.scheme : null
-    initService(language)
+    getMappingSchemes()
+      .then( schemes => new wds.service(schemes) )
       .then( service => service.getMappings({from,to,toScheme}) )
       .then( ndjson.write )
   })

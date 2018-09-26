@@ -127,6 +127,8 @@ respectively. Mappings can be limited to a target scheme. These are equivalent:
     wdjskos --scheme 430 mappings Q42
     wdjskos --scheme http://bartoc.org/en/node/430 mappings Q42
 
+Mapping schemes are cached in the caching directory of [wikidata-cli].
+
 ## API
 
 ```js
@@ -186,6 +188,7 @@ See <https://github.com/gbv/wikidata-jskos>.
 
 [wbgetentities]: https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities
 [wikidata-sdk]: https://github.com/maxlath/wikidata-sdk
+[wikidata-cli]: https://github.com/maxlath/wikidata-cli
 [wikidata-filter]: https://github.com/maxlath/wikidata-filter
 [Wikidata]: https://www.wikidata.org/
 [JSKOS]: https://gbv.github.io/jskos/
