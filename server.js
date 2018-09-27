@@ -1,6 +1,7 @@
-const config = require("config")
+const { port } = require("./lib/config.js")
 const app = require("express")()
 const wds = require("./lib/wikidata-wrapper")
+const examples = require("./lib/examples.json")
 
 function errorHandler(res) {
   return (err) => {
@@ -49,8 +50,15 @@ wds.getMappingSchemes({language:"en", maxAge:0})
       })
     }
 
+    // root endpoint
+    app.get("/", (req, res) => {
+      // TODO: send HTML view with clickable links
+      // TODO: add API documentation
+      res.json({ examples })
+    })
+
     // start application
-    app.listen(config.port, () => {
-      console.log(`listening on port ${config.port}`)
+    app.listen(port, () => {
+      console.log(`listening on port ${port}`)
     })
   })

@@ -59,6 +59,10 @@ For development serve with hot reload and auto reconnect at <http://localhost:20
 npm run start
 ```
 
+### Configuration
+
+Basic configuration is possible via environment variables, also possible via
+`.env` file. See `lib/config.js` for supported fields and default values.
 
 ## Usage
 
@@ -180,8 +184,6 @@ jskos = wds.mapSimpleLabels(entity.labels)
 ## Contributing
 
 See <https://github.com/gbv/wikidata-jskos>.
-
-Set environment variable `DEBUG` to `wds:*` to enable debugging. Use of `.env` is supported.
 
 ## License
 
