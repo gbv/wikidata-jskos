@@ -181,6 +181,8 @@ jskos = wds.mapSimpleLabels(entity.labels)
 
 See <https://github.com/gbv/wikidata-jskos>.
 
+Set environment variable `DEBUG` to `wds:*` to enable debugging. Use of `.env` is supported.
+
 ## License
 
 [MIT License](LICENSE.md)
