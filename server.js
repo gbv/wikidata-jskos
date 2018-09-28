@@ -2,21 +2,13 @@ const { port } = require("./lib/config.js")
 const app = require("express")()
 const wds = require("./lib/wikidata-wrapper")
 const examples = require("./lib/examples.json")
+const { addContext } = require("jskos-tools")
 
 function errorHandler(res) {
   return (err) => {
     console.error(err)
     res.status(err.status || 500).json({status: err.status, message: err.message})
   }
-}
-
-function addContext(set) {
-  if (set instanceof Array) {
-    set.forEach(item => {
-      item["@context"] = "https://gbv.github.io/jskos/context.json"
-    })
-  }
-  return set
 }
 
 // add default headers
