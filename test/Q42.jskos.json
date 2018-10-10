@@ -16,7 +16,8 @@
   },
   "broader": [
     {
-      "uri": "http://www.wikidata.org/entity/Q5"
+      "uri": "http://www.wikidata.org/entity/Q5",
+      "notation": [ "Q5" ]
     }
   ],
   "depiction": [
@@ -28,6 +29,7 @@
     }
   ],
   "modified": "2018-06-27T08:47:14Z",
+  "notation": [ "Q42" ],
   "occurrences": [
     {
       "count": 5,

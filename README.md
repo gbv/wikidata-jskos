@@ -149,7 +149,7 @@ All methods return a JSKOS item.
 
 ```js
 jskos = wds.mapIdentifier(entity.id)
-// { uri: "http://www.wikidata.org/entity/..." }
+// { uri: "http://www.wikidata.org/entity/...", notation: [ "..." ] }
 
 jskos = wds.mapLabels(entity.labels)
 // { prefLabel: { ... } }
