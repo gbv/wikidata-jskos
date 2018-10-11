@@ -13,6 +13,7 @@ program
   .option('-l, --lang <lang>', 'language(s), comma-separated')
   .option('-s, --scheme <id>', 'limit mappings to selected scheme')
   .option('-f, --force', 'force reloading mapping schemes')
+  .option('-b, --both', 'include both mapping directions')
 
 // TODO: option to not include subjectOf
 
@@ -48,19 +49,20 @@ program
   })
 
 program
-  .command('mappings [from] [to]').alias('m') // TODO: allow notation as 'to'
+  .command('mappings [from] [to]').alias('m')
   .description('get mappings between Wikidata and other schemes')
   .action( (from, to) => {
-    from = from && from.length < 2 ? '' : from
-    to   = to && to.length < 2 ? '' : to
-    if (!from && !to) {
-      error('missing required argument `from\' and/or `to\'')
-    }
+    let direction = program.both || to === undefined ? 'both' : 'forward'
+
+    if (from === '-') from = undefined
+    if (to === '-') to = undefined
+
     let toScheme = (from && program.scheme) ? program.scheme : null
     getMappingSchemes()
       .then( schemes => new wds.service(schemes) )
-      .then( service => service.getMappings({from,to,toScheme}) )
+      .then( service => service.getMappings({from,to,toScheme,direction}) )
       .then( ndjson.write )
+      .catch( e => error(e.message) )
   })
 
 program
