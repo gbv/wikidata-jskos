@@ -124,7 +124,7 @@ service (see [usage as web service](webservice.md)).
     wdjskos m Q42 | jq .to.memberSet[].uri
     wdjskos m - http://viaf.org/viaf/113230702
 
-A single character (e.g. `-`) can be used to nullify argument `from` or `to`,
+A single hyphen (`-`) can be used to nullify argument `from` or `to`,
 respectively. Mappings can be limited to a target scheme. These are equivalent:
 
     wdjskos --scheme P227 mappings Q42
@@ -184,6 +184,12 @@ jskos = wds.mapSimpleLabels(entity.labels)
 ## Contributing
 
 See <https://github.com/gbv/wikidata-jskos>.
+
+For debugging set environment variable `DEBUG`, also possible via file `.env`:
+
+    DEBUG=wds:*
+
+See `lib/utils/debug.js` for details.
 
 ## License
 
