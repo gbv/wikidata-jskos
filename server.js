@@ -1,7 +1,7 @@
 const { port } = require("./lib/config.js")
-const app = require("express")()
+const express = require("express")
+const app = express()
 const wds = require("./lib/wikidata-wrapper")
-const examples = require("./lib/examples.json")
 const { addContext } = require("jskos-tools")
 
 function errorHandler(res) {
@@ -11,7 +11,10 @@ function errorHandler(res) {
   }
 }
 
-// add default headers
+// serve static files from assets directory
+app.use(express.static(__dirname+"/assets"))
+
+// add default JSKOS headers
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader("Content-Type", "application/ld+json")
@@ -41,13 +44,6 @@ wds.getMappingSchemes({language:"en", maxAge:0})
           .catch(errorHandler(res))
       })
     }
-
-    // root endpoint
-    app.get("/", (req, res) => {
-      // TODO: send HTML view with clickable links
-      // TODO: add API documentation
-      res.json({ examples })
-    })
 
     // start application
     app.listen(port, () => {

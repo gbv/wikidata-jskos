@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/gbv/wikidata-jskos.svg?branch=master)](https://travis-ci.org/gbv/wikidata-jskos)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
-> Access Wikidata in [JSKOS](https://gbv.github.io/jskos/jskos.html) format
+> Access [Wikidata] in [JSKOS] format
 
 This node module provides a web service, a command line client, and a library to access Wikidata in [JSKOS] format.
 

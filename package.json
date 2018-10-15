@@ -13,7 +13,8 @@
     "test-watch": "mocha --watch",
     "lint": "eslint ./*.js ./**/*.js",
     "fix": "eslint --fix ./*.js ./**/*.js",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "home": "./scripts/build_home"
   },
   "lint-staged": {
     "**/*.js": [
@@ -25,7 +26,10 @@
       "git add"
     ]
   },
-  "pre-commit": "lint-staged",
+  "pre-commit": [
+    "home",
+    "lint-staged"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/gbv/wikidata-jskos"
@@ -44,9 +48,10 @@
   "devDependencies": {
     "eslint": "^4.19.1",
     "lint-staged": "^7.1.2",
+    "marked": "^0.5.1",
+    "mocha": "^5.2.0",
     "pre-commit": "^1.2.2",
-    "should": "^13.2.1",
-    "mocha": "^5.2.0"
+    "should": "^13.2.1"
   },
   "dependencies": {
     "bluereq": "^2.1.7",
