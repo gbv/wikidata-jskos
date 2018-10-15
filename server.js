@@ -19,9 +19,9 @@ app.use(function (req, res, next) {
 })
 
 const endpoints = {
-  "/concept": "getConcepts",
-  "/mapping": "getMappings",
-  "/scheme":  "getSchemes"
+  "/data": "getConcepts",
+  "/mappings": "getMappings",
+  "/mappings/voc": "getSchemes"
 }
 
 // load schemes

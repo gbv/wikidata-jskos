@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/gbv/wikidata-jskos.svg?branch=master)](https://travis-ci.org/gbv/wikidata-jskos)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
-> Access Wikidata in JSKOS format
+> Access Wikidata in [JSKOS](https://gbv.github.io/jskos/jskos.html) format
 
 This node module provides a web service, a command line client, and a library to access Wikidata in [JSKOS] format.
 
@@ -13,14 +13,18 @@ This node module provides a web service, a command line client, and a library to
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
+  - [Web Service](#web-service)
+    - [/data](#data)
+    - [/mappings](#mappings)
+    - [/mappings/voc](#mappingsvoc)
+  - [Command Line Application](#command-line-application)
 - [API](#api)
 - [Contribute](#contribute)
 - [License](#license)
 
-
 ## Background
 
-[Wikidata] is a large knowledge base with detailled informatin about all kinds
+[Wikidata] is a large knowledge base with detailed information about all kinds
 of entities. Mapping its data model to [JSKOS] data format allows simplified
 reuse of Wikidata as authority file. The mapping includes concordances between
 Wikidata and identifiers from other databases.
@@ -69,28 +73,53 @@ Basic configuration is possible via environment variables, also possible via
 ### Web Service
 
 An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The
-service provides the following endpoints:
+service provides the following endpoints, aligned with [JSKOS Server].
 
-#### /concept?uri=...
+#### /data
 
 Look up a Wikidata item as JSKOS Concept by its entity URI or QID.
 
-Optional parameters:
+* **URL Params**
 
-* `language` or `languages`: comma separated list of language codes
+  `uri=[uri]` URIs for concepts separated by `|`.
 
-#### /mapping?..
+  `language` or `languages`: comma separated list of language codes.
+
+* **Success Response**
+
+  JSON array of [JSKOS Concepts]
+
+#### /mappings
 
 Look up JSKOS mappings between Wikidata items (query parameter `from`) and
 external identifiers (query parameter `to`). At least one of both parameters
-must be given:
+must be given.
 
-* `from` (e.g. `?from=http://www.wikidata.org/entity/Q42`)
-* `to` (e.g. `?to=http://d-nb.info/gnd/119033364`)
+* **URL Params**
 
-The optional parameter `toScheme` can limit result of query with `from` to a
-selected concept scheme, identified by BARTOC URI (e.g.
-<http://bartoc.org/en/node/430> or just `430`).
+  `from=[uri|notation]` specify the source URI or notation
+
+  `to=[uri|notation]` specify the target URI or notation
+
+  `fromScheme=[uri|notation]` only show mappings from this concept scheme (URI or notation)
+
+  `toScheme=[uri|notation]` only show mappings to this concept scheme (URI or notation)
+
+  `language` or `languages` enables inclusion of entity labels. A comma separated list of language codes is used as preference list.
+
+  `mode=[mode]` specify the mode for `from`, `to`, one of `and` (default) and `or`
+
+Concept Schemes are identified by BARTOC IDs (e.g. <http://bartoc.org/en/node/430> or just `430`).
+
+* **Success Response**
+
+  JSON array of [JSKOS Concept Mappings]
+
+* ***Examples***
+
+  `?from=http://www.wikidata.org/entity/Q42`
+
+  `?to=http://d-nb.info/gnd/119033364`
 
 Mapping relation types ([P4390]) are respected, if given, see for example
 mapping from Wikidata to <http://d-nb.info/gnd/7527800-5>.
@@ -101,23 +130,32 @@ mapping from Wikidata to <http://d-nb.info/gnd/7527800-5>.
 [P2689]: http://www.wikidata.org/entity/P2689
 [P4390]: http://www.wikidata.org/entity/P2689
 
-Optional query parameter `language` or `languages` enables inclusion of entity
-labels. A comma separated list of language codes is used as preference list.
+#### /mappings/voc
 
-#### /scheme
-
-Return a list of supported concept schemes. These schemes need to have a
-BARTOC-ID ([P2689]), and be subject item ([P1629]) of an external identifier
-property with statements [P1921] (URI template) and [P1793] (regular
+Return a list of concept schemes supported in mappings. These schemes need to
+have a BARTOC-ID ([P2689]), and be subject item ([P1629]) of an external
+identifier property with statements [P1921] (URI template) and [P1793] (regular
 expression).
 
+* **URL Params**
 
-### CLI
+  None.
+
+* **Success Response**
+
+  JSON array of [JSKOS Concept Schemes]
+
+
+[JSKOS Concept Schemes]: https://gbv.github.io/jskos/jskos.html#concept-schemes
+[JSKOS Server]: https://github.com/gbv/jskos-server
+[JSKOS Concepts]: https://gbv.github.io/jskos/jskos.html#concept
+
+### Command Line Application
 
 The command line client `wdjskos` provides the same functionality as the web
 service (see [usage as web service](webservice.md)).
 
-## Examples
+#### Examples
 
 **Get mappings:**
 

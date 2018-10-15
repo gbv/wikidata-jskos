@@ -1,11 +1,11 @@
 {
-  "concept": [
+  "data": [
     { "uri": "http://www.wikidata.org/entity/Q42" }
   ],
-  "scheme": [
+  "mappings/voc": [
     {}
   ],
-  "mapping": [
+  "mappings": [
     { "from": "http://www.wikidata.org/entity/Q2013" },
     { "to": "http://d-nb.info/gnd/7527800-5" }
   ]
