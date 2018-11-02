@@ -14,10 +14,13 @@ This node module provides a web service, a command line client, and a library to
 - [Install](#install)
 - [Usage](#usage)
   - [Web Service](#web-service)
-    - [/data](#data)
+    - [/concept](#concept)
     - [/mappings](#mappings)
     - [/mappings/voc](#mappingsvoc)
-  - [Command Line Application](#command-line-application)
+  - [Command Line Interface](#command-line-interface)
+    - [concept](#concept-1)
+    - [mappings](#mappings-1)
+    - [schemes](#schemes)
 - [API](#api)
 - [Contribute](#contribute)
 - [License](#license)
@@ -75,9 +78,9 @@ Basic configuration is possible via environment variables, also possible via
 An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The
 service provides the following endpoints, aligned with [JSKOS Server].
 
-#### /data
+#### /concept
 
-Look up a Wikidata item as JSKOS Concept by its entity URI or QID.
+Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
 
 * **URL Params**
 
@@ -91,9 +94,9 @@ Look up a Wikidata item as JSKOS Concept by its entity URI or QID.
 
 #### /mappings
 
-Look up JSKOS mappings between Wikidata items (query parameter `from`) and
-external identifiers (query parameter `to`). At least one of both parameters
-must be given.
+Look up Wikidata mapping statements as [JSKOS Concept Mappings] between
+Wikidata items (query parameter `from`) and external identifiers (query
+parameter `to`). At least one of both parameters must be given.
 
 * **URL Params**
 
@@ -132,9 +135,10 @@ mapping from Wikidata to <http://d-nb.info/gnd/7527800-5>.
 
 #### /mappings/voc
 
-Return a list of concept schemes supported in mappings. These schemes need to
-have a BARTOC-ID ([P2689]), and be subject item ([P1629]) of an external
-identifier property with statements [P1921] (URI template) and [P1793] (regular
+Look up Wikidata items with [Wikidata properties for authority control] as
+[JSKOS Concept Schemes] with used for mappings. These schemes need to have a
+BARTOC-ID ([P2689]), and be subject item ([P1629]) of an external identifier
+property with statements [P1921] (URI template) and [P1793] (regular
 expression).
 
 * **URL Params**
@@ -149,12 +153,26 @@ expression).
 [JSKOS Concept Schemes]: https://gbv.github.io/jskos/jskos.html#concept-schemes
 [JSKOS Server]: https://github.com/gbv/jskos-server
 [JSKOS Concepts]: https://gbv.github.io/jskos/jskos.html#concept
+[JSKOS Concept Mappings]: https://gbv.github.io/jskos/jskos.html#concept-mappings
+[Wikidata properties for authority control]: http://www.wikidata.org/entity/Q18614948
 
-### Command Line Application
+### Command Line Interface
 
-The command line client `wdjskos` provides the same functionality as the web
-service (see [usage as web service](webservice.md)).
+The command line client `wdjskos` provides the same commands as accessible via
+[the web service](#web-service):
 
+#### concept
+
+Look up Wikidata items as [JSKOS Concepts].
+
+#### mapping
+
+Look up [JSKOS Concept Mappings].
+ 
+#### schemes
+
+Look up [JSKOS Concept Schemes] with [Wikidata properties for authority control].
+ 
 #### Examples
 
 **Get mappings:**
