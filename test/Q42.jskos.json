@@ -33,7 +33,9 @@
   "occurrences": [
     {
       "count": 5,
-      "database": "http://www.wikidata.org/entity/Q2013",
+      "database": {
+        "uri": "http://www.wikidata.org/entity/Q2013"
+      },
       "relation": "http://schema.org/about"
     }
   ],

@@ -5,5 +5,4 @@ node_js:
 install:
   - npm install
 script:
-  - ./bin/wdjskos schemes # also fills the cache
   - npm test
