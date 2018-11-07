@@ -5,6 +5,7 @@ const { readFileSync } = require('fs')
 const pkg = require('../package.json')
 const { red } = require('chalk')
 const wds = require("../lib/wikidata-wrapper")
+const { WikidataJSKOSService } = wds
 const ndjson = require("../lib/ndjson")
 
 program
@@ -35,7 +36,7 @@ program
   .action( ids => {
     const language = program.language || 'en'
     getMappingSchemes()
-      .then( schemes => new wds.service(schemes) )
+      .then( schemes => new WikidataJSKOSService(schemes) )
       .then( service => service.getConcepts({uri:ids, language}) )
       .then( ndjson.write )
   })
@@ -59,7 +60,7 @@ program
 
     let toScheme = (from && program.scheme) ? program.scheme : null
     getMappingSchemes()
-      .then( schemes => new wds.service(schemes) )
+      .then( schemes => new WikidataJSKOSService(schemes) )
       .then( service => service.getMappings({from,to,toScheme,direction}) )
       .then( ndjson.write )
       .catch( e => error(e.message) )

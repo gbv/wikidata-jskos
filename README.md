@@ -177,8 +177,8 @@ Look up [JSKOS Concept Schemes] with [Wikidata properties for authority control]
 
 **Get mappings:**
 
-    wdjskos m Q42 | jq .to.memberSet[].uri
-    wdjskos m - http://viaf.org/viaf/113230702
+    wdjskos mappings Q42 | jq .to.memberSet[].uri
+    wdjskos mappings - http://viaf.org/viaf/113230702
 
 A single hyphen (`-`) can be used to nullify argument `from` or `to`,
 respectively. Mappings can be limited to a target scheme. These are equivalent:
@@ -221,6 +221,9 @@ jskos = wds.mapSitelinks(entity.sitelinks)
 
 jskos = wds.mapClaims(entity.claims)
 // ...
+
+// convert claims with mapping properties
+jskos = wds.mapMappingClaims(claims)
 
 jskos = wds.mapInfo(entity)
 // ...
