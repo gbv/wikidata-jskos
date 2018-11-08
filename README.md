@@ -18,9 +18,9 @@ This node module provides a web service, a command line client, and a library to
     - [/mappings](#mappings)
     - [/mappings/voc](#mappingsvoc)
   - [Command Line Interface](#command-line-interface)
-    - [concept](#concept-1)
-    - [mappings](#mappings-1)
-    - [schemes](#schemes)
+    - [wdjskos concept](#wdjskos-concept)
+    - [wdjskos mappings](#wdjskos-mappings)
+    - [wdjskos schemes](#wdjskos-schemes)
 - [API](#api)
 - [Contribute](#contribute)
 - [License](#license)
@@ -161,21 +161,21 @@ expression).
 The command line client `wdjskos` provides the same commands as accessible via
 [the web service](#web-service):
 
-#### concept
+#### wdjskos concept
 
 Look up Wikidata items as [JSKOS Concepts].
 
-#### mapping
+#### wdjskos mappings
 
 Look up [JSKOS Concept Mappings].
  
-#### schemes
+#### wdjskos schemes
 
 Look up [JSKOS Concept Schemes] with [Wikidata properties for authority control].
  
 #### Examples
 
-**Get mappings:**
+Get mappings:
 
     wdjskos mappings Q42 | jq .to.memberSet[].uri
     wdjskos mappings - http://viaf.org/viaf/113230702
