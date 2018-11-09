@@ -4,9 +4,10 @@ const program = require('commander')
 const { readFileSync } = require('fs')
 const pkg = require('../package.json')
 const { red } = require('chalk')
-const wds = require("../lib/wikidata-wrapper")
+const wds = require('../lib/wikidata-wrapper')
+const wdk = require('wikidata-sdk')
 const { WikidataJSKOSService } = wds
-const ndjson = require("../lib/ndjson")
+const ndjson = require('../lib/ndjson')
 
 program
   .version(pkg.version)
@@ -26,59 +27,71 @@ const error = (message, showHelp) => {
 
 const getMappingSchemes = () => {
   const language = program.language || 'en'
-  const maxAge = program.force ? 0 : 7*24*3600
-  return wds.getMappingSchemes({language, maxAge})
+  const maxAge = program.force ? 0 : 7 * 24 * 3600
+  return wds.getMappingSchemes({ language, maxAge })
+}
+
+function conceptCommand (ids) {
+  const language = program.language || 'en'
+  getMappingSchemes()
+    .then(schemes => new WikidataJSKOSService(schemes))
+    .then(service => service.getConcepts({ uri: ids, language }))
+    .then(ndjson.write)
+}
+
+function schemesCommand () {
+  getMappingSchemes()
+    .then(ndjson.write)
+}
+
+function mappingsCommand (from, to) {
+  let direction = program.both || to === undefined ? 'both' : 'forward'
+
+  if (from === '-') from = undefined
+  if (to === '-') to = undefined
+
+  let toScheme = (from || direction !== 'forward') ? program.scheme : null
+  getMappingSchemes()
+    .then(schemes => new WikidataJSKOSService(schemes))
+    .then(service => service.getMappings({ from, to, toScheme, direction }))
+    .then(ndjson.write)
+    .catch(e => error(e.message))
 }
 
 program
   .command('concept <id...>').alias('c')
   .description('get Wikidata entity as JSKOS concept')
-  .action( ids => {
-    const language = program.language || 'en'
-    getMappingSchemes()
-      .then( schemes => new WikidataJSKOSService(schemes) )
-      .then( service => service.getConcepts({uri:ids, language}) )
-      .then( ndjson.write )
-  })
+  .action(conceptCommand)
 
 program
   .command('schemes').alias('s')
   .description('get mapping properties as concept schemes')
-  .action( () => {
-    getMappingSchemes()
-      .then(ndjson.write)
-  })
+  .action(schemesCommand)
 
 program
   .command('mappings [from] [to]').alias('m')
   .description('get mappings between Wikidata and other schemes')
-  .action( (from, to) => {
-    let direction = program.both || to === undefined ? 'both' : 'forward'
-
-    if (from === '-') from = undefined
-    if (to === '-') to = undefined
-
-    let toScheme = (from || direction !== 'forward') ? program.scheme : null
-    getMappingSchemes()
-      .then( schemes => new WikidataJSKOSService(schemes) )
-      .then( service => service.getMappings({from,to,toScheme,direction}) )
-      .then( ndjson.write )
-      .catch( e => error(e.message) )
-  })
+  .action(mappingsCommand)
 
 program
   .command('add [file]').alias('a')
   .description('add or update a mapping')
-  .action( (file) => {
-      const json = readFileSync(file ? file : 0, 'utf-8')
-      const mapping = JSON.parse(json)
-      // TODO: validate, check whether uri exists
-      // then upateMapping, else insertMapping
+  .action((file) => {
+    const json = readFileSync(file || 0, 'utf-8')
+    const mapping = JSON.parse(json)
+    // TODO: validate, check whether uri exists
+    // then upateMapping, else insertMapping
   })
 
-// complain on unknown commands
 program
-  .on('command:*', () => error(`unknown command '${program.args[0]}'`, true))
+  .on('command:*', () => {
+    const arg = program.args[0]
+    if (wdk.isEntityId(arg)) {
+      conceptCommand([arg])
+    } else {
+      error(`unknown command '${arg}'`, true)
+    }
+  })
 
 // execute
 program.parse(process.argv)
