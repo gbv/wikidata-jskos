@@ -1,21 +1,25 @@
 {
   "uri": "http://www.wikidata.org/entity/statement/q42-8AA8CCC1-86CE-4C66-88FC-267621A81EA0",
+  "toScheme": {
+    "uri": "http://bartoc.org/en/node/430",
+    "notation": [
+      "GND"
+    ]
+  },
   "to": {
     "memberSet": [
       {
         "uri": "http://d-nb.info/gnd/119033364",
         "notation": [
           "119033364"
-        ],
-        "inScheme": [
-          {
-            "uri": "http://bartoc.org/en/node/430",
-            "notation": [
-              "GND"
-            ]
-          }
         ]
       }
+    ]
+  },
+  "fromScheme": {
+    "uri": "http://bartoc.org/en/node/1940",
+    "notation": [
+      "WD"
     ]
   },
   "from": {
@@ -24,14 +28,6 @@
         "uri": "http://www.wikidata.org/entity/Q42",
         "notation": [
           "Q42"
-        ],
-        "inScheme": [
-          {
-            "uri": "http://bartoc.org/en/node/1940",
-            "notation": [
-              "WD"
-            ]
-          }
         ]
       }
     ]

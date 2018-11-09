@@ -1,21 +1,25 @@
 {
   "uri": "http://www.wikidata.org/entity/statement/Q1-f5d5115d-489a-7654-9a0a-5eea5be80d07",
+  "toScheme": {
+    "uri": "http://bartoc.org/en/node/241",
+    "notation": [
+      "DDC"
+    ]
+  },
   "to": {
     "memberSet": [
       {
         "uri": "http://dewey.info/class/113/",
         "notation": [
           "113"
-        ],
-        "inScheme": [
-          {
-            "uri": "http://bartoc.org/en/node/241",
-            "notation": [
-              "DDC"
-            ]
-          }
         ]
       }
+    ]
+  },
+  "fromScheme": {
+    "uri": "http://bartoc.org/en/node/1940",
+    "notation": [
+      "WD"
     ]
   },
   "from": {
@@ -24,14 +28,6 @@
         "uri": "http://www.wikidata.org/entity/Q1",
         "notation": [
           "Q1"
-        ],
-        "inScheme": [
-          {
-            "uri": "http://bartoc.org/en/node/1940",
-            "notation": [
-              "WD"
-            ]
-          }
         ]
       }
     ]
