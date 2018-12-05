@@ -26,13 +26,13 @@ const error = (message, showHelp) => {
 }
 
 const getMappingSchemes = () => {
-  const language = program.language || 'en'
+  const language = program.lang || 'en'
   const maxAge = program.force ? 0 : 7 * 24 * 3600
   return wds.getMappingSchemes({ language, maxAge })
 }
 
 function conceptCommand (ids) {
-  const language = program.language || 'en'
+  const language = program.lang || 'en'
   getMappingSchemes()
     .then(schemes => new WikidataJSKOSService(schemes))
     .then(service => service.getConcepts({ uri: ids, language }))
