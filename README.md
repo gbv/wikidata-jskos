@@ -14,6 +14,7 @@ This node module provides a web service, a command line client, and a library to
 - [Install](#install)
 - [Usage](#usage)
   - [Web Service](#web-service)
+    - [/suggest](#suggest)
     - [/concept](#concept)
     - [/mappings](#mappings)
     - [/mappings/voc](#mappingsvoc)
@@ -77,6 +78,10 @@ Basic configuration is possible via environment variables, also possible via
 
 An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The
 service provides the following endpoints, aligned with [JSKOS Server].
+
+#### /suggest
+
+OpenSearch Suggest endpoint for typeahead search.
 
 #### /concept
 
@@ -170,11 +175,11 @@ Look up Wikidata items as [JSKOS Concepts].
 #### wdjskos mappings
 
 Look up [JSKOS Concept Mappings].
- 
+
 #### wdjskos schemes
 
 Look up [JSKOS Concept Schemes] with [Wikidata properties for authority control].
- 
+
 #### Examples
 
 Get mappings:

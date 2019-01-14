@@ -19,6 +19,10 @@ This web service provides access to content from [Wikidata] in [JSKOS format]. T
 
 * [mappings/voc](mappings/voc)
 
+### Suggest Search
+
+* [suggest?search=Göttingen&language=de](suggest?search=Göttingen&language=de)
+
 ## Source Code
 
 See <https://github.com/gbv/wikidata-jskos/>.

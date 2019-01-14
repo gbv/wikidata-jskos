@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
 })
 
 const endpoints = {
-  '/data': 'getConcepts', // TODO: remove this
+  '/suggest': 'suggestSearch',
   '/concept': 'getConcepts',
   '/mappings': 'getMappings',
   '/mappings/voc': 'promiseSchemes'
