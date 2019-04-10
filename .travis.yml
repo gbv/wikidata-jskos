@@ -1,8 +1,20 @@
 language: node_js
 node_js:
-  - "7"
-  - "6"
+- 8
+- 7
+- 6
 install:
-  - npm install
+- npm install
 script:
-  - npm test
+- npm test
+deploy:
+  provider: npm
+  email: jakob.voss@gbv.de
+  api_key:
+    secure: veGhmXBlyfKSLGmDTs3I9gl7v+H0qSaTaPd6EYw4sS8kIFOOd6vlYOy4ydKkC8doe+cCrRf7rxCJ6dCwSBZ++uGJ8yUIqb+pb2X+JsxcApNnK+rpuy+LDGUOdTbCqBF6FmEI3FjsxVLavkPRJZwq63tmzgtfjJL++L6gVf6745RIAKRPSr15w29tS/kc1+OJARDH2RGd9Z7I629fC4IGC/4GWI7kQGt11XxAXtqPj167NsI3en6aHV3ZTB0T+VAHv6IWjJhJg56d7v+I96NF8h3JpC5gtEcxjRulmyJ2xsYJ3fOSxGWpNUNBoX3pS5ffh6SWxo876LNlGYNWhRFFMzKNgn7vxaHerzHWZGXempZTO2746Dspdfd5ge9Rm9TtvGRIwA8FCvOfXLISqjh7HAqbCEiiGXbDcFggadJjxSrU4izlVcK8gx5jcNCEuY7x5FYyixrCx8r/ajsyhQTyMx+fP0LwVCuz0xKqNMHeaFOE9oEhqCiakAAptDtJSdLy1duXd4NDDva/L/2Mrsr5fMz35x4EfFWiAgAvPuNn1ulXrSqIwXtJY2yi5lly1r/iostotikJjl/W5ZYIeEwHynYgmuBexHJQv+lB60SsoA9SK7zGGxjh+RgavTcKCGsahn3qPr7J6d1+Kk8N7qMdcpadgF2a9BBHArnokF439PU=
+  on:
+    tags: true
+    branch: master
+    skip_cleanup: true
+    node: 6
+    repo: gbv/wikidata-jskos
