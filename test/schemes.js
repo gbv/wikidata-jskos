@@ -1,9 +1,9 @@
-require('should')
+require("should")
 
-const { getMappingSchemes } = require('../lib/wikidata-wrapper')
+const { getMappingSchemes } = require("../lib/wikidata-wrapper")
 
-describe('getMappingSchemes', () => {
-  it('returns a list of concept schemes', () => {
+describe("getMappingSchemes", () => {
+  it("returns a list of concept schemes", () => {
     return getMappingSchemes()
       .then(schemes => {
         schemes.should.be.Array()

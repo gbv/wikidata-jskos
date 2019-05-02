@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 
-const program = require('commander')
-const { readFileSync } = require('fs')
-const pkg = require('../package.json')
-const { red } = require('chalk')
-const wds = require('../lib/wikidata-wrapper')
-const wdk = require('wikidata-sdk')
+const program = require("commander")
+const { readFileSync } = require("fs")
+const pkg = require("../package.json")
+const { red } = require("chalk")
+const wds = require("../lib/wikidata-wrapper")
+const wdk = require("wikidata-sdk")
 const { WikidataJSKOSService } = wds
-const ndjson = require('../lib/ndjson')
-const suggestSearch = require('../lib/suggest')
+const ndjson = require("../lib/ndjson")
+const suggestSearch = require("../lib/suggest")
 
 program
   .version(pkg.version)
-  .description('Access Wikidata in JSKOS format')
-  .option('-l, --lang <lang>', 'language(s), comma-separated')
-  .option('-s, --scheme <id>', 'limit mappings to selected scheme')
-  .option('-f, --force', 'force reloading mapping schemes')
-  .option('-b, --both', 'include both mapping directions')
+  .description("Access Wikidata in JSKOS format")
+  .option("-l, --lang <lang>", "language(s), comma-separated")
+  .option("-s, --scheme <id>", "limit mappings to selected scheme")
+  .option("-f, --force", "force reloading mapping schemes")
+  .option("-b, --both", "include both mapping directions")
 
 // TODO: option to not include subjectOf
 
@@ -27,20 +27,20 @@ const error = (message, showHelp) => {
 }
 
 const getMappingSchemes = () => {
-  const language = program.lang || 'en'
+  const language = program.lang || "en"
   const maxAge = program.force ? 0 : 7 * 24 * 3600
   return wds.getMappingSchemes({ language, maxAge })
 }
 
 function searchCommand (query) {
-  return suggestSearch({search: query.join(' ')})
+  return suggestSearch({search: query.join(" ")})
     .then(suggest => {
-    console.log(suggest)
+      console.log(suggest)
     })
 }
 
 function conceptCommand (ids) {
-  const language = program.lang || 'en'
+  const language = program.lang || "en"
   getMappingSchemes()
     .then(schemes => new WikidataJSKOSService(schemes))
     .then(service => service.getConcepts({ uri: ids, language }))
@@ -53,12 +53,12 @@ function schemesCommand () {
 }
 
 function mappingsCommand (from, to) {
-  let direction = program.both || to === undefined ? 'both' : 'forward'
+  let direction = program.both || to === undefined ? "both" : "forward"
 
-  if (from === '-') from = undefined
-  if (to === '-') to = undefined
+  if (from === "-") from = undefined
+  if (to === "-") to = undefined
 
-  let toScheme = (from || direction !== 'forward') ? program.scheme : null
+  let toScheme = (from || direction !== "forward") ? program.scheme : null
   getMappingSchemes()
     .then(schemes => new WikidataJSKOSService(schemes))
     .then(service => service.getMappings({ from, to, toScheme, direction }))
@@ -67,37 +67,37 @@ function mappingsCommand (from, to) {
 }
 
 program
-  .command('find <query...>').alias('f')
-  .description('search an entity')
+  .command("find <query...>").alias("f")
+  .description("search an entity")
   .action(searchCommand)
 
 program
-  .command('concept <id...>').alias('c')
-  .description('get Wikidata entity as JSKOS concept')
+  .command("concept <id...>").alias("c")
+  .description("get Wikidata entity as JSKOS concept")
   .action(conceptCommand)
 
 program
-  .command('schemes').alias('s')
-  .description('get mapping properties as concept schemes')
+  .command("schemes").alias("s")
+  .description("get mapping properties as concept schemes")
   .action(schemesCommand)
 
 program
-  .command('mappings [from] [to]').alias('m')
-  .description('get mappings between Wikidata and other schemes')
+  .command("mappings [from] [to]").alias("m")
+  .description("get mappings between Wikidata and other schemes")
   .action(mappingsCommand)
 
 program
-  .command('add [file]').alias('a')
-  .description('add or update a mapping')
+  .command("add [file]").alias("a")
+  .description("add or update a mapping")
   .action((file) => {
-    const json = readFileSync(file || 0, 'utf-8')
+    const json = readFileSync(file || 0, "utf-8")
     const mapping = JSON.parse(json)
     // TODO: validate, check whether uri exists
     // then upateMapping, else insertMapping
   })
 
 program
-  .on('command:*', () => {
+  .on("command:*", () => {
     const arg = program.args[0]
     if (wdk.isEntityId(arg)) {
       conceptCommand([arg])
@@ -113,6 +113,6 @@ program.parse(process.argv)
 if (!program.args.length) program.help()
 
 // Prevent logging an EPIPE error when piping the output
-process.stdout.on('error', err => {
-  if (err.code !== 'EPIPE') throw err
+process.stdout.on("error", err => {
+  if (err.code !== "EPIPE") throw err
 })
