@@ -11,23 +11,18 @@
     "server": "node server.js",
     "test": "mocha --timeout 10000",
     "test-watch": "mocha --watch",
-    "lint": "standard",
-    "fix": "standard --fix",
+    "lint": "eslint '*.js' '**/*.js'",
+    "fix": "eslint --fix '*.js' '**/*.js'",
     "lint-staged": "lint-staged",
     "home": "./scripts/build_home"
   },
-  "standard": {
-    "env": [
-      "mocha"
-    ]
-  },
   "lint-staged": {
-    "**/*.js": [
-      "standard --fix",
+    "src/**/*.{js,vue}": [
+      "eslint --fix",
       "git add"
     ],
-    "*.js": [
-      "standard --fix",
+    "src/*.{js,vue}": [
+      "eslint --fix",
       "git add"
     ]
   },
@@ -51,12 +46,12 @@
   "author": "Jakob Voß",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^5.16.0",
     "lint-staged": "^7.1.2",
     "marked": "^0.6.2",
     "mocha": "^5.2.0",
     "pre-commit": "^1.2.2",
-    "should": "^13.2.1",
-    "standard": "^12.0.1"
+    "should": "^13.2.1"
   },
   "dependencies": {
     "bluereq": "^2.1.7",
