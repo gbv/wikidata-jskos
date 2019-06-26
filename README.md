@@ -13,16 +13,20 @@ This node module provides a web service, a command line client, and a library to
 
 - [Background](#background)
 - [Install](#install)
+  - [Clone and Install](#clone-and-install)
+  - [Configuration](#configuration)
 - [Usage](#usage)
-  - [Web Service](#web-service)
-    - [/suggest](#suggest)
-    - [/concept](#concept)
-    - [/mappings](#mappings)
-    - [/mappings/voc](#mappingsvoc)
-  - [Command Line Interface](#command-line-interface)
-    - [wdjskos concept](#wdjskos-concept)
-    - [wdjskos mappings](#wdjskos-mappings)
-    - [wdjskos schemes](#wdjskos-schemes)
+  - [Run Server](#run-server)
+  - [Deployment](#deployment)
+- [Web Service](#web-service)
+  - [/mappings](#mappings)
+  - [/mappings/voc](#mappingsvoc)
+  - [/concept](#concept)    
+  - [/suggest](#suggest)    
+- [Command Line Interface](#command-line-interface)
+  - [wdjskos concept](#wdjskos-concept)
+  - [wdjskos mappings](#wdjskos-mappings)
+  - [wdjskos schemes](#wdjskos-schemes)
 - [API](#api)
 - [Contribute](#contribute)
 - [License](#license)
@@ -34,16 +38,15 @@ of entities. Mapping its data model to [JSKOS] data format allows simplified
 reuse of Wikidata as authority file. The mapping includes concordances between
 Wikidata and identifiers from other databases.
 
-### See Also
+**See Also:**
 
 * <https://coli-conc.gbv.de/>
 * <https://github.com/maxlath/wikidata-sdk>
 * <https://tools.wmflabs.org/hub/>
 
-
 ## Install
 
-### Clone and install dependencies
+### Clone and Install
 
 ``` bash
 # clone the repository
@@ -54,20 +57,6 @@ cd wikidata-jskos
 npm install
 ```
 
-### Install webservice
-
-For deployment there is a config file to use with [pm2](http://pm2.keymetrics.io/):
-
-```bash
-pm2 start ecosystem.config.json
-```
-
-For development serve with hot reload and auto reconnect at <http://localhost:2013/>:
-
-```bash
-npm run start
-```
-
 ### Configuration
 
 Basic configuration is possible via environment variables, also possible via
@@ -75,28 +64,26 @@ Basic configuration is possible via environment variables, also possible via
 
 ## Usage
 
-### Web Service
+### Run Server
+
+For development serve with hot reload and auto reconnect at <http://localhost:2013/>:
+
+```bash
+npm run start
+```
+
+### Deployment
+
+For deployment there is a config file to use with [pm2](http://pm2.keymetrics.io/):
+
+```bash
+pm2 start ecosystem.config.json
+```
+
+## Web Service
 
 An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The
 service provides the following endpoints, aligned with [JSKOS Server].
-
-#### /suggest
-
-OpenSearch Suggest endpoint for typeahead search.
-
-#### /concept
-
-Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
-
-* **URL Params**
-
-  `uri=[uri]` URIs for concepts separated by `|`.
-
-  `language` or `languages`: comma separated list of language codes.
-
-* **Success Response**
-
-  JSON array of [JSKOS Concepts]
 
 #### /mappings
 
@@ -157,6 +144,23 @@ expression).
 
   JSON array of [JSKOS Concept Schemes]
 
+#### /concept
+
+Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
+
+* **URL Params**
+
+  `uri=[uri]` URIs for concepts separated by `|`.
+
+  `language` or `languages`: comma separated list of language codes.
+
+* **Success Response**
+
+  JSON array of [JSKOS Concepts]
+
+#### /suggest
+
+OpenSearch Suggest endpoint for typeahead search.
 
 [JSKOS Concept Schemes]: https://gbv.github.io/jskos/jskos.html#concept-schemes
 [JSKOS Server]: https://github.com/gbv/jskos-server
