@@ -23,7 +23,7 @@ This node module provides a web service, a command line client, and a library to
   - [/mappings/voc](#mappingsvoc)
   - [/concept](#concept)    
   - [/suggest](#suggest)    
-- [Command Line Interface](#command-line-interface)
+- [Command line tool](#command-line-tool)
   - [wdjskos concept](#wdjskos-concept)
   - [wdjskos mappings](#wdjskos-mappings)
   - [wdjskos schemes](#wdjskos-schemes)
@@ -48,13 +48,19 @@ Wikidata and identifiers from other databases.
 
 ### Clone and Install
 
-``` bash
+```sh
 # clone the repository
 git clone https://github.com/gbv/wikidata-jskos.git
 cd wikidata-jskos
 
 # install dependencies
 npm install
+```
+
+Optionally make the [command line tool](#command-line-tool) `wdjskos` available:
+
+```sh
+npm link
 ```
 
 ### Configuration
@@ -168,7 +174,7 @@ OpenSearch Suggest endpoint for typeahead search.
 [JSKOS Concept Mappings]: https://gbv.github.io/jskos/jskos.html#concept-mappings
 [Wikidata properties for authority control]: http://www.wikidata.org/entity/Q18614948
 
-### Command Line Interface
+### Command line tool
 
 The command line client `wdjskos` provides the same commands as accessible via
 [the web service](#web-service):
@@ -229,7 +235,7 @@ jskos = wds.mapDescriptions(entity.descriptions)
 // { scopeNote: { ... } }
 
 jskos = wds.mapSitelinks(entity.sitelinks)
-// ...
+// { occurrences: [ { ... } ], subjectOf: [ { url: ... }, ... ] }
 
 jskos = wds.mapClaims(entity.claims)
 // ...
