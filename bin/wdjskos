@@ -43,7 +43,7 @@ function conceptCommand (ids) {
   const language = program.lang || "en"
   getMappingSchemes()
     .then(schemes => new WikidataJSKOSService(schemes))
-    .then(service => service.getConcepts({ uri: ids, language }))
+    .then(service => service.getConcepts({ uri: ids.join("|"), language }))
     .then(ndjson.write)
 }
 
