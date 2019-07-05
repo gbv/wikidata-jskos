@@ -1,7 +1,6 @@
 const should = require("should")
 
-const { WikidataJSKOSService } = require("../lib/wikidata-wrapper")
-const ConceptScheme = require("../lib/ConceptScheme.js")
+const { ConceptScheme, WikidataJSKOSService } = require("../lib/wikidata-wrapper")
 const schemes = require("./schemes.json").map(s => new ConceptScheme(s))
 const service = new WikidataJSKOSService(schemes)
 
