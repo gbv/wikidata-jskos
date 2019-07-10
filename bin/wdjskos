@@ -66,6 +66,19 @@ function mappingsCommand (from, to) {
     .catch(e => error(e.message))
 }
 
+function mapMappingCommand(mapping) {
+  return getMappingSchemes()
+    .then(schemes => new WikidataJSKOSService(schemes))
+    .then(service => {
+      const item = service.mapMapping(mapping)
+      if (item) {
+        return item
+      } else {
+        error("failed to convert mapping to Wikidata item")
+      }
+    })
+}
+
 program
   .command("find <query...>").alias("f")
   .description("search an entity")
@@ -87,31 +100,32 @@ program
   .action(mappingsCommand)
 
 program
-  .command("add [file]").alias("a")
-  .description("add or update a mapping (not implemented yet)")
-  .action((file) => {
-    const json = readFileSync(file || 0, "utf-8")
-    const mapping = JSON.parse(json)
-    // TODO: validate, check whether uri exists
-    // then upateMapping, else insertMapping
-  })
-
-program
-  .command("item [file]").alias("i")
+  .command("mapping-item [file]").alias("i")
   .description("convert a JSKOS mapping to a Wikidata item")
   .action((file) => {
     const json = readFileSync(file || 0, "utf-8")
     const mapping = JSON.parse(json)
 
-    getMappingSchemes()
-      .then(schemes => new WikidataJSKOSService(schemes))
-      .then(service => {
-        const item = service.mapMapping(mapping)
-        if (item) {
-          console.log(JSON.stringify(item, null, '  '))
-        } else {
-          error("failed to convert mapping to Wikidata item")
-        }
+    mapMappingCommand(mapping)
+      .then(item => console.log(JSON.stringify(item, null, '  ')))
+  })
+
+program
+  .command("add-mapping [file]").alias("a")
+  .description("add or update a mapping (not implemented yet)")
+  .action((file) => {
+    const json = readFileSync(file || 0, "utf-8")
+    const mapping = JSON.parse(json)
+
+    mapMappingCommand(mapping).then(item => {
+      if (!item.uri) {
+        // TODO: check whether statement exists
+      }
+
+      console.log(JSON.stringify(item, null, '  '))
+      // TODO: validate, check whether uri exists
+      // then upateMapping, else insertMapping
+
       })
   })
 

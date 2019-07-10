@@ -36,7 +36,7 @@ describe("mapMapping", () => {
       id: "Q1206262",
       claims: {
         P227: {
-          id: "q1206262-4365f346-48c8-bdd0-bdad-0cf07ba19134",
+          id: "q1206262$4365f346-48c8-bdd0-bdad-0cf07ba19134",
           mainsnak: {
             snaktype: "value",
             property: "P227",
