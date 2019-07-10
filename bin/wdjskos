@@ -2,7 +2,7 @@
 
 const program = require("commander")
 const { readFileSync } = require("fs")
-const pkg = require("../package.json")
+const { version } = require("../package.json")
 const { red } = require("chalk")
 const wds = require("../lib/wikidata-wrapper")
 const wdk = require("wikidata-sdk")
@@ -11,7 +11,7 @@ const ndjson = require("../lib/ndjson")
 const suggestSearch = require("../lib/suggest")
 
 program
-  .version(pkg.version)
+  .version(version)
   .description("Access Wikidata in JSKOS format")
   .option("-l, --lang <lang>", "language(s), comma-separated")
   .option("-s, --scheme <id>", "limit mappings to selected scheme")
@@ -88,12 +88,31 @@ program
 
 program
   .command("add [file]").alias("a")
-  .description("add or update a mapping")
+  .description("add or update a mapping (not implemented yet)")
   .action((file) => {
     const json = readFileSync(file || 0, "utf-8")
     const mapping = JSON.parse(json)
     // TODO: validate, check whether uri exists
     // then upateMapping, else insertMapping
+  })
+
+program
+  .command("item [file]").alias("i")
+  .description("convert a JSKOS mapping to a Wikidata item")
+  .action((file) => {
+    const json = readFileSync(file || 0, "utf-8")
+    const mapping = JSON.parse(json)
+
+    getMappingSchemes()
+      .then(schemes => new WikidataJSKOSService(schemes))
+      .then(service => {
+        const item = service.mapMapping(mapping)
+        if (item) {
+          console.log(JSON.stringify(item, null, '  '))
+        } else {
+          error("failed to convert mapping to Wikidata item")
+        }
+      })
   })
 
 program

@@ -21,16 +21,38 @@ This node module provides a web service, a command line client, and a library to
 - [Web Service](#web-service)
   - [/mappings](#mappings)
   - [/mappings/voc](#mappingsvoc)
-  - [/concept](#concept)    
-  - [/suggest](#suggest)    
+  - [/concept](#concept)
+  - [/suggest](#suggest)
 - [Command line tool](#command-line-tool)
   - [wdjskos concept](#wdjskos-concept)
   - [wdjskos mappings](#wdjskos-mappings)
   - [wdjskos schemes](#wdjskos-schemes)
 - [API](#api)
+  - [mapEntity](#mapentity)
+  - [mapMapping](#mapmapping)
 - [Contribute](#contribute)
 - [License](#license)
 
+[mapEntity]: #mapentity
+[mapMapping]: #mapmapping
+
+## Background
+
+[Wikidata] is a large knowledge base with detailed information about all kinds
+of entities. Mapping its data model to [JSKOS] data format allows simplified
+reuse of Wikidata as authority file. The mapping includes concordances between
+Wikidata and identifiers from other databases.
+
+**See Also:**
+
+* <https://coli-conc.gbv.de/>
+* <https://github.com/maxlath/wikidata-sdk>
+* <https://tools.wmflabs.org/hub/>
+
+## Install
+
+### Clone and Install
+[mapMappi
 ## Background
 
 [Wikidata] is a large knowledge base with detailed information about all kinds
@@ -209,6 +231,12 @@ Mapping schemes are cached in the caching directory of [wikidata-cli].
 
 ## API
 
+The node library can be used to convert Wikidata JSON format to JSKOS
+([mapEntity]) and to convert JSKOS mappings to Wikidata JSON format
+([mapMapping]).
+
+### mapEntity
+
 ```js
 jskos = wds.mapEntity(entity)
 ```
@@ -217,7 +245,7 @@ Entity data can be retrieved via Wikidata API method [wbgetentities] and from
 Wikidata database dumps. See JavaScript libraries [wikidata-sdk] and
 [wikidata-filter] for easy access and processing.
 
-### Map selected parts of a Wikidata entity
+#### Map selected parts of a Wikidata entity
 
 All methods return a JSKOS item.
 
@@ -247,7 +275,7 @@ jskos = wds.mapInfo(entity)
 // ...
 ```
 
-### Map simplified Wikidata entities
+#### Map simplified Wikidata entities
 
 Each method has a counterpart to map simplified Wikidata entities.
 
@@ -257,6 +285,14 @@ jskos = wds.mapSimpleIdentifier(entity.id)
 jskos = wds.mapSimpleLabels(entity.labels)
 ...
 ```
+
+## mapMapping
+
+Convert a JSKOS mapping into a Wikidata claim. Only respects JSKOS fields
+`from`, `to`, `uri`, and `type` (if given) and only supports 1-to-1 mappings
+from a single Wikidata item to a concept in another concept scheme.
+
+*this is work in progress!*
 
 ## Contributing
 

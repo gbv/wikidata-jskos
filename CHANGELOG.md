@@ -1,5 +1,5 @@
 # CHANGELOG
 
-## 0.0.1 - 2018-??-??
+## 0.2.0
 
-* Pre-release in development
+* Add basic conversion from JSKOS mappings to Wikidata JSON

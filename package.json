@@ -1,6 +1,6 @@
 {
   "name": "wikidata-jskos",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Access Wikidata in JSKOS format",
   "main": "server.js",
   "bin": {
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "forever --minUptime 2000 --spinSleepTime 2000 -c 'nodemon --exitcrash' server.js",
     "server": "node server.js",
-    "test": "mocha --timeout 10000",
+    "test": "mocha --timeout 30000",
     "test-watch": "mocha --watch",
     "lint": "eslint '*.js' '**/*.js'",
     "fix": "eslint --fix '*.js' '**/*.js'",
