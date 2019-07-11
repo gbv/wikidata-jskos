@@ -15,6 +15,7 @@ program
   .description("Access Wikidata in JSKOS format")
   .option("-l, --lang <lang>", "language(s), comma-separated")
   .option("-s, --scheme <id>", "limit mappings to selected scheme")
+  .option("-i, --simplify", "simplify Wikidata JSON")
   .option("-f, --force", "force reloading mapping schemes")
   .option("-b, --both", "include both mapping directions")
 
@@ -67,10 +68,11 @@ function mappingsCommand (from, to) {
 }
 
 function mapMappingCommand(mapping) {
+  const { simplify } = program
   return getMappingSchemes()
     .then(schemes => new WikidataJSKOSService(schemes))
     .then(service => {
-      const item = service.mapMapping(mapping)
+      const item = service.mapMapping(mapping, { simplify })
       if (item) {
         return item
       } else {

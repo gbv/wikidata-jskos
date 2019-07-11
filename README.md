@@ -27,6 +27,8 @@ This node module provides a web service, a command line client, and a library to
   - [wdjskos concept](#wdjskos-concept)
   - [wdjskos mappings](#wdjskos-mappings)
   - [wdjskos schemes](#wdjskos-schemes)
+  - [wdjskos find](#wdjskos-find)
+  - [wdjskos mapping-item](#wdjskos-mapping-item)
 - [API](#api)
   - [mapEntity](#mapentity)
   - [mapMapping](#mapmapping)
@@ -199,7 +201,9 @@ OpenSearch Suggest endpoint for typeahead search.
 ### Command line tool
 
 The command line client `wdjskos` provides the same commands as accessible via
-[the web service](#web-service):
+[the web service](#web-service).
+
+Mapping schemes are cached in the caching directory of [wikidata-cli].
 
 #### wdjskos concept
 
@@ -208,14 +212,6 @@ Look up Wikidata items as [JSKOS Concepts].
 #### wdjskos mappings
 
 Look up [JSKOS Concept Mappings].
-
-#### wdjskos schemes
-
-Look up [JSKOS Concept Schemes] with [Wikidata properties for authority control].
-
-#### Examples
-
-Get mappings:
 
     wdjskos mappings Q42 | jq .to.memberSet[].uri
     wdjskos mappings - http://viaf.org/viaf/113230702
@@ -227,7 +223,20 @@ respectively. Mappings can be limited to a target scheme. These are equivalent:
     wdjskos --scheme 430 mappings Q42
     wdjskos --scheme http://bartoc.org/en/node/430 mappings Q42
 
-Mapping schemes are cached in the caching directory of [wikidata-cli].
+#### wdjskos schemes
+
+Look up [JSKOS Concept Schemes] with [Wikidata properties for authority control].
+
+#### wdjskos find
+
+Search a Wikidata item by its names and return OpenSearch Suggestions response.
+
+#### wdjskos mapping-item
+
+Convert a JSKOS mapping to a Wikidata item.
+
+    wdjskos mapping-item mapping.json
+    wdjskos --simplfiy mapping-item mapping.json
 
 ## API
 

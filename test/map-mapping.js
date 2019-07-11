@@ -35,7 +35,7 @@ describe("mapMapping", () => {
   const wikidataClaim = {
     id: "Q1206262",
     claims: {
-      P227: {
+      P227: [ {
         id: "q1206262$4365f346-48c8-bdd0-bdad-0cf07ba19134",
         type: "statement",
         mainsnak: {
@@ -46,17 +46,31 @@ describe("mapMapping", () => {
             type: "string"
           },
         }
+      } ]
+    }
+  }
+
+  const simplified = {
+    id: "Q1206262",
+    claims: {
+      P227: {
+        value: "7527800-5",
+        id: "q1206262$4365f346-48c8-bdd0-bdad-0cf07ba19134",
       }
     }
   }
 
-  it("converts JSKOS mapping to Wikidata claim", () => {
+  it("converts JSKOS mapping to Wikidata JSON", () => {
     should(service.mapMapping(jskosMapping)).deepEqual(wikidataClaim)
+  })
+
+  it("converts JSKOS mapping to simplified Wikidata JSON", () => {
+    should(service.mapMapping(jskosMapping, { simplify: true })).deepEqual(simplified)
   })
 
   it("converts mapping types to qualifiers", () => {
     jskosMapping.type = [ "http://www.w3.org/2004/02/skos/core#closeMatch" ]
-    wikidataClaim.claims.P227.qualifiers = {
+    wikidataClaim.claims.P227[0].qualifiers = {
       P4390: [ {
         snaktype: "value",
         property: "P4390",
@@ -72,5 +86,12 @@ describe("mapMapping", () => {
     }
 
     should(service.mapMapping(jskosMapping)).deepEqual(wikidataClaim)
+  })
+
+  it("converts mapping types to qualifiers (simplified)", () => {
+    simplified.claims.P227.qualifiers = {
+      P4390: "Q39893184"
+    }
+    should(service.mapMapping(jskosMapping, { simplify: true })).deepEqual(simplified)
   })
 })
