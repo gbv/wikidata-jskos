@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.3
+
+* Support converting RVK URIs to Wikidata JSON
+
 ## 0.2.2
 
 * Extend wdjskos command mapping-item with option simplify
