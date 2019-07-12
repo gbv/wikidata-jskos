@@ -72,11 +72,10 @@ function mapMappingCommand(mapping) {
   return getMappingSchemes()
     .then(schemes => new WikidataJSKOSService(schemes))
     .then(service => {
-      const item = service.mapMapping(mapping, { simplify })
-      if (item) {
-        return item
-      } else {
-        error("failed to convert mapping to Wikidata item")
+      try {
+        return service.mapMapping(mapping, { simplify })
+      } catch(e) {
+        error(e)
       }
     })
 }
