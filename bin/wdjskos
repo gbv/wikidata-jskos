@@ -5,7 +5,7 @@ const { readFileSync } = require("fs")
 const { version } = require("../package.json")
 const { red } = require("chalk")
 const wds = require("../lib/wikidata-wrapper")
-const wdk = require("wikidata-sdk")
+const wdk = require("../lib/utils/wdk")
 const { WikidataJSKOSService } = wds
 const ndjson = require("../lib/ndjson")
 const suggestSearch = require("../lib/suggest")
@@ -108,7 +108,7 @@ program
     const mapping = JSON.parse(json)
 
     mapMappingCommand(mapping)
-      .then(item => console.log(JSON.stringify(item, null, '  ')))
+      .then(item => console.log(JSON.stringify(item, null, "  ")))
   })
 
 program
@@ -123,11 +123,11 @@ program
         // TODO: check whether statement exists
       }
 
-      console.log(JSON.stringify(item, null, '  '))
+      console.log(JSON.stringify(item, null, "  "))
       // TODO: validate, check whether uri exists
       // then upateMapping, else insertMapping
 
-      })
+    })
   })
 
 program

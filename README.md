@@ -89,8 +89,11 @@ npm link
 
 ### Configuration
 
-Basic configuration is possible via environment variables, also possible via
-`.env` file. See `lib/config.js` for supported fields and default values.
+You can customize the application settings via a configuration file, e.g. by providing a generic `config.json` file and/or a more specific `config.{env}.json` file (where `{env}` is the environment like `development` or `production`). The latter will have precendent over the former, and all missing keys will be defaulted with values from `config.default.json`.
+
+Please consult `config.default.json` for possible configuration options. Some notes:
+- To use a custom Wikibase instance, you can set the subkeys of the `wikibase` property. Both `instance` and `sparqlEnpoint` are necessary. By default, Wikidata is used.
+- wikidata-jskos supports saving, editing, and deleting mappings in Wikidata. To enable this, you will need to provide `auth.algorithm` and `auth.key` (algorithm and key to decode the JWT), as well as `oauth.consumer_key` and `oauth.consumer_secret` (for your registered OAuth consumer).
 
 ## Usage
 
@@ -157,6 +160,8 @@ mapping from Wikidata to <http://d-nb.info/gnd/7527800-5>.
 [P1629]: http://www.wikidata.org/entity/P1629
 [P2689]: http://www.wikidata.org/entity/P2689
 [P4390]: http://www.wikidata.org/entity/P2689
+
+<!-- TODO: Add documentation about saving, editing, and deleting mappings. -->
 
 #### /mappings/voc
 

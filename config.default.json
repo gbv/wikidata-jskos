@@ -1,0 +1,22 @@
+{
+  "wikibase": {
+    "instance": "https://www.wikidata.org",
+    "sparqlEndpoint": "https://query.wikidata.org/sparql",
+    "api": null
+  },
+  "verbosity": false,
+  "baseUrl": null,
+  "port": 2013,
+  "auth": {
+    "algorithm": "HS256",
+    "key": null,
+    "postAuthRequired": true,
+    "allowCrossUserEditing": true
+  },
+  "oauth": {
+    "consumer_key": null,
+    "consumer_secret": null
+  },
+  "concepts": true,
+  "mappings": true
+}

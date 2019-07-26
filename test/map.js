@@ -1,6 +1,6 @@
 const should = require("should")
 
-const wdk = require("wikidata-sdk")
+const wdk = require("../lib/utils/wdk")
 const wds = require("../lib/wikidata-wrapper")
 const { ConceptSchemeSet } = wds
 const Q42 = require("./Q42.json")
