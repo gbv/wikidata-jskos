@@ -4,6 +4,8 @@ const { ConceptScheme, WikidataJSKOSService } = require("../lib/wikidata-wrapper
 const schemes = require("./schemes.json").map(s => new ConceptScheme(s))
 const service = new WikidataJSKOSService(schemes)
 
+const adjustMappingUri = require("./adjustMappingUri")
+
 describe("getMappings", () => {
   it("fails on missing parameters", () => {
     return service.getMappings({})
@@ -24,7 +26,7 @@ describe("getMappings", () => {
 
     return service.getMappings({ from, toScheme })
       .then(mappings => {
-        mappings.should.deepEqual([require("./Q42.gnd.json")])
+        mappings.should.deepEqual([adjustMappingUri(require("./Q42.gnd.json"))])
       })
   })
 })
