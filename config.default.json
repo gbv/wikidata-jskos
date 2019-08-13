@@ -11,7 +11,8 @@
     "algorithm": "HS256",
     "key": null,
     "postAuthRequired": true,
-    "allowCrossUserEditing": true
+    "allowCrossUserEditing": true,
+    "identityProviders": ["wikidata"]
   },
   "oauth": {
     "consumer_key": null,
