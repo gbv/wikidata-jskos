@@ -99,17 +99,6 @@ wds.getMappingSchemes({ language: "en", maxAge: 0 })
       res.json(status)
     })
 
-    // save a new mapping
-    app.post("/mappings", auth, (req, res) => {
-      service.saveMapping({
-        user: req.user,
-        body: req.body,
-      })
-        .then(addContext)
-        .then(jskos => res.status(201).json(jskos))
-        .catch(errorHandler(res))
-    })
-
     // get single mapping
     app.get("/mappings/:_id", (req, res) => {
       service.getMapping(req.params._id)
@@ -118,27 +107,42 @@ wds.getMappingSchemes({ language: "en", maxAge: 0 })
         .catch(errorHandler(res))
     })
 
-    // edit mapping
-    app.put("/mappings/:_id", auth, (req, res) => {
-      service.saveMapping({
-        _id: req.params._id,
-        user: req.user,
-        body: req.body,
-      })
-        .then(addContext)
-        .then(jskos => res.json(jskos))
-        .catch(errorHandler(res))
-    })
+    if (auth) {
 
-    // delete mapping endpoint
-    app.delete("/mappings/:_id", auth, (req, res) => {
-      service.deleteMapping({
-        _id: req.params._id,
-        user: req.user,
+      // save a new mapping
+      app.post("/mappings", auth, (req, res) => {
+        service.saveMapping({
+          user: req.user,
+          body: req.body,
+        })
+          .then(addContext)
+          .then(jskos => res.status(201).json(jskos))
+          .catch(errorHandler(res))
       })
-        .then(() => res.sendStatus(204))
-        .catch(errorHandler(res))
-    })
+
+      // edit mapping
+      app.put("/mappings/:_id", auth, (req, res) => {
+        service.saveMapping({
+          _id: req.params._id,
+          user: req.user,
+          body: req.body,
+        })
+          .then(addContext)
+          .then(jskos => res.json(jskos))
+          .catch(errorHandler(res))
+      })
+
+      // delete mapping endpoint
+      app.delete("/mappings/:_id", auth, (req, res) => {
+        service.deleteMapping({
+          _id: req.params._id,
+          user: req.user,
+        })
+          .then(() => res.sendStatus(204))
+          .catch(errorHandler(res))
+      })
+
+    }
 
     // start application
     app.listen(port, () => {
