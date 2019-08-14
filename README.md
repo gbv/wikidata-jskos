@@ -274,6 +274,8 @@ Returns a specific mapping for a Wikidata claim/statement.
 ### POST /mappings
 Saves a mapping in Wikidata. Requires [authentication](#authentication).
 
+Note that if an existing mapping in Wikidata is found with the exact same members, that mapping will be overwritten by this request.
+
 * **Success Reponse**
 
   JSKOS Mapping object as it was saved in Wikidata.
