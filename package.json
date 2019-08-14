@@ -60,11 +60,15 @@
     "express": "^4.16.3",
     "forever": "^1.0.0",
     "jskos-tools": "^0.2.8",
+    "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
     "nodemon": "^1.17.5",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "simple-sha1": "^2.1.1",
+    "wikidata-edit": "^2.9.3",
     "wikidata-sdk": "^7.0.0"
   }
 }

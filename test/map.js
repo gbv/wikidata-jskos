@@ -1,11 +1,17 @@
 const should = require("should")
 
-const wdk = require("wikidata-sdk")
+const wdk = require("../lib/utils/wdk")
 const wds = require("../lib/wikidata-wrapper")
 const { ConceptSchemeSet } = wds
 const Q42 = require("./Q42.json")
 const Q42concept = require("./Q42.jskos.json")
-const Q42mappings = require("./Q42.mappings.json")
+let Q42mappings = require("./Q42.mappings.json")
+const adjustMappingUri = require("./adjustMappingUri")
+
+// Adjust URIs of mappings
+for (let mapping of Q42mappings) {
+  adjustMappingUri(mapping)
+}
 
 describe("mapEntity", () => {
   it("map(Simple)Entity", done => {

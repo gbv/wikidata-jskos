@@ -19,10 +19,15 @@ This node module provides a web service, a command line client, and a library to
   - [Run Server](#run-server)
   - [Deployment](#deployment)
 - [Web Service](#web-service)
-  - [/mappings](#mappings)
-  - [/mappings/voc](#mappingsvoc)
-  - [/concept](#concept)
-  - [/suggest](#suggest)
+  - [Authentication](#authentication)
+  - [GET /mappings](#get-mappings)
+  - [GET /mappings/voc](#get-mappingsvoc)
+  - [GET /mappings/:_id](#get-mappings_id)
+  - [POST /mappings](#post-mappings)
+  - [PUT /mappings/:_id](#put-mappings_id)
+  - [DELETE /mappings/:_id](#delete-mappings_id)
+  - [GET /concept](#get-concept)
+  - [GET /suggest](#get-suggest)
 - [Command line tool](#command-line-tool)
   - [wdjskos concept](#wdjskos-concept)
   - [wdjskos mappings](#wdjskos-mappings)
@@ -89,8 +94,11 @@ npm link
 
 ### Configuration
 
-Basic configuration is possible via environment variables, also possible via
-`.env` file. See `lib/config.js` for supported fields and default values.
+You can customize the application settings via a configuration file, e.g. by providing a generic `config.json` file and/or a more specific `config.{env}.json` file (where `{env}` is the environment like `development` or `production`). The latter will have precendent over the former, and all missing keys will be defaulted with values from `config.default.json`.
+
+Please consult `config.default.json` for possible configuration options. Some notes:
+- To use a custom Wikibase instance, you can set the subkeys of the `wikibase` property. Both `instance` and `sparqlEnpoint` are necessary. By default, Wikidata is used.
+- wikidata-jskos supports saving, editing, and deleting mappings in Wikidata. To enable this, you will need to provide `auth.algorithm` and `auth.key` (algorithm and key to decode the JWT), as well as `oauth.consumer_key` and `oauth.consumer_secret` (for your registered OAuth consumer).
 
 ## Usage
 
@@ -115,7 +123,32 @@ pm2 start ecosystem.config.json
 An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The
 service provides the following endpoints, aligned with [JSKOS Server].
 
-#### /mappings
+### Authentication
+The following endpoints require an authenticated user:
+- [POST /mappings](#post-mappings)
+- [PUT /mappings/:_id](#put-mappings_id)
+- [DELETE /mappings/:_id](#delete-mappings_id)
+
+Authentication works via a JWT (JSON Web Token). The JWT has to be provided as a Bearer token in the authentication header, e.g. `Authentication: Bearer <token>`. It is integrated with [login-server](https://github.com/gbv/login-server) and the JWT is required to have the same format as the one login-server provides. Specifically, the OAuth token and secret for the user need to be provided as follows:
+
+```json
+{
+  "user": {
+    "identities": {
+      "wikidata": {
+        "oauth": {
+          "token": "..",
+          "token_secret": "..."
+        }
+      }
+    }
+  }
+}
+```
+
+There are more properties in the JWT, but those are not used by wikidata-jskos. Note that the JWT needs to be signed with the respective private key for the public key provided in the [configuration](#configuration). Also, the OAuth user token and secret need to come from the same OAuth consumer provided in the config.
+
+### GET /mappings
 
 Look up Wikidata mapping statements as [JSKOS Concept Mappings] between
 Wikidata items (query parameter `from`) and external identifiers (query
@@ -158,7 +191,7 @@ mapping from Wikidata to <http://d-nb.info/gnd/7527800-5>.
 [P2689]: http://www.wikidata.org/entity/P2689
 [P4390]: http://www.wikidata.org/entity/P2689
 
-#### /mappings/voc
+### GET /mappings/voc
 
 Look up Wikidata items with [Wikidata properties for authority control] as
 [JSKOS Concept Schemes] with used for mappings. These schemes need to have a
@@ -174,7 +207,94 @@ expression).
 
   JSON array of [JSKOS Concept Schemes]
 
-#### /concept
+### GET /mappings/:_id
+Returns a specific mapping for a Wikidata claim/statement.
+
+* **Success Response**
+
+  JSKOS object for mapping.
+
+* **Error Response**
+
+  If no claim with `_id` could be found, it will return a 404 not found error.
+
+* **Sample Call**
+
+  ```bash
+  curl https://coli-conc.gbv.de/services/wikidata/mappings/Q11351-9968E140-6CA7-448D-BF0C-D8ED5A9F4598
+  ```
+
+  ```json
+  {
+    "uri": "http://localhost:2013/mappings/Q11351-9968E140-6CA7-448D-BF0C-D8ED5A9F4598",
+    "identifier": [
+      "http://www.wikidata.org/entity/statement/Q11351-9968E140-6CA7-448D-BF0C-D8ED5A9F4598",
+      "urn:jskos:mapping:content:2807c55eac85ed8c0c9254ff04b457f89b801ac9",
+      "urn:jskos:mapping:members:daafcd8580e6f0304f0b1cee024f65f04da98a3c"
+    ],
+    "to": {
+      "memberSet": [
+        {
+          "uri": "http://rvk.uni-regensburg.de/nt/VK",
+          "notation": [
+            "VK"
+          ]
+        }
+      ]
+    },
+    "type": [
+      "http://www.w3.org/2004/02/skos/core#exactMatch"
+    ],
+    "fromScheme": {
+      "uri": "http://bartoc.org/en/node/1940",
+      "notation": [
+        "WD"
+      ]
+    },
+    "toScheme": {
+      "uri": "http://bartoc.org/en/node/533",
+      "notation": [
+        "RVK"
+      ]
+    },
+    "from": {
+      "memberSet": [
+        {
+          "uri": "http://www.wikidata.org/entity/Q11351",
+          "notation": [
+            "Q11351"
+          ]
+        }
+      ]
+    },
+    "@context": "https://gbv.github.io/jskos/context.json"
+  }
+  ```
+
+### POST /mappings
+Saves a mapping in Wikidata. Requires [authentication](#authentication).
+
+Note that if an existing mapping in Wikidata is found with the exact same members, that mapping will be overwritten by this request.
+
+* **Success Reponse**
+
+  JSKOS Mapping object as it was saved in Wikidata.
+
+### PUT /mappings/:_id
+Overwrites a mapping in Wikidata. Requires [authentication](#authentication).
+
+* **Success Reponse**
+
+  JSKOS Mapping object as it was saved in Wikidata.
+
+### DELETE /mappings/:_id
+Deletes a mapping from Wikidata. Requires [authentication](#authentication).
+
+* **Success Reponse**
+
+  Status 204, no content.
+
+### GET /concept
 
 Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
 
@@ -188,7 +308,7 @@ Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
 
   JSON array of [JSKOS Concepts]
 
-#### /suggest
+### GET /suggest
 
 OpenSearch Suggest endpoint for typeahead search.
 
@@ -198,18 +318,18 @@ OpenSearch Suggest endpoint for typeahead search.
 [JSKOS Concept Mappings]: https://gbv.github.io/jskos/jskos.html#concept-mappings
 [Wikidata properties for authority control]: http://www.wikidata.org/entity/Q18614948
 
-### Command line tool
+## Command line tool
 
 The command line client `wdjskos` provides the same commands as accessible via
 [the web service](#web-service).
 
 Mapping schemes are cached in the caching directory of [wikidata-cli].
 
-#### wdjskos concept
+### wdjskos concept
 
 Look up Wikidata items as [JSKOS Concepts].
 
-#### wdjskos mappings
+### wdjskos mappings
 
 Look up [JSKOS Concept Mappings].
 
@@ -223,15 +343,15 @@ respectively. Mappings can be limited to a target scheme. These are equivalent:
     wdjskos --scheme 430 mappings Q42
     wdjskos --scheme http://bartoc.org/en/node/430 mappings Q42
 
-#### wdjskos schemes
+### wdjskos schemes
 
 Look up [JSKOS Concept Schemes] with [Wikidata properties for authority control].
 
-#### wdjskos find
+### wdjskos find
 
 Search a Wikidata item by its names and return OpenSearch Suggestions response.
 
-#### wdjskos mapping-item
+### wdjskos mapping-item
 
 Convert a JSKOS mapping to a Wikidata item.
 
@@ -295,7 +415,7 @@ jskos = wds.mapSimpleLabels(entity.labels)
 ...
 ```
 
-## mapMapping
+### mapMapping
 
 Convert a JSKOS mapping into a Wikidata claim. Only respects JSKOS fields
 `from`, `to`, `uri`, and `type` (if given) and only supports 1-to-1 mappings
