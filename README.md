@@ -59,23 +59,6 @@ Wikidata and identifiers from other databases.
 ## Install
 
 ### Clone and Install
-[mapMappi
-## Background
-
-[Wikidata] is a large knowledge base with detailed information about all kinds
-of entities. Mapping its data model to [JSKOS] data format allows simplified
-reuse of Wikidata as authority file. The mapping includes concordances between
-Wikidata and identifiers from other databases.
-
-**See Also:**
-
-* <https://coli-conc.gbv.de/>
-* <https://github.com/maxlath/wikidata-sdk>
-* <https://tools.wmflabs.org/hub/>
-
-## Install
-
-### Clone and Install
 
 ```sh
 # clone the repository
