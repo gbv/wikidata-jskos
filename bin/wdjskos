@@ -59,10 +59,11 @@ function mappingsCommand (from, to) {
   if (from === "-") from = undefined
   if (to === "-") to = undefined
 
+  let languages = program.lang
   let toScheme = (from || direction !== "forward") ? program.scheme : null
   getMappingSchemes()
     .then(schemes => new WikidataJSKOSService(schemes))
-    .then(service => service.getMappings({ from, to, toScheme, direction }))
+    .then(service => service.getMappings({ from, to, toScheme, direction, languages }))
     .then(ndjson.write)
     .catch(e => error(e.message))
 }

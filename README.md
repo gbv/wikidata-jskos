@@ -153,6 +153,10 @@ parameter `to`). At least one of both parameters must be given.
 
   `direction=forward|backward|both` searches mappings from `from` to `to` (default), reverse, or in both directions
 
+  `limit=[number]` maximum number of mappings to return (not fully implemented)
+
+  `offset=[number]` start number of mappings to return (not fully implemented)
+
 Concept Schemes are identified by BARTOC IDs (e.g. <http://bartoc.org/en/node/430> or just `430`).
 
 * **Success Response**

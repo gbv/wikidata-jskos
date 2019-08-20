@@ -12,8 +12,9 @@ This web service provides access to content from [Wikidata] in [JSKOS format]. T
 
 * [mappings?from=http://www.wikidata.org/entity/Q2013](mappings?from=http://www.wikidata.org/entity/Q2013)
 * [mappings?to=http://d-nb.info/gnd/7527800-5](mappings?to=http://d-nb.info/gnd/7527800-5)
-* [mappings?direction=both&mode=and&from=http://Fwww.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3](mappings/?direction=both&mode=or&from=http://www.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3)
-* [mappings?direction=both&mode=or&from=http://Fwww.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3](mappings/?direction=both&mode=or&from=http://www.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3)
+* [mappings?direction=both&mode=and&from=http://www.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3](mappings/?direction=both&mode=or&from=http://www.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3)
+* [mappings?direction=both&mode=or&from=http://www.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3](mappings/?direction=both&mode=or&from=http://www.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3)
+* [mappings?toScheme=http://bartoc.org/en/node/18785](mappings?toScheme=http://bartoc.org/en/node/18785)
 
 ### Concept Schemes
 
