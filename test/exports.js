@@ -28,8 +28,4 @@ describe("wikidata-wrapper exports", () => {
     should(wds.mappingTypes).be.Object()
     should(wds.mappingTypes.Q39893184).equal("http://www.w3.org/2004/02/skos/core#closeMatch")
   })
-
-  it("getMappingSchemes", () => {
-    should(wds.getMappingSchemes).be.Function()
-  })
 })

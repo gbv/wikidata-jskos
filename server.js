@@ -4,8 +4,8 @@ const _ = require("lodash")
 const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
-const wds = require("./lib/wikidata-wrapper")
-const { WikidataJSKOSService } = wds
+const { WikidataJSKOSService } = require("./lib/wikidata-wrapper")
+const loadMappingSchemes = require("./lib/load-mapping-schemes")
 const { addContext } = require("jskos-tools")
 const path = require("path")
 
@@ -64,7 +64,7 @@ const endpoints = {
 }
 
 // load schemes
-wds.getMappingSchemes({ language: "en", maxAge: 0 })
+loadMappingSchemes({ language: "en", maxAge: 0 })
   .then(schemes => {
     // initialize service
     const service = new WikidataJSKOSService(schemes)

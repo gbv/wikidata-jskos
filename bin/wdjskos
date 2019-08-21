@@ -4,11 +4,11 @@ const program = require("commander")
 const { readFileSync } = require("fs")
 const { version } = require("../package.json")
 const { red } = require("chalk")
-const wds = require("../lib/wikidata-wrapper")
 const wdk = require("../lib/utils/wdk")
-const { WikidataJSKOSService } = wds
+const { WikidataJSKOSService } = require("../lib/wikidata-wrapper")
 const ndjson = require("../lib/ndjson")
 const suggestSearch = require("../lib/suggest")
+const loadMappingSchemes = require("../lib/load-mapping-schemes")
 
 program
   .version(version)
@@ -30,7 +30,7 @@ const error = (message, showHelp) => {
 const getMappingSchemes = () => {
   const language = program.lang || "en"
   const maxAge = program.force ? 0 : 7 * 24 * 3600
-  return wds.getMappingSchemes({ language, maxAge })
+  return loadMappingSchemes({ language, maxAge })
 }
 
 function searchCommand (query) {
