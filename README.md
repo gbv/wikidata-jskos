@@ -82,6 +82,7 @@ You can customize the application settings via a configuration file, e.g. by pro
 Please consult `config.default.json` for possible configuration options. Some notes:
 - To use a custom Wikibase instance, you can set the subkeys of the `wikibase` property. Both `instance` and `sparqlEnpoint` are necessary. By default, Wikidata is used.
 - wikidata-jskos supports saving, editing, and deleting mappings in Wikidata. To enable this, you will need to provide `auth.algorithm` and `auth.key` (algorithm and key to decode the JWT), as well as `oauth.consumer_key` and `oauth.consumer_secret` (for your registered OAuth consumer).
+- Changes to `concepts` and `mappings` will not change actual functionality. These keys are only provided so that clients know what kind of functionality is available.
 
 ## Usage
 

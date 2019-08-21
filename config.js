@@ -44,6 +44,20 @@ if (!config.wikibase.api) {
 if (config.auth.key && config.oauth.consumer_key && config.oauth.consumer_secret) {
   config.auth.canSaveMappings = true
   config.auth.canRemoveMappings = true
+  config.mappings.create = {
+    auth: true,
+    identityProviders: config.identityProviders,
+  }
+  config.mappings.update = {
+    auth: true,
+    crossUser: true,
+    identityProviders: config.identityProviders,
+  }
+  config.mappings.delete = {
+    auth: true,
+    crossUser: true,
+    identityProviders: config.identityProviders,
+  }
   console.log("Authentication and therefore saving/removing mappings is configured.")
 } else {
   console.log("Note: To allow saving/removing mappings, authentication has to be configured (see documentation).")

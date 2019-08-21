@@ -166,6 +166,7 @@ loadMappingSchemes({ language: "en", maxAge: 0 })
       if (status.config.mappings) {
         // Add endpoints related to mappings
         status.mappings = `${baseUrl}mappings`
+        status.config.mappings.toSchemeWhitelist = Object.values(service.schemes).map(scheme => ({ uri: scheme.uri }))
       }
       status.ok = 1
       res.json(status)

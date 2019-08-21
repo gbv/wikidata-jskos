@@ -11,13 +11,29 @@
     "algorithm": "HS256",
     "key": null,
     "postAuthRequired": true,
-    "allowCrossUserEditing": true,
-    "identityProviders": ["wikidata"]
+    "allowCrossUserEditing": true
   },
   "oauth": {
     "consumer_key": null,
     "consumer_secret": null
   },
-  "concepts": true,
-  "mappings": true
+  "concepts": {
+    "read": {
+      "auth": false
+    }
+  },
+  "mappings": {
+    "read": {
+      "auth": false
+    },
+    "fromSchemeWhitelist": [
+      {
+        "uri": "http://bartoc.org/en/node/1940"
+      }
+    ],
+    "toSchemeWhitelist": [],
+    "anonymous": true
+  },
+  "identities": null,
+  "identityProviders": ["wikidata"]
 }
