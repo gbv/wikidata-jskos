@@ -56,9 +56,23 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+app.use((req, res, next) => {
+  if (req.query) {
+    // Limit for pagination
+    const defaultLimit = 1000
+    req.query.limit = parseInt(req.query.limit)
+    req.query.limit = (req.query.limit && req.query.limit > 0) ? req.query.limit : defaultLimit
+    // Offset for pagination
+    const defaultOffset = 0
+    req.query.offset = parseInt(req.query.offset)
+    req.query.offset = (req.query.offset && req.query.offset >= 0) ? req.query.offset : defaultOffset
+  }
+  next()
+})
+
 const addPaginationHeaders = (req, res, data) => {
-  const limit = parseInt(req.query.limit)
-  const offset = parseInt(req.query.offset)
+  const limit = req.query.limit
+  const offset = req.query.offset
   const total = parseInt((data && data.totalCount) || (data && data.length))
   if (req == null || res == null || limit == null || offset == null || total == null) {
     return
@@ -123,6 +137,13 @@ loadMappingSchemes({ language: "en", maxAge: 0 })
           .then(addContext)
           .then(jskos => {
             if (_.isArray(jskos)) {
+              // Split result if necessary
+              if (jskos.totalCount == null || jskos.length > jskos.totalCount) {
+                let totalCount = jskos.totalCount || jskos.length
+                jskos = jskos.slice(req.query.offset, req.query.offset + req.query.limit)
+                jskos.totalCount = totalCount
+              }
+              // Add pagination headers
               addPaginationHeaders(req, res, jskos)
             }
             res.json(jskos)
