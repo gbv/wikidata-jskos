@@ -56,6 +56,52 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+const addPaginationHeaders = (req, res, data) => {
+  const limit = parseInt(req.query.limit)
+  const offset = parseInt(req.query.offset)
+  const total = parseInt((data && data.totalCount) || (data && data.length))
+  if (req == null || res == null || limit == null || offset == null || total == null) {
+    return
+  }
+  const baseUrl = config.baseUrl.substring(0, config.baseUrl.length - 1) + req.path
+  const url = (query, rel) => {
+    let url = baseUrl
+    let index = 0
+    _.forOwn(query, (value, key) => {
+      url += `${(index == 0 ? "?" : "&")}${key}=${encodeURIComponent(value)}`
+      index += 1
+    })
+    return `<${url}>; rel="${rel}"`
+  }
+  // Set X-Total-Count header
+  res.set("X-Total-Count", total)
+  let links = []
+  let query = _.cloneDeep(req.query)
+  query.limit = limit
+  // rel: first
+  query.offset = 0
+  links.push(url(query, "first"))
+  // rel: prev
+  if (offset > 0) {
+    query.offset = Math.max(offset - limit, 0)
+    links.push(url(query, "prev"))
+  }
+  // rel: next
+  if (limit + offset < total) {
+    query.offset = offset + limit
+    links.push(url(query, "next"))
+  }
+  // rel: last
+  let current = 0
+  while (current + limit < total) {
+    current += limit
+  }
+  query.offset = current
+  links.push(url(query, "last"))
+  // Set Link header
+  res.set("Link", links.join(","))
+}
+
 const endpoints = {
   "/suggest": "suggestSearch",
   "/concept": "getConcepts",
@@ -75,7 +121,12 @@ loadMappingSchemes({ language: "en", maxAge: 0 })
       app.get(path, (req, res) => {
         service[endpoints[path]](req.query)
           .then(addContext)
-          .then(jskos => res.json(jskos))
+          .then(jskos => {
+            if (_.isArray(jskos)) {
+              addPaginationHeaders(req, res, jskos)
+            }
+            res.json(jskos)
+          })
           .catch(errorHandler(res))
       })
     }
