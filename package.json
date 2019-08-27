@@ -1,6 +1,6 @@
 {
   "name": "wikidata-jskos",
-  "version": "0.2.3",
+  "version": "0.2.9",
   "description": "Access Wikidata in JSKOS format",
   "main": "server.js",
   "bin": {
@@ -16,6 +16,16 @@
     "lint-staged": "lint-staged",
     "home": "./scripts/build_home"
   },
+  "files": [
+    "lib/*",
+    "assets/*",
+    "test/*",
+    "scripts/*",
+    "bin/*",
+    "*.md",
+    "*.js",
+    "*.json"
+  ],
   "lint-staged": {
     "src/**/*.{js,vue}": [
       "eslint --fix",
@@ -48,7 +58,7 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "lint-staged": "^7.1.2",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
     "mocha": "^5.2.0",
     "pre-commit": "^1.2.2",
     "should": "^13.2.1"
