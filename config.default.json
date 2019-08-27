@@ -32,7 +32,8 @@
       }
     ],
     "toSchemeWhitelist": [],
-    "anonymous": true
+    "anonymous": true,
+    "cardinality": "1-to-1"
   },
   "identities": null,
   "identityProviders": ["wikidata"]
