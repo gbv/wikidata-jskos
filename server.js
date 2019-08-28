@@ -10,6 +10,12 @@ const loadMappingSchemes = require("./lib/load-mapping-schemes")
 const { addContext } = require("jskos-tools")
 const path = require("path")
 
+if (config.auth.key && config.oauth.consumer_key && config.oauth.consumer_secret) {
+  config.log("Authentication and therefore saving/removing mappings is configured.")
+} else {
+  config.log("Note: To allow saving/removing mappings, authentication has to be configured (see documentation).")
+}
+
 function errorHandler (res) {
   return (err) => {
     console.error(err)
@@ -129,7 +135,7 @@ loadMappingSchemes({ language: "en", maxAge: 0 })
   .then(schemes => {
     // initialize service
     const service = new WikidataJSKOSService(schemes)
-    console.log(`loaded ${schemes.length} mapping schemes`)
+    config.log(`loaded ${schemes.length} mapping schemes`)
 
     // enable endpoints
     for (let path in endpoints) {
@@ -220,6 +226,6 @@ loadMappingSchemes({ language: "en", maxAge: 0 })
 
     // start application
     app.listen(port, () => {
-      console.log(`listening on port ${port}`)
+      config.log(`listening on port ${port}`)
     })
   })

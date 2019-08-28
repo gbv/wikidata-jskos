@@ -58,9 +58,6 @@ if (config.auth.key && config.oauth.consumer_key && config.oauth.consumer_secret
     crossUser: true,
     identityProviders: config.identityProviders,
   }
-  console.log("Authentication and therefore saving/removing mappings is configured.")
-} else {
-  console.log("Note: To allow saving/removing mappings, authentication has to be configured (see documentation).")
 }
 
 const log = (...args) => {
