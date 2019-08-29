@@ -7,7 +7,7 @@
 
 > Access [Wikidata] in [JSKOS] format
 
-This node module provides a web service, a command line client, and a library to access Wikidata in [JSKOS] format.
+This node module provides [a web service](#web-service), a [command line client](#command-line-tool), and [a library](#api) to access Wikidata in [JSKOS] format. The data includes Wikidata items as concepts and concept schemes (read) and mappings between Wikidata and other authority files (read and write).
 
 ## Table of Contents
 
@@ -45,27 +45,23 @@ This node module provides a web service, a command line client, and a library to
 
 ## Background
 
-[Wikidata] is a large knowledge base with detailed information about all kinds
-of entities. Mapping its data model to [JSKOS] data format allows simplified
-reuse of Wikidata as authority file. The mapping includes concordances between
-Wikidata and identifiers from other databases.
+[Wikidata] is a large knowledge base with detailed information about all kinds of entities. Mapping its data model to [JSKOS] data format allows simplified reuse of Wikidata as authority file. This implementation is used in the [Cocoda web application](https://coli-conc.gbv.de/cocoda/) but it can also be used independently.
 
-**See Also:**
+The mapping between Wikidata and JSKOS format includes:
 
-* <https://coli-conc.gbv.de/>
-* <https://github.com/maxlath/wikidata-sdk>
-* <https://tools.wmflabs.org/hub/>
+* Wikidata items expressed as authority records ([JSKOS Concepts](https://gbv.github.io/jskos/jskos.html#concept))
+* Selected Wikidata items covering information about authority files ([JSKOS Concept Schemes](https://gbv.github.io/jskos/jskos.html#concept-schemes))
+* Selected Wikidata statements linking Wikidata to other authority files ([JSKOS Mappings](https://gbv.github.io/jskos/jskos.html#concept-mappings))
+
+In addition a search service is provided for selecting a Wikidata item with typeahead.
 
 ## Install
 
-### Clone and Install
+### Clone and Install 
 
 ```sh
-# clone the repository
 git clone https://github.com/gbv/wikidata-jskos.git
 cd wikidata-jskos
-
-# install dependencies
 npm install
 ```
 
@@ -80,6 +76,7 @@ npm link
 You can customize the application settings via a configuration file, e.g. by providing a generic `config.json` file and/or a more specific `config.{env}.json` file (where `{env}` is the environment like `development` or `production`). The latter will have precendent over the former, and all missing keys will be defaulted with values from `config.default.json`.
 
 Please consult `config.default.json` for possible configuration options. Some notes:
+
 - To use a custom Wikibase instance, you can set the subkeys of the `wikibase` property. Both `instance` and `sparqlEnpoint` are necessary. By default, Wikidata is used.
 - wikidata-jskos supports saving, editing, and deleting mappings in Wikidata. To enable this, you will need to provide `auth.algorithm` and `auth.key` (algorithm and key to decode the JWT), as well as `oauth.consumer_key` and `oauth.consumer_secret` (for your registered OAuth consumer).
 - Changes to `concepts` and `mappings` will not change actual functionality. These keys are only provided so that clients know what kind of functionality is available.
@@ -104,11 +101,12 @@ pm2 start ecosystem.config.json
 
 ## Web Service
 
-An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The
-service provides the following endpoints, aligned with [JSKOS Server].
+An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The service provides the following endpoints, aligned with [JSKOS Server].
 
 ### Authentication
+
 The following endpoints require an authenticated user:
+
 - [POST /mappings](#post-mappings)
 - [PUT /mappings/:_id](#put-mappings_id)
 - [DELETE /mappings/:_id](#delete-mappings_id)
@@ -260,6 +258,7 @@ Returns a specific mapping for a Wikidata claim/statement.
   ```
 
 ### POST /mappings
+
 Saves a mapping in Wikidata. Requires [authentication](#authentication).
 
 Note that if an existing mapping in Wikidata is found with the exact same members, that mapping will be overwritten by this request.
@@ -269,6 +268,7 @@ Note that if an existing mapping in Wikidata is found with the exact same member
   JSKOS Mapping object as it was saved in Wikidata.
 
 ### PUT /mappings/:_id
+
 Overwrites a mapping in Wikidata. Requires [authentication](#authentication).
 
 * **Success Reponse**
@@ -276,6 +276,7 @@ Overwrites a mapping in Wikidata. Requires [authentication](#authentication).
   JSKOS Mapping object as it was saved in Wikidata.
 
 ### DELETE /mappings/:_id
+
 Deletes a mapping from Wikidata. Requires [authentication](#authentication).
 
 * **Success Reponse**
