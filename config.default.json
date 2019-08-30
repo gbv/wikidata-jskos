@@ -9,32 +9,10 @@
   "port": 2013,
   "auth": {
     "algorithm": "HS256",
-    "key": null,
-    "postAuthRequired": true,
-    "allowCrossUserEditing": true
+    "key": null
   },
   "oauth": {
     "consumer_key": null,
     "consumer_secret": null
-  },
-  "concepts": {
-    "read": {
-      "auth": false
-    }
-  },
-  "mappings": {
-    "read": {
-      "auth": false
-    },
-    "fromSchemeWhitelist": [
-      {
-        "uri": "http://bartoc.org/en/node/1940"
-      }
-    ],
-    "toSchemeWhitelist": [],
-    "anonymous": true,
-    "cardinality": "1-to-1"
-  },
-  "identities": null,
-  "identityProviders": ["wikidata"]
+  }
 }

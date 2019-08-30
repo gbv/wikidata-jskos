@@ -162,7 +162,7 @@ loadMappingSchemes({ language: "en", maxAge: 0 })
     // status endpoint
     app.get("/status", (req, res) => {
       let status = {
-        config: _.omit(config, ["verbosity", "port", "mongo", "oauth"])
+        config: _.omit(config, ["verbosity", "port", "mongo", "oauth", "wikibase"])
       }
       let baseUrl = status.config.baseUrl
       if (status.config.concepts) {

@@ -40,10 +40,35 @@ if (!config.wikibase.api) {
   config.wikibase.api = `${config.wikibase.instance}/w/api.php`
 }
 
+// Set capabilities for clients
+// JSKOS API version from package.json
+config.version = require("./package.json")["jskos-api"]
+// Concepts (read only)
+config.concepts = {
+  read: {
+    auth: false
+  }
+}
+// Mappings (read only by default)
+config.mappings = {
+  read: {
+    auth: false
+  },
+  fromSchemeWhitelist: [
+    {
+      uri: "http://bartoc.org/en/node/1940"
+    }
+  ],
+  toSchemeWhitelist: [],
+  anonymous: true,
+  cardinality: "1-to-1"
+}
+// Identity requirements
+config.identities = null
+config.identityProviders = ["wikidata"]
+
 // Set auth capabilities if possible (config.auth.key, config.oauth.consumer_key, and config.oauth.consumer_secret are necessary)
 if (config.auth.key && config.oauth.consumer_key && config.oauth.consumer_secret) {
-  config.auth.canSaveMappings = true
-  config.auth.canRemoveMappings = true
   config.mappings.create = {
     auth: true,
     identityProviders: config.identityProviders,
