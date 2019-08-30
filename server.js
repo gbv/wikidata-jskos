@@ -126,6 +126,7 @@ const addPaginationHeaders = (req, res, data) => {
 const endpoints = {
   "/suggest": "suggestSearch",
   "/concept": "getConcepts",
+  "/data": "getConcepts",
   "/mappings": "getMappings",
   "/mappings/voc": "promiseSchemes",
 }
@@ -167,7 +168,7 @@ loadMappingSchemes({ language: "en", maxAge: 0 })
       let baseUrl = status.config.baseUrl
       if (status.config.concepts) {
         // Add endpoints related to concepts
-        status.data = `${baseUrl}concept`
+        status.data = `${baseUrl}data`
         status.suggest = `${baseUrl}suggest?search={searchTerms}`
       }
       if (status.config.mappings) {
