@@ -1,4 +1,4 @@
-const should = require("should")
+const should = require("chai").should()
 
 const { ConceptScheme, WikidataJSKOSService } = require("../lib/wikidata-wrapper")
 const schemes = require("./schemes.json").map(s => new ConceptScheme(s))
@@ -61,11 +61,11 @@ describe("mapMapping", () => {
   }
 
   it("converts JSKOS mapping to Wikidata JSON", () => {
-    should(service.mapMapping(jskosMapping)).deepEqual(wikidataClaim)
+    service.mapMapping(jskosMapping).should.deep.equal(wikidataClaim)
   })
 
   it("converts JSKOS mapping to simplified Wikidata JSON", () => {
-    should(service.mapMapping(jskosMapping, { simplify: true })).deepEqual(simplified)
+    service.mapMapping(jskosMapping, { simplify: true }).should.deep.equal(simplified)
   })
 
   it("converts mapping types to qualifiers", () => {
@@ -85,13 +85,13 @@ describe("mapMapping", () => {
       } ]
     }
 
-    should(service.mapMapping(jskosMapping)).deepEqual(wikidataClaim)
+    service.mapMapping(jskosMapping).should.deep.equal(wikidataClaim)
   })
 
   it("converts mapping types to qualifiers (simplified)", () => {
     simplified.claims.P227.qualifiers = {
       P4390: "Q39893184"
     }
-    should(service.mapMapping(jskosMapping, { simplify: true })).deepEqual(simplified)
+    service.mapMapping(jskosMapping, { simplify: true }).should.deep.equal(simplified)
   })
 })

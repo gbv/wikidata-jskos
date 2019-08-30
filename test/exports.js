@@ -1,4 +1,4 @@
-const should = require("should")
+const should = require("chai").should()
 const wds = require("../lib/wikidata-wrapper")
 
 describe("wikidata-wrapper exports", () => {
@@ -13,19 +13,19 @@ describe("wikidata-wrapper exports", () => {
     "Entity"
   ].forEach(what => {
     it(`map${what}`, () => {
-      should(wds[`map${what}`]).be.Function()
+      wds[`map${what}`].should.be.a("function")
     })
     it(`mapSimple${what}`, () => {
-      should(wds[`mapSimple${what}`]).be.Function()
+      wds[`mapSimple${what}`].should.be.a("function")
     })
   })
 
   it("entityTypes", () => {
-    should(wds.entityTypes).be.Object()
+    wds.entityTypes.should.be.a("object")
   })
 
   it("mappingTypes", () => {
-    should(wds.mappingTypes).be.Object()
-    should(wds.mappingTypes.Q39893184).equal("http://www.w3.org/2004/02/skos/core#closeMatch")
+    wds.mappingTypes.should.be.a("object")
+    wds.mappingTypes.Q39893184.should.equal("http://www.w3.org/2004/02/skos/core#closeMatch")
   })
 })

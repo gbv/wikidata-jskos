@@ -57,12 +57,13 @@
   "author": "Jakob Voß",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^5.16.0",
     "lint-staged": "^7.1.2",
     "marked": "^0.7.0",
     "mocha": "^5.2.0",
-    "pre-commit": "^1.2.2",
-    "should": "^13.2.1"
+    "pre-commit": "^1.2.2"
   },
   "dependencies": {
     "chalk": "^1.1.3",
