@@ -59,11 +59,12 @@ In addition a search service is provided for selecting a Wikidata item with type
 Editing Wikidata mapping statements to other authority files requires [authentification](#authentification) via OAuth. The following authority files have been tested succesfully:
 
 * Basisklassifikation (BK)
+* Regensburg Classification (RVK)
 * Integrated Authority File (GND)
 * Nomisma
 * Iconclass
 
-Other systems (not including RVK and DDC) may also work but they have not been converted to JSKOS yet, so they are not provided for browsing in Cocoda.
+Other systems (not including DDC) may also work but they have not been converted to JSKOS yet, so they are not provided for browsing in Cocoda.
 
 ## Install
 
