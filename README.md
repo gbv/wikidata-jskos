@@ -20,6 +20,7 @@ This node module provides [a web service](#web-service), a [command line client]
   - [Deployment](#deployment)
 - [Web Service](#web-service)
   - [Authentication](#authentication)
+  - [GET /status](#get-status)
   - [GET /mappings](#get-mappings)
   - [GET /mappings/voc](#get-mappingsvoc)
   - [GET /mappings/:_id](#get-mappings_id)
@@ -55,9 +56,18 @@ The mapping between Wikidata and JSKOS format includes:
 
 In addition a search service is provided for selecting a Wikidata item with typeahead.
 
+Editing Wikidata mapping statements to other authority files requires [authentification](#authentification) via OAuth. The following authority files have been tested succesfully:
+
+* Basisklassifikation (BK)
+* Integrated Authority File (GND)
+* Nomisma
+* Iconclass
+
+Other systems (not including RVK and DDC) may also work but they have not been converted to JSKOS yet, so they are not provided for browsing in Cocoda.
+
 ## Install
 
-### Clone and Install 
+### Clone and Install
 
 ```sh
 git clone https://github.com/gbv/wikidata-jskos.git
@@ -101,7 +111,7 @@ pm2 start ecosystem.config.json
 
 ## Web Service
 
-An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The service provides the following endpoints, aligned with [JSKOS Server].
+An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The service provides selected endpoints of [JSKOS API](https://github.com/gbv/jskos-server#api).
 
 ### Authentication
 
@@ -130,6 +140,27 @@ Authentication works via a JWT (JSON Web Token). The JWT has to be provided as a
 
 There are more properties in the JWT, but those are not used by wikidata-jskos. Note that the JWT needs to be signed with the respective private key for the public key provided in the [configuration](#configuration). Also, the OAuth user token and secret need to come from the same OAuth consumer provided in the config.
 
+### GET /status
+
+Returns a JSKOS API status object. See [JSKOS Server] for details.
+
+### GET /concept
+
+Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
+
+* **URL Params**
+
+  `uri=[uri]` URIs for concepts separated by `|`.
+
+  `language` or `languages`: comma separated list of language codes.
+
+* **Success Response**
+
+  JSON array of [JSKOS Concepts]
+
+Only some Wikidata properties are mapped to JSKOS fields.  The result also
+contains `broader` links determined by an additional SPARQL request.
+
 ### GET /mappings
 
 Look up Wikidata mapping statements as [JSKOS Concept Mappings] between
@@ -156,7 +187,7 @@ parameter `to`). At least one of both parameters must be given.
 
   `offset=[number]` start number of mappings to return (not fully implemented)
 
-Concept Schemes are identified by BARTOC IDs (e.g. <http://bartoc.org/en/node/430> or just `430`).
+Concept Schemes are identified by BARTOC IDs (e.g. <http://bartoc.org/en/node/430>`).
 
 * **Success Response**
 
@@ -194,6 +225,7 @@ expression).
   JSON array of [JSKOS Concept Schemes]
 
 ### GET /mappings/:_id
+
 Returns a specific mapping for a Wikidata claim/statement.
 
 * **Success Response**
@@ -283,20 +315,6 @@ Deletes a mapping from Wikidata. Requires [authentication](#authentication).
 
   Status 204, no content.
 
-### GET /concept
-
-Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
-
-* **URL Params**
-
-  `uri=[uri]` URIs for concepts separated by `|`.
-
-  `language` or `languages`: comma separated list of language codes.
-
-* **Success Response**
-
-  JSON array of [JSKOS Concepts]
-
 ### GET /suggest
 
 OpenSearch Suggest endpoint for typeahead search.
@@ -309,7 +327,7 @@ OpenSearch Suggest endpoint for typeahead search.
 
 ## Command line tool
 
-The command line client `wdjskos` provides the same commands as accessible via
+The command line client `wdjskos` provides roughly the same commands as accessible via
 [the web service](#web-service).
 
 Mapping schemes are cached in the caching directory of [wikidata-cli].
@@ -317,6 +335,8 @@ Mapping schemes are cached in the caching directory of [wikidata-cli].
 ### wdjskos concept
 
 Look up Wikidata items as [JSKOS Concepts].
+
+    wdjskos concept Q42
 
 ### wdjskos mappings
 
