@@ -170,9 +170,9 @@ parameter `to`). At least one of both parameters must be given.
 
 * **URL Params**
 
-  `from=[uri|notation]` specify the source URI or notation
+  `from=[uriOrNotation1|uriOrNotation2|...]` specify the source URI or notation (multiple URIs/notations separated by `|`)
 
-  `to=[uri|notation]` specify the target URI or notation
+  `to=[uriOrNotation1|uriOrNotation2|...]` specify the target URI or notation (multiple URIs/notations separated by `|`)
 
   `fromScheme=[uri|notation]` only show mappings from this concept scheme (URI or notation)
 
