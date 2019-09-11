@@ -15,5 +15,5 @@ deploy:
     tags: true
     branch: master
     skip_cleanup: true
-    node: 6
+    node: 8
     repo: gbv/wikidata-jskos
