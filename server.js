@@ -7,7 +7,7 @@ const app = express()
 app.set("json spaces", 2)
 const { WikidataJSKOSService } = require("./lib/wikidata-wrapper")
 const { loadMappingSchemes } = require("./lib/mapping-schemes")
-const { addContext } = require("jskos-tools")
+const { addContext, addMappingIdentifiers } = require("jskos-tools")
 const path = require("path")
 
 if (config.auth.key && config.oauth.consumer_key && config.oauth.consumer_secret) {
@@ -131,7 +131,18 @@ const endpoints = {
   "/mappings/voc": "promiseSchemes",
 }
 
+function rewriteMappingUri(mapping) {
+  const { uri } = mapping
+  if (uri.startsWith("http://www.wikidata.org/entity/statement/")) {
+    mapping.uri = `${config.baseUrl}mappings/${uri.substring(41)}`
+    mapping.identifier = [uri]
+    mapping = addMappingIdentifiers(mapping)
+  }
+  return mapping
+}
+
 // load schemes
+<<<<<<< HEAD
 const schemes = loadMappingSchemes()
 
 // initialize service
@@ -155,11 +166,40 @@ for (let path in endpoints) {
           addPaginationHeaders(req, res, jskos)
         }
         res.json(jskos)
+=======
+loadMappingSchemes({ language: "en", maxAge: 0 })
+  .then(schemes => {
+    // initialize service
+    const service = new WikidataJSKOSService(schemes)
+    config.log(`loaded ${schemes.length} mapping schemes`)
+
+    // enable endpoints
+    for (let path in endpoints) {
+      app.get(path, (req, res) => {
+        service[endpoints[path]](req.query)
+          .then(jskos => path === "/mappings" ? jskos.map(rewriteMappingUri) : jskos)
+          .then(addContext)
+          .then(jskos => {
+            if (_.isArray(jskos)) {
+              // Split result if necessary
+              if (jskos.totalCount == null || jskos.length > jskos.totalCount) {
+                let totalCount = jskos.totalCount || jskos.length
+                jskos = jskos.slice(req.query.offset, req.query.offset + req.query.limit)
+                jskos.totalCount = totalCount
+              }
+              // Add pagination headers
+              addPaginationHeaders(req, res, jskos)
+            }
+            res.json(jskos)
+          })
+          .catch(errorHandler(res))
+>>>>>>> 6d3fb76... Move local mapping URI handling to server
       })
       .catch(errorHandler(res))
   })
 }
 
+<<<<<<< HEAD
 // status endpoint
 app.get("/status", (req, res) => {
   let status = {
@@ -189,6 +229,43 @@ app.get("/mappings/:_id", (req, res) => {
 })
 
 if (auth) {
+=======
+    // get single mapping
+    app.get("/mappings/:_id", (req, res) => {
+      service.getMapping(req.params._id)
+        .then(addContext)
+        .then(rewriteMappingUri)
+        .then(jskos => res.json(jskos))
+        .catch(errorHandler(res))
+    })
+
+    if (auth) {
+
+      // save a new mapping
+      app.post("/mappings", auth, (req, res) => {
+        service.saveMapping({
+          user: req.user,
+          body: req.body,
+        })
+          .then(addContext)
+          .then(rewriteMappingUri)
+          .then(jskos => res.status(201).json(jskos))
+          .catch(errorHandler(res))
+      })
+
+      // edit mapping
+      app.put("/mappings/:_id", auth, (req, res) => {
+        service.saveMapping({
+          _id: req.params._id,
+          user: req.user,
+          body: req.body,
+        })
+          .then(addContext)
+          .then(rewriteMappingUri)
+          .then(jskos => res.json(jskos))
+          .catch(errorHandler(res))
+      })
+>>>>>>> 6d3fb76... Move local mapping URI handling to server
 
   // save a new mapping
   app.post("/mappings", auth, (req, res) => {
