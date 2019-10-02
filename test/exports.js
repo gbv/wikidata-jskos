@@ -1,4 +1,4 @@
-const should = require("chai").should()
+require("chai").should()
 const wds = require("../lib/wikidata-wrapper")
 
 describe("wikidata-wrapper exports", () => {

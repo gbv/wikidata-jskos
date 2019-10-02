@@ -1,4 +1,4 @@
-const should = require("chai").should()
+require("chai").should()
 
 const wdk = require("../lib/utils/wdk")
 const wds = require("../lib/wikidata-wrapper")

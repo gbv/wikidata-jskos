@@ -1,4 +1,4 @@
-const should = require("chai").should()
+require("chai").should()
 
 const { ConceptScheme, WikidataJSKOSService } = require("../lib/wikidata-wrapper")
 const schemes = require("./schemes.json").map(s => new ConceptScheme(s))
