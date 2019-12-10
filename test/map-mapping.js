@@ -1,8 +1,8 @@
 require("chai").should()
 
-const { ConceptScheme, WikidataJSKOSService } = require("../lib/wikidata-wrapper")
-const schemes = require("./schemes.json").map(s => new ConceptScheme(s))
-const service = new WikidataJSKOSService(schemes)
+const { WikidataConceptScheme, WikidataService } = require("../lib/wikidata-wrapper")
+const schemes = require("./schemes.json").map(s => new WikidataConceptScheme(s))
+const service = new WikidataService(schemes)
 
 describe("mapMapping", () => {
 

@@ -2,7 +2,7 @@ require("chai").should()
 
 const wdk = require("../lib/utils/wdk")
 const wds = require("../lib/wikidata-wrapper")
-const { ConceptSchemeSet } = wds
+const { WikidataConceptSchemeSet } = wds
 const Q42 = require("./Q42.json")
 const Q42concept = require("./Q42.jskos.json")
 let Q42mappings = require("./Q42.mappings.json")
@@ -27,7 +27,7 @@ describe("mapEntity", () => {
   it("mapMappingClaims", done => {
     wds.mapMappingClaims(Q42.claims).should.deep.equal([])
 
-    const schemes = new ConceptSchemeSet(require("./schemes.json"))
+    const schemes = new WikidataConceptSchemeSet(require("./schemes.json"))
     wds.mapMappingClaims(Q42.claims, { schemes }).should.deep.equal(Q42mappings)
     done()
   })

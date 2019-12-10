@@ -5,7 +5,7 @@ const { readFileSync } = require("fs")
 const { version } = require("../package.json")
 const { red } = require("chalk")
 const wdk = require("../lib/utils/wdk")
-const { WikidataJSKOSService } = require("../lib/wikidata-wrapper")
+const { WikidataService } = require("../lib/wikidata-wrapper")
 const ndjson = require("../lib/ndjson")
 const suggestSearch = require("../lib/suggest")
 const { loadMappingSchemes, updateMappingSchemes } = require("../lib/mapping-schemes")
@@ -37,9 +37,10 @@ function searchCommand (query) {
 
 function conceptCommand (ids) {
   const language = program.lang || "en"
-  const service = new WikidataJSKOSService(schemes)
 
-  service.getConcepts({ uri: ids.join("|"), language })
+  getMappingSchemes()
+    .then(schemes => new WikidataService(schemes))
+    .then(service => service.getConcepts({ uri: ids.join("|"), language }))
     .then(ndjson.write)
 }
 
@@ -64,7 +65,7 @@ function mappingsCommand (from, to) {
   let languages = program.lang
   let toScheme = (from || direction !== "forward") ? program.scheme : null
   getMappingSchemes()
-    .then(schemes => new WikidataJSKOSService(schemes))
+    .then(schemes => new WikidataService(schemes))
     .then(service => service.getMappings({ from, to, toScheme, direction, languages }))
     .then(ndjson.write)
     .catch(e => error(e.message))
@@ -74,7 +75,7 @@ function mapMappingCommand(mapping) {
   const { simplify } = program
 
   return getMappingSchemes()
-    .then(schemes => new WikidataJSKOSService(schemes))
+    .then(schemes => new WikidataService(schemes))
     .then(service => {
       try {
         return service.mapMapping(mapping, { simplify })
