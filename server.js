@@ -133,13 +133,25 @@ function rewriteMappingUri(mapping) {
   return mapping
 }
 
-const endpoints = {
-  "/suggest": "suggestSearch",
-  "/concept": "getConcepts",
-  "/data": "getConcepts",
-  "/mappings": "getMappings",
-  "/mappings/voc": "promiseSchemes",
+
+function paginate(jskos, req, res) {
+  if (_.isArray(jskos)) {
+    // Split result if necessary
+    if (jskos.totalCount == null || jskos.length > jskos.totalCount) {
+      let totalCount = jskos.totalCount || jskos.length
+      jskos = jskos.slice(req.query.offset, req.query.offset + req.query.limit)
+      jskos.totalCount = totalCount
+    }
+    // Add pagination headers
+    addPaginationHeaders(req, res, jskos)
+  }
+
+  res.json(jskos)
+
+  return jskos
 }
+
+const getConcepts = require("./lib/queries/get-concepts")
 
 // load schemes
 const schemes = loadMappingSchemes()
@@ -149,27 +161,39 @@ const service = new WikidataService(schemes)
 config.log(`loaded ${schemes.length} mapping schemes`)
 
 // enable endpoints
-for (let path in endpoints) {
-  app.get(path, (req, res) => {
-    service[endpoints[path]](req.query)
-      .then(jskos => path === "/mappings" ? jskos.map(rewriteMappingUri) : jskos)
-      .then(addContext)
-      .then(jskos => {
-        if (_.isArray(jskos)) {
-          // Split result if necessary
-          if (jskos.totalCount == null || jskos.length > jskos.totalCount) {
-            let totalCount = jskos.totalCount || jskos.length
-            jskos = jskos.slice(req.query.offset, req.query.offset + req.query.limit)
-            jskos.totalCount = totalCount
-          }
-          // Add pagination headers
-          addPaginationHeaders(req, res, jskos)
-        }
-        res.json(jskos)
-      })
-      .catch(errorHandler(res))
-  })
+const conceptHandler = (req, res) => {
+  getConcepts(req.query)
+    .then(addContext)
+    .then(jskos => paginate(jskos, req, res))
+    .catch(errorHandler(res))
 }
+
+app.get("/concept", conceptHandler)
+app.get("/data", conceptHandler)
+
+app.get("/mappings", (req, res) => {
+  service.getMappings(req.query)
+    .then(jskos => jskos.map(rewriteMappingUri))
+    .then(addContext)
+    .then(jskos => paginate(jskos, req, res))
+    .catch(errorHandler(res))
+})
+
+app.get("/suggest", (req, res) => {
+  const suggest = require("./lib/suggest")
+  suggest(req.query)
+    .then(result => res.json(result))
+    .catch(errorHandler(res))
+})
+
+app.get("/mappings/voc", (req, res) => {
+  const schemes = Promise.resolve(service.getSchemes())
+  schemes
+    .then(addContext)
+    .then(jskos => paginate(jskos, req, res))
+    .catch(errorHandler(res))
+})
+
 
 // status endpoint
 app.get("/status", (req, res) => {

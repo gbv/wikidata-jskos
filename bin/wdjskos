@@ -7,9 +7,9 @@ const { red } = require("chalk")
 const wdk = require("../lib/utils/wdk")
 const { WikidataService } = require("../lib/wikidata-wrapper")
 const ndjson = require("../lib/ndjson")
-const suggestSearch = require("../lib/suggest")
+const suggest = require("../lib/suggest")
 const { loadMappingSchemes, updateMappingSchemes } = require("../lib/mapping-schemes")
-
+const getConcepts = require("../lib/queries/get-concepts")
 
 program
   .version(version)
@@ -29,7 +29,7 @@ const error = (message, showHelp) => {
 }
 
 function searchCommand (query) {
-  return suggestSearch({search: query.join(" ")})
+  return suggest({search: query.join(" ")})
     .then(suggest => {
       console.log(suggest)
     })
@@ -40,7 +40,7 @@ function conceptCommand (ids) {
 
   getMappingSchemes()
     .then(schemes => new WikidataService(schemes))
-    .then(service => service.getConcepts({ uri: ids.join("|"), language }))
+    .then(service => getConcepts({ uri: ids.join("|"), language }))
     .then(ndjson.write)
 }
 
