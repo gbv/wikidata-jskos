@@ -452,7 +452,7 @@ For debugging set environment variable `DEBUG`, also possible via file `.env`:
 
     DEBUG=wds:*
 
-See `lib/utils/debug.js` for details.
+See `lib/debug.js` for details.
 
 ## License
 

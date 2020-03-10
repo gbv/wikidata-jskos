@@ -1,6 +1,6 @@
 require("chai").should()
 
-const wdk = require("../lib/utils/wdk")
+const wdk = require("../lib/wdk")
 const wds = require("../lib/wikidata-wrapper")
 const { WikidataConceptSchemeSet } = wds
 const Q42 = require("./Q42.json")
