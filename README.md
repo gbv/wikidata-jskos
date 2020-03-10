@@ -110,6 +110,12 @@ For deployment there is a config file to use with [pm2](http://pm2.keymetrics.io
 pm2 start ecosystem.config.json
 ```
 
+To update concept schemes, regularly run:
+
+```bash
+npm run update
+```
+
 ## Web Service
 
 An instance is available at <https://coli-conc.gbv.de/services/wikidata/>. The service provides selected endpoints of [JSKOS API](https://github.com/gbv/jskos-server#api).
@@ -331,7 +337,8 @@ OpenSearch Suggest endpoint for typeahead search.
 The command line client `wdjskos` provides roughly the same commands as accessible via
 [the web service](#web-service).
 
-Mapping schemes are cached in the caching directory of [wikidata-cli].
+Mapping schemes are cached in the subfolder `./cache`. To update the cache
+include option `--force` or run command `update`.
 
 ### wdjskos concept
 
@@ -355,7 +362,11 @@ respectively. Mappings can be limited to a target scheme. These are equivalent:
 
 ### wdjskos schemes
 
-Look up [JSKOS Concept Schemes] with [Wikidata properties for authority control].
+Return up [JSKOS Concept Schemes] with [Wikidata properties for authority control].
+
+### wdjskos update
+
+Look up concept schemes from Wikidata and update the cache.
 
 ### wdjskos find
 

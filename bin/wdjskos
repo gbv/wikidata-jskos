@@ -8,7 +8,8 @@ const wdk = require("../lib/utils/wdk")
 const { WikidataJSKOSService } = require("../lib/wikidata-wrapper")
 const ndjson = require("../lib/ndjson")
 const suggestSearch = require("../lib/suggest")
-const loadMappingSchemes = require("../lib/load-mapping-schemes")
+const { loadMappingSchemes, updateMappingSchemes } = require("../lib/mapping-schemes")
+
 
 program
   .version(version)
@@ -27,12 +28,6 @@ const error = (message, showHelp) => {
   process.exit(1)
 }
 
-const getMappingSchemes = () => {
-  const language = program.lang || "en"
-  const maxAge = program.force ? 0 : 7 * 24 * 3600
-  return loadMappingSchemes({ language, maxAge })
-}
-
 function searchCommand (query) {
   return suggestSearch({search: query.join(" ")})
     .then(suggest => {
@@ -42,15 +37,22 @@ function searchCommand (query) {
 
 function conceptCommand (ids) {
   const language = program.lang || "en"
-  getMappingSchemes()
-    .then(schemes => new WikidataJSKOSService(schemes))
-    .then(service => service.getConcepts({ uri: ids.join("|"), language }))
+  const service = new WikidataJSKOSService(schemes)
+
+  service.getConcepts({ uri: ids.join("|"), language })
     .then(ndjson.write)
 }
 
+async function getMappingSchemes() {
+  if (program.force) {
+    return updateMappingSchemes()
+  } else {
+    return Promise.resolve(loadMappingSchemes())
+  }
+}
+
 function schemesCommand () {
-  getMappingSchemes()
-    .then(ndjson.write)
+  getMappingSchemes().then(ndjson.write)
 }
 
 function mappingsCommand (from, to) {
@@ -70,6 +72,7 @@ function mappingsCommand (from, to) {
 
 function mapMappingCommand(mapping) {
   const { simplify } = program
+
   return getMappingSchemes()
     .then(schemes => new WikidataJSKOSService(schemes))
     .then(service => {
@@ -95,6 +98,11 @@ program
   .command("schemes").alias("s")
   .description("get mapping properties as concept schemes")
   .action(schemesCommand)
+
+program
+  .command("update").alias("u")
+  .description("update mapping properties from Wikidata")
+  .action(updateMappingSchemes)
 
 program
   .command("mappings [from] [to]").alias("m")

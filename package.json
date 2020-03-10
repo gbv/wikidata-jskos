@@ -10,6 +10,7 @@
   "scripts": {
     "start": "forever --minUptime 2000 --spinSleepTime 2000 -c 'nodemon --exitcrash' server.js",
     "server": "node server.js",
+    "update": "./bin/wdjskos update && cp cache/mapping-schemes.ndjson assets",
     "test": "mocha --timeout 30000",
     "test-watch": "mocha --watch",
     "lint": "eslint '*.js' '**/*.js'",

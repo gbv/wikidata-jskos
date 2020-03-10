@@ -1,1 +1,0 @@
-This directory contains code files from [wikidata-cli](https://github.com/maxlath/wikidata-cli) created bby Maxime Lathuilière and licensed under MIT license. The purpose of this code is to access config files and cache files at same location like wikidata-cli.
