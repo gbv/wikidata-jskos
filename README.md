@@ -450,9 +450,7 @@ See <https://github.com/gbv/wikidata-jskos>.
 
 For debugging set environment variable `DEBUG`, also possible via file `.env`:
 
-    DEBUG=wds:*
-
-See `lib/debug.js` for details.
+    DEBUG=*
 
 ## License
 
