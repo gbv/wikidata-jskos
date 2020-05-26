@@ -30,12 +30,10 @@
   ],
   "lint-staged": {
     "src/**/*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "src/*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "pre-commit": [
