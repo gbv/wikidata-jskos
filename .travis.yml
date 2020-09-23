@@ -1,7 +1,8 @@
 language: node_js
 node_js:
-- 11
-- 8
+- 14
+- 12
+- 10
 install:
 - npm install
 script:
@@ -15,5 +16,5 @@ deploy:
     tags: true
     branch: master
     skip_cleanup: true
-    node: 8
+    node: 12
     repo: gbv/wikidata-jskos
