@@ -48,4 +48,15 @@ describe("getMappings", () => {
       })
   })
 
+  it("returns no mappings when partOf is present", () => {
+    const from = "http://www.wikidata.org/entity/Q42"
+    const toScheme = "http://bartoc.org/en/node/430"
+    const partOf = "http://coli-conc.gbv.de/concordances/ddc_rvk_1000"
+
+    return service.getMappings({ from, toScheme, partOf })
+      .then(mappings => {
+        mappings.should.deep.equal([])
+      })
+  })
+
 })
