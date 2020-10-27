@@ -173,7 +173,12 @@ app.get("/data", conceptHandler)
 
 app.get("/mappings", (req, res) => {
   service.getMappings(req.query)
-    .then(jskos => jskos.map(rewriteMappingUri))
+    .then(jskos => {
+      // Preserve totalCount property
+      const rewrittenJskos = jskos.map(rewriteMappingUri)
+      rewrittenJskos.totalCount = jskos.totalCount
+      return rewrittenJskos
+    })
     .then(addContext)
     .then(jskos => paginate(jskos, req, res))
     .catch(errorHandler(res))
