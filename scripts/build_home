@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const fs = require("fs")
-const marked = require("marked")
+const { marked } = require("marked")
 const markdown = fs.readFileSync("./assets/index.md").toString()
 const base = fs.readFileSync("./assets/index.base.html").toString()
 const html = base.replace("MARKDOWN", marked(markdown))
