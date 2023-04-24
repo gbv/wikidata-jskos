@@ -1,4 +1,0 @@
-{
-  "name": "wikidata-jskos",
-  "script": "./server.js"
-}
