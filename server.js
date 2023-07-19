@@ -49,6 +49,11 @@ if (config.auth.algorithm && config.auth.key) {
 // serve static files from assets directory
 app.use(express.static(path.join(__dirname, "/assets")))
 
+// configure view engine to render EJS templates
+app.set("views", __dirname + "/views")
+app.set("view engine", "ejs")
+app.get("/", (req, res) => res.render("base", { config }))
+
 // add default JSKOS headers
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*")
@@ -168,7 +173,8 @@ const conceptHandler = (req, res) => {
     .catch(errorHandler(res))
 }
 
-app.get("/concept", conceptHandler)
+app.get("/concepts", conceptHandler)
+app.get("/concept", conceptHandler) // deprecated
 app.get("/data", conceptHandler)
 
 app.get("/mappings", (req, res) => {
@@ -184,12 +190,15 @@ app.get("/mappings", (req, res) => {
     .catch(errorHandler(res))
 })
 
-app.get("/suggest", (req, res) => {
+function suggest(req, res) {
   const suggest = require("./lib/suggest")
-  suggest(req.query)
+  return suggest(req.query)
     .then(result => res.json(result))
     .catch(errorHandler(res))
-})
+}
+app.get("/concepts/suggest", suggest)
+app.get("/concept/suggest", suggest) // deprecated
+app.get("/suggest", suggest) // deprecated
 
 app.get("/mappings/voc", (req, res) => {
   const schemes = Promise.resolve(service.getSchemes())
@@ -209,7 +218,8 @@ app.get("/status", (req, res) => {
   if (status.config.concepts) {
     // Add endpoints related to concepts
     status.data = `${baseUrl}data`
-    status.suggest = `${baseUrl}suggest?search={searchTerms}`
+    status.concepts = `${baseUrl}concepts`
+    status.suggest = `${baseUrl}concepts/suggest?search={searchTerms}`
   }
   if (status.config.mappings) {
     // Add endpoints related to mappings

@@ -1,4 +1,5 @@
 {
+  "title": "Wikidata JSKOS Service",
   "wikibase": {
     "instance": "https://www.wikidata.org",
     "sparqlEndpoint": "https://query.wikidata.org/sparql",

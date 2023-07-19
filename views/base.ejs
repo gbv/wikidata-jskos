@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= config.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+    body {
+      margin: 20px;
+    }
+    a:link, a:visited {
+      text-decoration: none;
+      color: rgb(96, 143, 219);
+    }
+    a:hover, a:active {
+      text-decoration: underline;
+    }
+    </style>
+  </head>
+  <body>
+    <h1><%= config.title %></h1>
+    <h2>Available Endpoints</h2>
+    <p>
+      This service provides a subset of JSKOS API (as implemented in <a href="https://github.com/gbv/jskos-server" target="_blank">in JSKOS-Server</a>) to access Wikibase instance <a href="<%= config.wikibase.instance %>"><%= config.wikibase.instance %></a> in
+      <a href="https://gbv.github.io/jskos/jskos.html">JSKOS format</a>.
+      See <a href="https://github.com/gbv/wikidata-jskos/">https://github.com/gbv/wikidata-jskos/</a> for source code and issue tracker.
+    </p>
+    <h3>General</h3>
+    <ul>
+      <li>
+        GET <a href="status">/status</a> - Returns a status object
+        (<a href="https://github.com/gbv/wikidata-jskos#get-status" target="_blank">documentation</a>)
+      </li>
+    </ul>
+    <h3>Concepts</h3>
+    <ul>
+      <li>
+        GET <a href="concepts">/concepts</a> - Returns detailed data for concepts
+        (<a href="https://github.com/gbv/wikidata-jskos#get-concepts" target="_blank">documentation</a>)
+        <br><em>example:</em>
+        <a href="concept?uri=http://www.wikidata.org/entity/Q42">concept?uri=http://www.wikidata.org/entity/Q42</a>
+      </li>
+      <li>
+        GET <a href="concepts">/concepts/suggest</a> - Returns concept suggestions
+        (<a href="https://github.com/gbv/wikidata-jskos#get-concepts-suggest" target="_blank">documentation</a>)
+        <br>
+        <em>example:</em>
+        <a href="concepts/suggest?search=G%C3%B6ttingen&language=de">concepts/suggest?search=Göttingen&amp;language=de</a>
+      </li>
+      </li>
+    </ul>
+    <h3>Mappings</h3>
+    <ul>
+      <li>
+        GET <a href="mappings">/mappings</a> - Returns a list of mappings
+        (<a href="https://github.com/gbv/wikidata-jskos#get-mappings" target="_blank">documentation</a>)
+        <br><em>examples:</em>
+    <ul>
+      <li><a href="mappings?from=http://www.wikidata.org/entity/Q2013">mappings?from=http://www.wikidata.org/entity/Q2013</a></li>
+      <li><a href="mappings?to=http://d-nb.info/gnd/7527800-5">mappings?to=http://d-nb.info/gnd/7527800-5</a></li>
+      <li><a href="mappings/?direction=both&mode=or&from=http://www.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3">mappings?direction=both&amp;mode=and&amp;from=http://www.wikidata.org/entity/Q42395&amp;to=http://d-nb.info/gnd/4074195-3</a></li>
+      <li><a href="mappings/?direction=both&mode=or&from=http://www.wikidata.org/entity/Q42395&to=http://d-nb.info/gnd/4074195-3">mappings?direction=both&amp;mode=or&amp;from=http://www.wikidata.org/entity/Q42395&amp;to=http://d-nb.info/gnd/4074195-3</a></li>
+      <li><a href="mappings?toScheme=http://bartoc.org/en/node/18785">mappings?toScheme=http://bartoc.org/en/node/18785</a></li>
+    </ul>
+
+      </li>
+      <li>
+        POST /mappings - Saves a mapping in Wikidata (authentication needed)
+        (<a href="https://github.com/gbv/wikidata-jskos-#post-mappings" target="_blank">documentation</a>)
+      </li>
+      <li>
+        PUT /mappings/:_id - Overwrites a mapping in Wikidata (authentication needed)
+        <a href="https://github.com/gbv/wikidata-jskos#put-mappings_id" target="_blank">documentation</a>)
+      </li>
+      <li>
+        DELETE /mappings/:_id - Deletes a mapping in Wikidata (authentication needed)
+        <a href="https://github.com/gbv/wikidata-jskos#delete-mappings_id" target="_blank">documentation</a>)
+      </li>
+      <li>
+        GET <a href="mappings/voc">/mappings/voc</a> - Returns a list of concept schemes used in mappings
+        (<a href="https://github.com/gbv/wikidata-jskos#get-mappingsvoc" target="_blank">documentation</a>)
+      </li>
+    </ul>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 {
   "name": "wikidata-jskos",
   "version": "0.3.3",
-  "jskos-api": "1.0",
+  "jskos-api": "2.0",
   "description": "Access Wikidata in JSKOS format",
   "main": "server.js",
   "bin": {
@@ -15,8 +15,7 @@
     "test-watch": "mocha --watch",
     "lint": "eslint '*.js' '**/*.js'",
     "fix": "eslint --fix '*.js' '**/*.js'",
-    "lint-staged": "lint-staged",
-    "home": "./scripts/build_home"
+    "lint-staged": "lint-staged"
   },
   "files": [
     "lib/*",
@@ -37,7 +36,6 @@
     ]
   },
   "pre-commit": [
-    "home",
     "lint-staged"
   ],
   "repository": {
@@ -60,7 +58,6 @@
     "chai-http": "^4.3.0",
     "eslint": "^8.29.0",
     "lint-staged": "^13.2.3",
-    "marked": "^4.2.4",
     "mocha": "^10.2.0",
     "pre-commit": "^1.2.2"
   },
@@ -68,6 +65,7 @@
     "chalk": "^5.3.0",
     "debug": "^4.3.4",
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "jskos-tools": "^1.0.28",
     "lodash": "^4.17.21",

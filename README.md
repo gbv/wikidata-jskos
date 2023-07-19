@@ -21,14 +21,14 @@ This node module provides [a web service](#web-service), a [command line client]
 - [Web Service](#web-service)
   - [Authentication](#authentication)
   - [GET /status](#get-status)
+  - [GET /concepts](#get-concept)
+  - [GET /concepts/suggest](#get-conceptsuggest)
   - [GET /mappings](#get-mappings)
   - [GET /mappings/voc](#get-mappingsvoc)
   - [GET /mappings/:_id](#get-mappings_id)
   - [POST /mappings](#post-mappings)
   - [PUT /mappings/:_id](#put-mappings_id)
   - [DELETE /mappings/:_id](#delete-mappings_id)
-  - [GET /concept](#get-concept)
-  - [GET /suggest](#get-suggest)
 - [Command line tool](#command-line-tool)
   - [wdjskos concept](#wdjskos-concept)
   - [wdjskos mappings](#wdjskos-mappings)
@@ -151,7 +151,7 @@ There are more properties in the JWT, but those are not used by wikidata-jskos. 
 
 Returns a JSKOS API status object. See [JSKOS Server] for details.
 
-### GET /concept
+### GET /concepts
 
 Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
 
@@ -167,6 +167,20 @@ Look up Wikidata items as [JSKOS Concepts] by their entity URI or QID.
 
 Only some Wikidata properties are mapped to JSKOS fields.  The result also
 contains `broader` links determined by an additional SPARQL request.
+
+Deprected alias at `/concept` is going to be removed.
+
+### GET /concepts/suggest
+
+OpenSearch Suggest endpoint for typeahead search.
+
+[JSKOS Concept Schemes]: https://gbv.github.io/jskos/jskos.html#concept-schemes
+[JSKOS Server]: https://github.com/gbv/jskos-server
+[JSKOS Concepts]: https://gbv.github.io/jskos/jskos.html#concept
+[JSKOS Concept Mappings]: https://gbv.github.io/jskos/jskos.html#concept-mappings
+[Wikidata properties for authority control]: http://www.wikidata.org/entity/Q18614948
+
+Deprected aliases at `/concept/suggest` and `/suggest` are going to be removed.
 
 ### GET /mappings
 
@@ -321,16 +335,6 @@ Deletes a mapping from Wikidata. Requires [authentication](#authentication).
 * **Success Reponse**
 
   Status 204, no content.
-
-### GET /suggest
-
-OpenSearch Suggest endpoint for typeahead search.
-
-[JSKOS Concept Schemes]: https://gbv.github.io/jskos/jskos.html#concept-schemes
-[JSKOS Server]: https://github.com/gbv/jskos-server
-[JSKOS Concepts]: https://gbv.github.io/jskos/jskos.html#concept
-[JSKOS Concept Mappings]: https://gbv.github.io/jskos/jskos.html#concept-mappings
-[Wikidata properties for authority control]: http://www.wikidata.org/entity/Q18614948
 
 ## Command line tool
 
