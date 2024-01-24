@@ -1,7 +1,10 @@
 # Wikidata JSKOS
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/gbv/wikidata-jskos.svg?branch=master)](https://travis-ci.org/gbv/wikidata-jskos)
+[![GitHub release](https://img.shields.io/github/release/gbv/wikidata-jskos.svg)](https://github.com/gbv/wikidata-jskos/releases/latest)
+[![API Status](https://coli-conc-status.fly.dev/api/badge/19/status?label=API)](https://coli-conc.gbv.de/services/wikidata/)
+[![License](https://img.shields.io/github/license/gbv/wikidata-jskos.svg)](./LICENSE.md)
+[![Docker](https://img.shields.io/badge/Docker-ghcr.io%2Fgbv%2Fwikidata--jskos-informational)](./docker/README.md)
+[![Test](https://github.com/gbv/wikidata-jskos/actions/workflows/test.yml/badge.svg)](https://github.com/gbv/wikidata-jskos/actions/workflows/test.yml)
 [![npm version](http://img.shields.io/npm/v/wikidata-jskos.svg?style=flat)](https://www.npmjs.org/package/wikidata-jskos)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
