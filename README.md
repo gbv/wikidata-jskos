@@ -100,12 +100,13 @@ You can customize the application settings via a configuration file, e.g. by pro
 
 All configuration options can also be set via environment variables (`.env` when running via Node.js or using `environment` or `env_file` in Docker Compose).
 
-Please consult the table below for possible configuration options. Some notes:
+Some notes:
 
 - To use a custom Wikibase instance, you can set the subkeys of the `wikibase` property. Both `instance` and `sparqlEnpoint` are necessary. By default, Wikidata is used.
 - wikidata-jskos supports saving, editing, and deleting mappings in Wikidata. To enable this, you will need to provide `auth.algorithm` and `auth.key` (algorithm and key to decode the JWT, usually coming from [login-server]), as well as `oauth.consumer_key` and `oauth.consumer_secret` (for your registered OAuth consumer).
 - `auth.key`/`AUTH_KEY` contain line breaks. In JSON, these can simply be set as `\n`. When using `.env` or `env_file`, the whole key needs to be double-quoted (`"-----BEGIN PUBLIC KEY-----\n..."`). To set `AUTH_KEY` directly in `docker-compose.yml` via `environment`, please look at the included [`docker-compose.yml`](./docker/docker-compose.yml) file or refer to [this StackOverflow answer](https://stackoverflow.com/a/53198865).
 - Please provide a `baseUrl` when used in production. If no baseUrl is provided, `http://localhost:${port}/` will be used.
+- List of all available configuration options:
 
 | `config.json` key       | environment variable | default value                       |
 | ----------------------- | -------------------- | ----------------------------------- |
@@ -136,6 +137,7 @@ npm run start
 For deployment there is a config file to use with [pm2](http://pm2.keymetrics.io/):
 
 ```bash
+cp ecosystem.example.json ecosystem.config.json
 pm2 start ecosystem.config.json
 ```
 
