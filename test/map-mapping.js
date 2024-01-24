@@ -14,10 +14,10 @@ describe("mapMapping", () => {
           uri: "http://www.wikidata.org/entity/Q1206262",
           notation: [ "Q1206262" ],
           inScheme: [
-            { uri: "http://bartoc.org/en/node/1940" }
-          ]
-        }
-      ]
+            { uri: "http://bartoc.org/en/node/1940" },
+          ],
+        },
+      ],
     },
     to: {
       memberSet: [
@@ -25,11 +25,11 @@ describe("mapMapping", () => {
           uri: "http://d-nb.info/gnd/7527800-5",
           notation: [ "7527800-5" ],
           inScheme: [
-            { uri: "http://bartoc.org/en/node/430" }
-          ]
-        }
-      ]
-    }
+            { uri: "http://bartoc.org/en/node/430" },
+          ],
+        },
+      ],
+    },
   }
 
   const wikidataClaim = {
@@ -43,11 +43,11 @@ describe("mapMapping", () => {
           property: "P227",
           datavalue: {
             value: "7527800-5",
-            type: "string"
+            type: "string",
           },
-        }
-      } ]
-    }
+        },
+      } ],
+    },
   }
 
   const simplified = {
@@ -56,8 +56,8 @@ describe("mapMapping", () => {
       P227: {
         value: "7527800-5",
         id: "q1206262$4365f346-48c8-bdd0-bdad-0cf07ba19134",
-      }
-    }
+      },
+    },
   }
 
   it("converts JSKOS mapping to Wikidata JSON", () => {
@@ -78,11 +78,11 @@ describe("mapMapping", () => {
           type: "wikibase-entityid",
           value: {
             "entity-type": "item",
-            "id": "Q39893184",
-            "numeric-id": 39893184
-          }
-        }
-      } ]
+            id: "Q39893184",
+            "numeric-id": 39893184,
+          },
+        },
+      } ],
     }
 
     service.mapMapping(jskosMapping).should.deep.equal(wikidataClaim)
@@ -90,7 +90,7 @@ describe("mapMapping", () => {
 
   it("converts mapping types to qualifiers (simplified)", () => {
     simplified.claims.P227.qualifiers = {
-      P4390: "Q39893184"
+      P4390: "Q39893184",
     }
     service.mapMapping(jskosMapping, { simplify: true }).should.deep.equal(simplified)
   })

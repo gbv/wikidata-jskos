@@ -65,22 +65,22 @@ config.serverVersion = require("./package.json").version
 // Concepts (read only)
 config.concepts = {
   read: {
-    auth: false
-  }
+    auth: false,
+  },
 }
 // Mappings (read only by default)
 config.mappings = {
   read: {
-    auth: false
+    auth: false,
   },
   fromSchemeWhitelist: [
     {
-      uri: "http://bartoc.org/en/node/1940"
-    }
+      uri: "http://bartoc.org/en/node/1940",
+    },
   ],
   toSchemeWhitelist: [],
   anonymous: true,
-  cardinality: "1-to-1"
+  cardinality: "1-to-1",
 }
 // Identity requirements
 config.identities = null

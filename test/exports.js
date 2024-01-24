@@ -10,7 +10,7 @@ describe("wikidata-wrapper exports", () => {
     "Claims",
     "Sitelinks",
     "Info",
-    "Entity"
+    "Entity",
   ].forEach(what => {
     it(`map${what}`, () => {
       wds[`map${what}`].should.be.a("function")

@@ -8,7 +8,9 @@ describe("getMappings", () => {
   it("fails on missing parameters", () => {
     return service.getMappings({})
       .then(() => should.fail())
-      .catch(err => { err.should.be.ok })
+      .catch(err => {
+        err.should.be.ok 
+      })
   })
 
   it("returns no mappings from unknown URI", () => {

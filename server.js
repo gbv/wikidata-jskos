@@ -32,7 +32,7 @@ if (config.auth.algorithm && config.auth.key) {
   var opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.auth.key,
-    algorithms: [config.auth.algorithm]
+    algorithms: [config.auth.algorithm],
   }
   try {
     passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
@@ -212,7 +212,7 @@ app.get("/mappings/voc", (req, res) => {
 // status endpoint
 app.get("/status", (req, res) => {
   let status = {
-    config: _.omit(config, ["verbosity", "port", "mongo", "oauth", "wikibase"])
+    config: _.omit(config, ["verbosity", "port", "mongo", "oauth", "wikibase"]),
   }
   let baseUrl = status.config.baseUrl
   if (status.config.concepts) {
