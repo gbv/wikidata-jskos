@@ -1,9 +1,32 @@
 const _ = require("lodash")
+require("dotenv").config()
 
 // Load default config
 const configDefault = require("./config.default.json")
-// Current environment
-const env = process.env.NODE_ENV || "development"
+
+// Load configuration from environment variables
+const configEnvVariables = {
+  env: process.env.NODE_ENV || "development",
+  title: process.env.TITLE,
+  wikibase: {
+    instance: process.env.WIKIBASE_INSTANCE,
+    sparqlEndpoint: process.env.WIKIBASE_SPARQL,
+    api: process.env.WIKIBASE_API,
+  },
+  verbosity: process.env.VERBOSITY,
+  baseUrl: process.env.BASE_URL,
+  port: process.env.PORT,
+  auth: {
+    algorithm: process.env.AUTH_ALGORITHM,
+    key: process.env.AUTH_KEY,
+  },
+  oauth: {
+    consumer_key: process.env.OAUTH_KEY,
+    consumer_secret: process.env.OAUTH_SECRET,
+  },
+}
+const env = configEnvVariables.env
+
 // Load environment config
 let configEnv
 try {
@@ -11,6 +34,7 @@ try {
 } catch(error) {
   configEnv = {}
 }
+
 // Load user config
 let configUser
 try {
@@ -19,13 +43,7 @@ try {
   configUser = {}
 }
 
-// Backwards compatibility with env variable for port
-require("dotenv").config()
-if (!configUser.port && process.env.PORT) {
-  configUser.port = process.env.PORT
-}
-
-let config = _.defaultsDeep({ env }, configEnv, configUser, configDefault)
+let config = _.defaultsDeep(configEnvVariables, configEnv, configUser, configDefault)
 
 // Set baseUrl to localhost if not set
 if (!config.baseUrl) {
