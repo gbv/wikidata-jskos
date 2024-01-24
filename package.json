@@ -1,7 +1,7 @@
 {
   "name": "wikidata-jskos",
   "version": "0.3.3",
-  "jskos-api": "2.0",
+  "apiVersion": "2.0",
   "description": "Access Wikidata in JSKOS format",
   "main": "server.js",
   "bin": {

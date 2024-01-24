@@ -59,8 +59,9 @@ if (!config.wikibase.api) {
 }
 
 // Set capabilities for clients
-// JSKOS API version from package.json
-config.version = require("./package.json")["jskos-api"]
+// JSKOS API version and server version from package.json
+config.version = require("./package.json").apiVersion
+config.serverVersion = require("./package.json").version
 // Concepts (read only)
 config.concepts = {
   read: {
