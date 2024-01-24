@@ -41,6 +41,7 @@ This node module provides [a web service](#web-service), a [command line client]
   - [mapEntity](#mapentity)
   - [mapMapping](#mapmapping)
 - [Contributing](#contributing)
+  - [Publish](#publish)
 - [License](#license)
 
 [mapEntity]: #mapentity
@@ -475,11 +476,19 @@ from a single Wikidata item to a concept in another concept scheme.
 
 ## Contributing
 
-See <https://github.com/gbv/wikidata-jskos>.
+PRs accepted against the `dev` branch.
 
-For debugging set environment variable `DEBUG`, also possible via file `.env`:
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
-    DEBUG=*
+### Publish
+
+**For maintainers only**
+
+Never work on the main branch directly. Always make changes on `dev` and then run the release script:
+
+```bash
+npm run release:patch # or minor or major
+```
 
 ## License
 
