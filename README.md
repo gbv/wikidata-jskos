@@ -21,24 +21,25 @@ This node module provides [a web service](#web-service), a [command line client]
 - [Web Service](#web-service)
   - [Authentication](#authentication)
   - [GET /status](#get-status)
-  - [GET /concepts](#get-concept)
-  - [GET /concepts/suggest](#get-conceptsuggest)
+  - [GET /concepts](#get-concepts)
+  - [GET /concepts/suggest](#get-conceptssuggest)
   - [GET /mappings](#get-mappings)
   - [GET /mappings/voc](#get-mappingsvoc)
-  - [GET /mappings/:_id](#get-mappings_id)
+  - [GET /mappings/:\_id](#get-mappings_id)
   - [POST /mappings](#post-mappings)
-  - [PUT /mappings/:_id](#put-mappings_id)
-  - [DELETE /mappings/:_id](#delete-mappings_id)
+  - [PUT /mappings/:\_id](#put-mappings_id)
+  - [DELETE /mappings/:\_id](#delete-mappings_id)
 - [Command line tool](#command-line-tool)
   - [wdjskos concept](#wdjskos-concept)
   - [wdjskos mappings](#wdjskos-mappings)
   - [wdjskos schemes](#wdjskos-schemes)
+  - [wdjskos update](#wdjskos-update)
   - [wdjskos find](#wdjskos-find)
   - [wdjskos mapping-item](#wdjskos-mapping-item)
 - [API](#api)
   - [mapEntity](#mapentity)
   - [mapMapping](#mapmapping)
-- [Contribute](#contribute)
+- [Contributing](#contributing)
 - [License](#license)
 
 [mapEntity]: #mapentity
@@ -128,7 +129,7 @@ The following endpoints require an authenticated user:
 - [PUT /mappings/:_id](#put-mappings_id)
 - [DELETE /mappings/:_id](#delete-mappings_id)
 
-Authentication works via a JWT (JSON Web Token). The JWT has to be provided as a Bearer token in the authentication header, e.g. `Authentication: Bearer <token>`. It is integrated with [login-server](https://github.com/gbv/login-server) and the JWT is required to have the same format as the one login-server provides. Specifically, the OAuth token and secret for the user need to be provided as follows:
+Authentication works via a JWT (JSON Web Token). The JWT has to be provided as a Bearer token in the authentication header, e.g. `Authentication: Bearer <token>`. It is integrated with [login-server] and the JWT is required to have the same format as the one login-server provides. Specifically, the OAuth token and secret for the user need to be provided as follows:
 
 ```json
 {
@@ -467,3 +468,4 @@ For debugging set environment variable `DEBUG`, also possible via file `.env`:
 [wikidata-filter]: https://github.com/maxlath/wikidata-filter
 [Wikidata]: https://www.wikidata.org/
 [JSKOS]: https://gbv.github.io/jskos/
+[login-server]: https://github.com/gbv/login-server
