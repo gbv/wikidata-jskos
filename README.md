@@ -483,7 +483,7 @@ For debugging set environment variable `DEBUG`, also possible via file `.env`:
 
 ## License
 
-[MIT License](LICENSE.md)
+[MIT © 2024 Verbundzentrale des GBV (VZG)](LICENSE.md)
 
 
 [wbgetentities]: https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities
