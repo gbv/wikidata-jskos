@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  wikidata-jskos:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./data/config:/config
+    environment:
+      - NODE_ENV=production
+      - AUTH_ALGORITHM=RS256
+      # Example how to set AUTH_KEY (it is recommend to use env_file or config.json instead though)
+      - |-
+        AUTH_KEY_=-----BEGIN PUBLIC KEY-----
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjmpVmMlsiVyihtYc/lwS
+        pxZpyCXcMmdNH8nLHWFbmTvzcBXA7R5uvdH3mZMqF2Cap+VmPmnqXj0A9dLgrDuq
+        xC4UK049xqcNnuM7Kz7BDJ91KflFN3JBdqW4V7CDTXz4tArzCzrSgOhGACsv3kti
+        gvi3UEnb74eajS2ZZxHuoXBfvUdBi10RaxEajbbHTl9yGbdcGpLwPo/wum6hCpEv
+        5yfPx48Sf8T8hgBWccAOljorkKOTNS54Qf9hFH4rGPhnfjjYHz+G3xH6WlNcqIkO
+        mUd+qsCLVCtxTVh3na0gn2skWDpXwph/o8ftO+/05wykkaodza74P9mvalhk3Vzb
+        xQIDAQAB
+        -----END PUBLIC KEY-----
+    env_file:
+      - .env
+    ports:
+      - 2013:2013
+    restart: unless-stopped

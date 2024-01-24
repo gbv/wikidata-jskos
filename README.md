@@ -13,8 +13,9 @@ This node module provides [a web service](#web-service), a [command line client]
 
 - [Background](#background)
 - [Install](#install)
-  - [Clone and Install](#clone-and-install)
-  - [Configuration](#configuration)
+  - [Docker](#docker)
+  - [Node.js](#nodejs)
+- [Configuration](#configuration)
 - [Usage](#usage)
   - [Run Server](#run-server)
   - [Deployment](#deployment)
@@ -69,12 +70,18 @@ Other systems (not including DDC) may also work but they have not been converted
 
 ## Install
 
-### Clone and Install
+### Docker
+
+The easiest way to run wikidata-jskos is via Docker. Please refer to the [Docker documentation](./docker/README.md).
+
+### Node.js
+
+Node.js 18 is required (Node.js 20 recommended).
 
 ```sh
 git clone https://github.com/gbv/wikidata-jskos.git
 cd wikidata-jskos
-npm install
+npm ci
 ```
 
 Optionally make the [command line tool](#command-line-tool) `wdjskos` available:
@@ -83,7 +90,7 @@ Optionally make the [command line tool](#command-line-tool) `wdjskos` available:
 npm link
 ```
 
-### Configuration
+## Configuration
 
 You can customize the application settings via a configuration file, e.g. by providing a generic `config.json` file and/or a more specific `config.{env}.json` file (where `{env}` is the environment like `development` or `production`). The latter will have precendent over the former, and all missing keys will be defaulted with values from `config.default.json`.
 

@@ -3,6 +3,9 @@ cache/
 .env
 config.json
 
+docker/data
+!docker/.env
+
 .DS_Store
 node_modules
 
