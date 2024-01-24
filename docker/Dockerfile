@@ -15,7 +15,7 @@ RUN mkdir /config
 RUN npm i -g pm2
 
 # Symlink config file
-RUN rm config.json
+RUN rm -f config.json
 RUN ln -s /config/config.json ./config.json
 
 CMD pm2-runtime server.js
