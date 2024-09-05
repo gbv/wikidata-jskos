@@ -1,14 +1,24 @@
-const config = require("./config")
+import config from "./config.js"
+import _ from "lodash"
+import express from "express"
+import bodyParser from "body-parser"
+import { WikidataService } from "./lib/wikidata-wrapper.js"
+import { loadMappingSchemes } from "./lib/mapping-schemes.js"
+import getConcepts from "./lib/queries/get-concepts.js"
+import * as jskosTools from "jskos-tools"
+import path, { dirname } from "node:path"
+import { fileURLToPath } from "node:url"
+import passport from "passport"
+import { Strategy as JwtStrategy } from "passport-jwt"
+import { ExtractJwt } from "passport-jwt"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const { addContext, addMappingIdentifiers } = jskosTools
+
 const port = config.port
-const _ = require("lodash")
-const express = require("express")
-const bodyParser = require("body-parser")
 const app = express()
 app.set("json spaces", 2)
-const { WikidataService } = require("./lib/wikidata-wrapper")
-const { loadMappingSchemes } = require("./lib/mapping-schemes")
-const { addContext, addMappingIdentifiers } = require("jskos-tools")
-const path = require("path")
 
 if (config.auth.key && config.oauth.consumer_key && config.oauth.consumer_secret) {
   config.log("Authentication and therefore saving/removing mappings is configured.")
@@ -16,7 +26,7 @@ if (config.auth.key && config.oauth.consumer_key && config.oauth.consumer_secret
   config.log("Note: To allow saving/removing mappings, authentication has to be configured (see documentation).")
 }
 
-function errorHandler (res) {
+async function errorHandler(res) {
   return (err) => {
     console.error(err)
     res.status(err.status || 500).json({ status: err.status, message: err.message })
@@ -24,11 +34,8 @@ function errorHandler (res) {
 }
 
 // Prepare authorization via JWT
-const passport = require("passport")
 let auth
 if (config.auth.algorithm && config.auth.key) {
-  const JwtStrategy = require("passport-jwt").Strategy,
-    ExtractJwt = require("passport-jwt").ExtractJwt
   var opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.auth.key,
@@ -41,7 +48,7 @@ if (config.auth.algorithm && config.auth.key) {
     // Use like this: app.get("/secureEndpoint", auth, (req, res) => { ... })
     // res.user will contain the current authorized user.
     auth = passport.authenticate("jwt", { session: false })
-  } catch(error) {
+  } catch (error) {
     console.error("Error setting up JWT authentication")
   }
 }
@@ -156,8 +163,6 @@ function paginate(jskos, req, res) {
   return jskos
 }
 
-const getConcepts = require("./lib/queries/get-concepts")
-
 // load schemes
 const schemes = loadMappingSchemes()
 
@@ -190,12 +195,13 @@ app.get("/mappings", (req, res) => {
     .catch(errorHandler(res))
 })
 
-function suggest(req, res) {
-  const suggest = require("./lib/suggest")
+async function suggest(req, res) {
+  const { default: suggest } = await import("./lib/suggest.js")
   return suggest(req.query)
     .then(result => res.json(result))
     .catch(errorHandler(res))
 }
+
 app.get("/concepts/suggest", suggest)
 app.get("/concept/suggest", suggest) // deprecated
 app.get("/suggest", suggest) // deprecated

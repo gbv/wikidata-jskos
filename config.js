@@ -1,8 +1,13 @@
-const _ = require("lodash")
-require("dotenv").config()
+import _ from "lodash"
+import dotenv from "dotenv"
+import process from "node:process"
+import { readFile } from "node:fs/promises"
 
+const fileUrl = new URL("./config.default.json", import.meta.url)
 // Load default config
-const configDefault = require("./config.default.json")
+const configDefault = JSON.parse(await readFile(fileUrl, "utf8"))
+
+dotenv.config()
 
 // Load configuration from environment variables
 const configEnvVariables = {
@@ -30,16 +35,19 @@ const env = configEnvVariables.env
 // Load environment config
 let configEnv
 try {
-  configEnv = require(`./config.${env}.json`)
-} catch(error) {
+  const fileUrl = new URL(`./config.${env}.json`, import.meta.url)
+  configEnv = JSON.parse(await readFile(fileUrl, "utf-8"))
+} catch (error) {
   configEnv = {}
 }
 
 // Load user config
 let configUser
 try {
-  configUser = require("./config.json")
-} catch(error) {
+  const fileUrl = new URL("./config.json", import.meta.url)
+  configUser = JSON.parse(await readFile(fileUrl, "utf-8"))
+
+} catch (error) {
   configUser = {}
 }
 
@@ -60,8 +68,12 @@ if (!config.wikibase.api) {
 
 // Set capabilities for clients
 // JSKOS API version and server version from package.json
-config.version = require("./package.json").apiVersion
-config.serverVersion = require("./package.json").version
+const fileUrlPkg = new URL("./package.json", import.meta.url)
+const pkg = JSON.parse(await readFile(fileUrlPkg, "utf-8"))
+
+config.version  = pkg.apiVersion
+config.serverVersion = pkg.version
+
 // Concepts (read only)
 config.concepts = {
   read: {
@@ -111,4 +123,4 @@ const log = (...args) => {
 }
 config.log = log
 
-module.exports = config
+export default config
