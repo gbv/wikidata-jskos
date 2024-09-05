@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 
-import program from "commander"
+import { Command } from "commander"
 import { readFileSync } from "fs"
-import pkg from "../package.json" assert {type: 'json'}
-import { red } from "chalk"
+import pkg from "../package.json" with {type: 'json'}
+import chalk from "chalk"
 import wdk from "../lib/wdk.js"
 import { WikidataService } from "../lib/wikidata-wrapper.js"
-import ndjson from "../lib/ndjson.js"
+import * as ndjson from "../lib/ndjson.js"
 import suggest from "../lib/suggest.js"
 import { loadMappingSchemes, updateMappingSchemes } from "../lib/mapping-schemes.js"
 import getConcepts from "../lib/queries/get-concepts.js"
 
+const program = new Command();
 
 program
   .version(pkg.version)
@@ -24,7 +25,7 @@ program
 // TODO: option to not include subjectOf
 
 const error = (message, showHelp) => {
-  console.error(red(message))
+  console.error(chalk.red(message))
   if (showHelp) { program.help() }
   process.exit(1)
 }
