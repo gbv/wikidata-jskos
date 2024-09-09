@@ -1,34 +1,52 @@
-require("chai").should()
+import { expect } from "chai"
 
-const wdk = require("../lib/wdk")
-const wds = require("../lib/wikidata-wrapper")
+import wdk from "../lib/wdk.js"
+import * as wds from "../lib/wikidata-wrapper.js"
+import { readFile } from "node:fs/promises"
+
 const { WikidataConceptSchemeSet } = wds
-const Q42 = require("./Q42.json")
-const Q42concept = require("./Q42.jskos.json")
-let Q42mappings = require("./Q42.mappings.json")
+
+let Q42
+let Q42concept
+let Q42mappings
+
 
 describe("mapEntity", () => {
+
+  before(async () => {
+    let fileUrl
+    fileUrl = new URL("./Q42.json", import.meta.url)
+    Q42 = JSON.parse(await readFile(fileUrl, "utf8"))
+
+    fileUrl = new URL("./Q42.jskos.json", import.meta.url)
+    Q42concept = JSON.parse(await readFile(fileUrl, "utf8"))
+
+    fileUrl = new URL("./Q42.mappings.json", import.meta.url)
+    Q42mappings = JSON.parse(await readFile(fileUrl, "utf8"))
+  })
+
   it("map(Simple)Entity", done => {
-    wds.mapSimpleEntity(wdk.simplify.entity(Q42)).should.deep.equal(Q42concept)
-    wds.mapEntity(Q42).should.deep.equal(Q42concept)
+    expect(wds.mapSimpleEntity(wdk.simplify.entity(Q42))).deep.equal(Q42concept)
+    expect(wds.mapEntity(Q42)).deep.equal(Q42concept)
     done()
   })
 
   it("mapLabels", done => {
-    wds.mapLabels(undefined).should.deep.equal({})
+    expect(wds.mapLabels(undefined)).deep.equal({})
 
     const labels = { xx: { language: "xx", value: "Y" } }
-    const expect = { prefLabel: { xx: "Y", "-": "?" } }
-    wds.mapLabels(labels).should.deep.equal(expect)
+    const expected = { prefLabel: { xx: "Y", "-": "?" } }
+    expect(wds.mapLabels(labels)).deep.equal(expected)
 
     done()
   })
 
-  it("mapMappingClaims", done => {
-    wds.mapMappingClaims(Q42.claims).should.deep.equal([])
+  it("mapMappingClaims", async () => {
+    expect(wds.mapMappingClaims(Q42.claims)).deep.equal([])
 
-    const schemes = new WikidataConceptSchemeSet(require("./schemes.json"))
-    wds.mapMappingClaims(Q42.claims, { schemes }).should.deep.equal(Q42mappings)
-    done()
+    const fileUrl = new URL("./schemes.json", import.meta.url)
+    const jsonSchemes = JSON.parse(await readFile(fileUrl, "utf8"))
+    const schemes = new WikidataConceptSchemeSet(jsonSchemes)
+    expect(wds.mapMappingClaims(Q42.claims, { schemes })).deep.equal(Q42mappings)
   })
 })

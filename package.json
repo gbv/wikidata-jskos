@@ -3,7 +3,11 @@
   "version": "0.4.0",
   "apiVersion": "2.0",
   "description": "Access Wikidata in JSKOS format",
-  "main": "server.js",
+  "type": "module",
+  "exports": "./server.js",
+  "engines": {
+    "node": ">=18"
+  },
   "bin": {
     "wdjskos": "./bin/wdjskos"
   },
@@ -58,7 +62,7 @@
   "author": "Jakob Voß",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^4.4.1",
+    "chai": "^5.1.1",
     "chai-http": "^4.4.0",
     "eslint": "^8.56.0",
     "eslint-config-gbv": "^1.1.0",
@@ -72,7 +76,7 @@
     "dotenv": "^16.3.2",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "jskos-tools": "^1.0.34",
+    "jskos-tools": "^1.0.40",
     "lodash": "^4.17.21",
     "mkdirp": "^3.0.1",
     "nodemon": "^3.0.3",
@@ -81,7 +85,8 @@
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
     "simple-sha1": "^3.1.0",
-    "wikibase-edit": "^5.3.3",
+    "wikibase-edit": "^7.1.0",
+    "wikibase-sdk": "^9.2.5",
     "wikidata-sdk": "^8.1.1"
   }
 }

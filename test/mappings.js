@@ -1,32 +1,43 @@
-const should = require("chai").should()
+import { expect } from "chai"
+import { WikidataConceptScheme, WikidataService } from "../lib/wikidata-wrapper.js"
+import { readFile } from "node:fs/promises"
 
-const { WikidataConceptScheme, WikidataService } = require("../lib/wikidata-wrapper")
-const schemes = require("./schemes.json").map(s => new WikidataConceptScheme(s))
-const service = new WikidataService(schemes)
+let service
 
 describe("getMappings", () => {
+  
+  before(async ()=> {
+    const fileUrl = new URL("./schemes.json", import.meta.url)
+    const jsonSchemes = JSON.parse(await readFile(fileUrl, "utf8"))
+    const schemes = jsonSchemes.map(s => new WikidataConceptScheme(s))
+    service = new WikidataService(schemes)
+  })
+
   it("fails on missing parameters", () => {
     return service.getMappings({})
-      .then(() => should.fail())
+      .then(() => expect.fail())
       .catch(err => {
-        err.should.be.ok 
+        expect(err).be.ok
       })
   })
 
   it("returns no mappings from unknown URI", () => {
     return service.getMappings({ from: "wtf" })
       .then(mappings => {
-        mappings.should.deep.equal([])
+        expect(mappings).deep.equal([])
       })
   })
 
-  it("returns mappings from Wikidata item", () => {
+  it("returns mappings from Wikidata item", async () => {
     const from = "http://www.wikidata.org/entity/Q42"
     const toScheme = "http://bartoc.org/en/node/430"
 
+    const fileUrl = new URL("./Q42.gnd.json", import.meta.url)
+    const q42Json = JSON.parse(await readFile(fileUrl, "utf8"))
+
     return service.getMappings({ from, toScheme })
       .then(mappings => {
-        mappings.should.deep.equal([require("./Q42.gnd.json")])
+        expect(mappings).deep.equal([q42Json])
       })
   })
 
@@ -36,7 +47,7 @@ describe("getMappings", () => {
 
     return service.getMappings({ fromScheme, toScheme })
       .then(mappings => {
-        mappings.should.deep.equal([])
+        expect(mappings).deep.equal([])
       })
   })
 
@@ -46,7 +57,7 @@ describe("getMappings", () => {
 
     return service.getMappings({ from, toScheme })
       .then(mappings => {
-        mappings.should.deep.equal([])
+        expect(mappings).deep.equal([])
       })
   })
 
@@ -57,7 +68,7 @@ describe("getMappings", () => {
 
     return service.getMappings({ from, toScheme, partOf })
       .then(mappings => {
-        mappings.should.deep.equal([])
+        expect(mappings).deep.equal([])
       })
   })
 

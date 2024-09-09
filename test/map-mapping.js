@@ -1,8 +1,8 @@
-require("chai").should()
+import { expect } from "chai"
+import { WikidataConceptScheme, WikidataService } from "../lib/wikidata-wrapper.js"
+import { readFile } from "node:fs/promises"
 
-const { WikidataConceptScheme, WikidataService } = require("../lib/wikidata-wrapper")
-const schemes = require("./schemes.json").map(s => new WikidataConceptScheme(s))
-const service = new WikidataService(schemes)
+let service
 
 describe("mapMapping", () => {
 
@@ -60,12 +60,19 @@ describe("mapMapping", () => {
     },
   }
 
+  before(async () => {
+    const fileUrl = new URL("./schemes.json", import.meta.url)
+    const jsonSchemes = JSON.parse(await readFile(fileUrl, "utf8"))
+    const schemes = jsonSchemes.map(s => new WikidataConceptScheme(s))
+    service = new WikidataService(schemes)
+  })
+
   it("converts JSKOS mapping to Wikidata JSON", () => {
-    service.mapMapping(jskosMapping).should.deep.equal(wikidataClaim)
+    expect(service.mapMapping(jskosMapping)).deep.equal(wikidataClaim)
   })
 
   it("converts JSKOS mapping to simplified Wikidata JSON", () => {
-    service.mapMapping(jskosMapping, { simplify: true }).should.deep.equal(simplified)
+    expect(service.mapMapping(jskosMapping, { simplify: true })).deep.equal(simplified)
   })
 
   it("converts mapping types to qualifiers", () => {
@@ -85,13 +92,13 @@ describe("mapMapping", () => {
       } ],
     }
 
-    service.mapMapping(jskosMapping).should.deep.equal(wikidataClaim)
+    expect(service.mapMapping(jskosMapping)).deep.equal(wikidataClaim)
   })
 
   it("converts mapping types to qualifiers (simplified)", () => {
     simplified.claims.P227.qualifiers = {
       P4390: "Q39893184",
     }
-    service.mapMapping(jskosMapping, { simplify: true }).should.deep.equal(simplified)
+    expect(service.mapMapping(jskosMapping, { simplify: true })).deep.equal(simplified)
   })
 })
