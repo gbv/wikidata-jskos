@@ -26,7 +26,7 @@ if (config.auth.key && config.oauth.consumer_key && config.oauth.consumer_secret
   config.log("Note: To allow saving/removing mappings, authentication has to be configured (see documentation).")
 }
 
-async function errorHandler(res) {
+function errorHandler(res) {
   return (err) => {
     console.error(err)
     res.status(err.status || 500).json({ status: err.status, message: err.message })
