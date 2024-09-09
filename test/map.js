@@ -18,7 +18,6 @@ describe("mapEntity", () => {
     fileUrl = new URL("./Q42.json", import.meta.url)
     Q42 = JSON.parse(await readFile(fileUrl, "utf8"))
 
-
     fileUrl = new URL("./Q42.jskos.json", import.meta.url)
     Q42concept = JSON.parse(await readFile(fileUrl, "utf8"))
 

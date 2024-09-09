@@ -12,7 +12,7 @@ import suggest from "../lib/suggest.js"
 import { loadMappingSchemes, updateMappingSchemes } from "../lib/mapping-schemes.js"
 import getConcepts from "../lib/queries/get-concepts.js"
 
-const program = new Command();
+const program = new Command()
 
 program
   .version(pkg.version)
@@ -27,7 +27,9 @@ program
 
 const error = (message, showHelp) => {
   console.error(chalk.red(message))
-  if (showHelp) { program.help() }
+  if (showHelp) {
+    program.help()
+  }
   process.exit(1)
 }
 
@@ -43,7 +45,7 @@ function conceptCommand (ids) {
 
   getMappingSchemes()
     .then(schemes => new WikidataService(schemes))
-    .then(service => getConcepts({ uri: ids.join("|"), language }))
+    .then(() => getConcepts({ uri: ids.join("|"), language }))
     .then(ndjson.write)
 }
 
@@ -62,8 +64,12 @@ function schemesCommand () {
 function mappingsCommand (from, to) {
   let direction = program.both || to === undefined ? "both" : "forward"
 
-  if (from === "-") from = undefined
-  if (to === "-") to = undefined
+  if (from === "-") {
+    from = undefined
+  }
+  if (to === "-") {
+    to = undefined
+  }
 
   let languages = program.lang
   let toScheme = (from || direction !== "forward") ? program.scheme : null
@@ -157,9 +163,13 @@ program
 program.parse(process.argv)
 
 // Show help by default
-if (!program.args.length) program.help()
+if (!program.args.length) {
+  program.help()
+}
 
 // Prevent logging an EPIPE error when piping the output
 process.stdout.on("error", err => {
-  if (err.code !== "EPIPE") throw err
+  if (err.code !== "EPIPE") {
+    throw err
+  }
 })

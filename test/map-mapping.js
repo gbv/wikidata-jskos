@@ -1,6 +1,6 @@
 import { expect } from "chai"
 import { WikidataConceptScheme, WikidataService } from "../lib/wikidata-wrapper.js"
-import { readFile } from "fs/promises"
+import { readFile } from "node:fs/promises"
 
 let service
 

@@ -5,7 +5,7 @@ import bodyParser from "body-parser"
 import { WikidataService } from "./lib/wikidata-wrapper.js"
 import { loadMappingSchemes } from "./lib/mapping-schemes.js"
 import getConcepts from "./lib/queries/get-concepts.js"
-import * as jskosTools from "jskos-tools"
+import * as jskos from "jskos-tools"
 import path, { dirname } from "node:path"
 import { fileURLToPath } from "node:url"
 import passport from "passport"
@@ -14,7 +14,7 @@ import { ExtractJwt } from "passport-jwt"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const { addContext, addMappingIdentifiers } = jskosTools
+const { addContext, addMappingIdentifiers } = jskos
 
 const port = config.port
 const app = express()
