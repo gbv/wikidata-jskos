@@ -36,7 +36,7 @@ function errorHandler(res) {
 // Prepare authorization via JWT
 let auth
 if (config.auth.algorithm && config.auth.key) {
-  var opts = {
+  const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.auth.key,
     algorithms: [config.auth.algorithm],
