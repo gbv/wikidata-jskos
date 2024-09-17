@@ -17,8 +17,8 @@
     "update": "./bin/wdjskos update && cp cache/mapping-schemes.ndjson assets",
     "test": "mocha --timeout 30000",
     "test-watch": "mocha --watch",
-    "lint": "eslint '*.js' '**/*.js'",
-    "fix": "eslint --fix '*.js' '**/*.js'",
+    "lint": "eslint",
+    "fix": "eslint --fix",
     "lint-staged": "lint-staged",
     "release": "[[ \"$(git rev-parse --abbrev-ref HEAD)\" == \"dev\" ]] && git pull && npm test && npm version $SEMVER && git push && git checkout main && git merge dev && git push --follow-tags && git checkout dev",
     "release:patch": "SEMVER=patch npm run release",
@@ -64,8 +64,8 @@
   "devDependencies": {
     "chai": "^5.1.1",
     "chai-http": "^5.0.0",
-    "eslint": "^8.57.0",
-    "eslint-config-gbv": "^1.1.0",
+    "eslint": "^9.10.0",
+    "eslint-config-gbv": "^2.0.0",
     "lint-staged": "^15.2.10",
     "mocha": "^10.7.3",
     "pre-commit": "^1.2.2"
