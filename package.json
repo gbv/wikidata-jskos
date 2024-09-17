@@ -75,7 +75,7 @@
     "debug": "^4.3.7",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "express": "^4.20.0",
+    "express": "^4.21.0",
     "jskos-tools": "^1.0.40",
     "lodash": "^4.17.21",
     "mkdirp": "^3.0.1",
@@ -83,7 +83,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "simple-sha1": "^3.1.0",
-    "wikibase-edit": "^7.1.0",
+    "wikibase-edit": "^7.1.1",
     "wikibase-sdk": "^10.1.0"
   }
 }
