@@ -42,9 +42,12 @@ This node module provides [a web service](#web-service), a [command line client]
   - [wdjskos mapping-item](#wdjskos-mapping-item)
 - [API](#api)
   - [mapEntity](#mapentity)
+    - [Map selected parts of a Wikidata entity](#map-selected-parts-of-a-wikidata-entity)
+    - [Map simplified Wikidata entities](#map-simplified-wikidata-entities)
   - [mapMapping](#mapmapping)
-- [Contributing](#contributing)
+- [Maintainers](#maintainers)
   - [Publish](#publish)
+- [Contributing](#contributing)
 - [License](#license)
 
 [mapEntity]: #mapentity
@@ -479,21 +482,40 @@ from a single Wikidata item to a concept in another concept scheme.
 
 *this is work in progress!*
 
+## Maintainers
+- [@stefandesu](https://github.com/stefandesu)
+- [@nichtich](https://github.com/nichtich)
+
+### Publish
+**For maintainers only**
+
+Please work on the `dev` branch during development (or better yet, develop in a feature branch and merge into `dev` when ready).
+
+When a new release is ready (i.e. the features are finished, merged into `dev`, and all tests succeed), run the included release script (replace "patch" with "minor" or "major" if necessary):
+
+```bash
+npm run release:patch
+```
+
+This will:
+- Check that we are on `dev`
+- Run tests and build to make sure everything works
+- Make sure `dev` is up-to-date
+- Run `npm version patch` (or "minor"/"major")
+- **Ask you to confirm the version**
+- Push changes to `dev`
+- Switch to `main`
+- Merge changes from `dev`
+- Push `main` with tags
+- Switch back to `dev`
+
+After running this, GitHub Actions will automatically create a new GitHub Release draft. Please edit and publish the release manually.
+
 ## Contributing
 
 PRs accepted against the `dev` branch.
 
 Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
-
-### Publish
-
-**For maintainers only**
-
-Never work on the main branch directly. Always make changes on `dev` and then run the release script:
-
-```bash
-npm run release:patch # or minor or major
-```
 
 ## License
 
