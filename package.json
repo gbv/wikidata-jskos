@@ -64,8 +64,8 @@
   "devDependencies": {
     "chai": "^5.1.1",
     "chai-http": "^5.0.0",
-    "eslint": "^9.10.0",
-    "eslint-config-gbv": "^2.0.0",
+    "eslint": "~9.11",
+    "eslint-config-gbv": "~2.1",
     "lint-staged": "^15.2.10",
     "mocha": "^10.7.3",
     "pre-commit": "^1.2.2"
@@ -76,14 +76,14 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.21.0",
-    "jskos-tools": "^1.0.40",
+    "jskos-tools": "^1.0.42",
     "lodash": "^4.17.21",
     "mkdirp": "^3.0.1",
-    "nodemon": "^3.1.4",
+    "nodemon": "^3.1.7",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "simple-sha1": "^3.1.0",
-    "wikibase-edit": "^7.1.1",
-    "wikibase-sdk": "^10.1.0"
+    "wikibase-edit": "^7.1.2",
+    "wikibase-sdk": "^10.1.1"
   }
 }
