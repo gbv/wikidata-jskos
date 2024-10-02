@@ -1,6 +1,6 @@
 {
   "name": "wikidata-jskos",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "apiVersion": "2.0",
   "description": "Access Wikidata in JSKOS format",
   "type": "module",
