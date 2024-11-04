@@ -254,6 +254,7 @@ if (auth) {
       body: req.body,
     })
       .then(addContext)
+      .then(rewriteMappingUri)
       .then(jskos => res.status(201).json(jskos))
       .catch(errorHandler(res))
   })
@@ -266,6 +267,7 @@ if (auth) {
       body: req.body,
     })
       .then(addContext)
+      .then(rewriteMappingUri)
       .then(jskos => res.json(jskos))
       .catch(errorHandler(res))
   })
