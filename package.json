@@ -63,12 +63,12 @@
   "author": "Jakob Voß",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^5.1.1",
-    "chai-http": "^5.0.0",
-    "eslint": "~9.11",
-    "eslint-config-gbv": "~2.1",
+    "chai": "^5.1.2",
+    "chai-http": "^5.1.1",
+    "eslint": "~9.14",
+    "eslint-config-gbv": "~2.4",
     "lint-staged": "^15.2.10",
-    "mocha": "^10.7.3",
+    "mocha": "^10.8.2",
     "pre-commit": "^1.2.2",
     "yesno": "^0.4.0"
   },
@@ -77,7 +77,7 @@
     "debug": "^4.3.7",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "express": "^4.21.0",
+    "express": "^4.21.1",
     "jskos-tools": "^1.0.42",
     "lodash": "^4.17.21",
     "mkdirp": "^3.0.1",
@@ -85,7 +85,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "simple-sha1": "^3.1.0",
-    "wikibase-edit": "^7.1.2",
-    "wikibase-sdk": "^10.1.1"
+    "wikibase-edit": "^7.1.3",
+    "wikibase-sdk": "^10.2.1"
   }
 }
