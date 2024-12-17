@@ -3,6 +3,7 @@ cache/
 !.github/
 .env
 config.json
+!.husky/
 
 docker/data
 !docker/.env
