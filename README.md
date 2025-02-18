@@ -483,7 +483,6 @@ from a single Wikidata item to a concept in another concept scheme.
 *this is work in progress!*
 
 ## Maintainers
-- [@stefandesu](https://github.com/stefandesu)
 - [@nichtich](https://github.com/nichtich)
 
 ### Publish
