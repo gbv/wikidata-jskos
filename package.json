@@ -14,7 +14,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "server": "node server.js",
-    "update": "./bin/wdjskos update && cp cache/mapping-schemes.ndjson assets",
+    "update": "./bin/wdjskos update && cp cache/concept-schemes.ndjson assets",
     "test": "mocha --timeout 30000",
     "test-watch": "mocha --watch",
     "lint": "eslint",
