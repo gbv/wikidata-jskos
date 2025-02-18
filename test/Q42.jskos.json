@@ -1,6 +1,5 @@
 {
   "altLabel": {
-    "-": [],
     "de": [
       "Douglas Noël Adams",
       "Douglas Noel Adams"
@@ -40,13 +39,11 @@
     }
   ],
   "prefLabel": {
-    "-": "?",
     "de": "Douglas Adams",
     "en": "Douglas Adams",
     "ja": "ダグラス・アダムズ"
   },
   "scopeNote": {
-    "-": [],
     "de": [
       "britischer Schriftsteller"
     ],

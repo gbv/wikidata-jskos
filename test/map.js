@@ -35,7 +35,7 @@ describe("mapEntity", () => {
     expect(wds.mapLabels(undefined)).deep.equal({})
 
     const labels = { xx: { language: "xx", value: "Y" } }
-    const expected = { prefLabel: { xx: "Y", "-": "?" } }
+    const expected = { prefLabel: { xx: "Y" } }
     expect(wds.mapLabels(labels)).deep.equal(expected)
 
     done()
