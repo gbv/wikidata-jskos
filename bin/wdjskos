@@ -41,7 +41,7 @@ function searchCommand (query) {
 }
 
 function conceptCommand (ids) {
-  const language = program.lang || "en"
+  const language = program.opts().lang || "en"
 
   getMappingSchemes()
     .then(schemes => new WikidataService(schemes))
@@ -50,7 +50,7 @@ function conceptCommand (ids) {
 }
 
 async function getMappingSchemes() {
-  if (program.force) {
+  if (program.opts().force) {
     return updateMappingSchemes()
   } else {
     return Promise.resolve(loadMappingSchemes())
@@ -62,7 +62,8 @@ function schemesCommand () {
 }
 
 function mappingsCommand (from, to) {
-  let direction = program.both || to === undefined ? "both" : "forward"
+  const { both, lang, scheme } = program.opts()
+  let direction = both || to === undefined ? "both" : "forward"
 
   if (from === "-") {
     from = undefined
@@ -71,17 +72,16 @@ function mappingsCommand (from, to) {
     to = undefined
   }
 
-  let languages = program.lang
-  let toScheme = (from || direction !== "forward") ? program.scheme : null
+  let toScheme = (from || direction !== "forward") ? scheme : null
   getMappingSchemes()
     .then(schemes => new WikidataService(schemes))
-    .then(service => service.getMappings({ from, to, toScheme, direction, languages }))
+    .then(service => service.getMappings({ from, to, toScheme, direction, languages: lang }))
     .then(ndjson.write)
     .catch(e => error(e.message))
 }
 
 function mapMappingCommand(mapping) {
-  const { simplify } = program
+  const { simplify } = program.opts()
 
   return getMappingSchemes()
     .then(schemes => new WikidataService(schemes))

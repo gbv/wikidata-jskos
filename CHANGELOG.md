@@ -5,6 +5,8 @@
 - Update dependencies
 - Fix publication at npmjs
 - Fix updating timeout by exclusion of field "extend"
+- Remove language ranges ("-")
+- Fix missing mapping type on some requests (#72)
 
 ## 0.5.4
 
