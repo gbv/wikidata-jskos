@@ -3,6 +3,8 @@
 ## next
 
 - Update dependencies
+- Fix publication at npmjs
+- Fix updating timeout by exclusion of field "extend"
 
 ## 0.5.4
 

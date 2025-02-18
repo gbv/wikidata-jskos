@@ -20,8 +20,6 @@ This node module provides [a web service](#web-service), a [command line client]
   - [Node.js](#nodejs)
 - [Configuration](#configuration)
 - [Usage](#usage)
-  - [Run Server](#run-server)
-  - [Deployment](#deployment)
 - [Web Service](#web-service)
   - [Authentication](#authentication)
   - [GET /status](#get-status)
@@ -97,6 +95,19 @@ Optionally make the [command line tool](#command-line-tool) `wdjskos` available:
 npm link
 ```
 
+For development of the web service with hot reload and auto reconnect at <http://localhost:2013/>:
+
+```bash
+npm run start
+```
+
+For deployment of the web service (if not using Docker) there is a config file to use with [pm2](http://pm2.keymetrics.io/):
+
+```bash
+cp ecosystem.example.json ecosystem.config.json
+pm2 start ecosystem.config.json
+```
+
 ## Configuration
 
 You can customize the application settings via a configuration file, e.g. by providing a generic `config.json` file and/or a more specific `config.{env}.json` file (where `{env}` is the environment like `development` or `production`). The latter will have precendent over the former, and all missing keys will be defaulted with values from `config.default.json`.
@@ -125,30 +136,16 @@ Some notes:
 | oauth.consumer_key      | OAUTH_KEY            | null                                |
 | oauth.consumer_secret   | OAUTH_SECRET         | null                                |
 
-## Usage
-
-### Run Server
-
-For development serve with hot reload and auto reconnect at <http://localhost:2013/>:
-
-```bash
-npm run start
-```
-
-### Deployment
-
-For deployment there is a config file to use with [pm2](http://pm2.keymetrics.io/):
-
-```bash
-cp ecosystem.example.json ecosystem.config.json
-pm2 start ecosystem.config.json
-```
-
-To update concept schemes, regularly run:
+The list of concept schemes to read and write mappings to, is hard-coded in directory [assests](assets). To update concept schemes, regularly run:
 
 ```bash
 npm run update
 ```
+
+
+## Usage
+
+See below for use of the [Web Service](#web-service), the [command line tool](#command-line-tool), and the JavaScript [API](#api).
 
 ## Web Service
 
@@ -514,7 +511,11 @@ After running this, GitHub Actions will automatically create a new GitHub Releas
 
 PRs accepted against the `dev` branch.
 
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+To enbale debugging ouput set enviroment variable `DEBUG` to comma-separated list of components (`sparql`, `http`, `query`).
+
+Please lint JavaScript code (e.g. run `npm run lint` or `npm run fix`).
+
+If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 
