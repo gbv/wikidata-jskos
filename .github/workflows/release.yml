@@ -7,6 +7,7 @@ on:
 
 jobs:
   npm:
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
