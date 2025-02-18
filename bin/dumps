@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+mkdir -p dumps
+
+# TODO create concordance information
+
+jq -r .uri assets/concept-schemes.ndjson \
+| while read uri; do
+  id=${uri##*/}
+  echo $uri
+  ndjson=dumps/wd-$id.ndjson
+  ./bin/wdjskos -s $uri -n 1000000 mappings > $ndjson  2> dumps/wd-$id.log
+  wc -l $ndjson
+done
+
