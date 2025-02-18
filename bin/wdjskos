@@ -18,6 +18,7 @@ program
   .version(pkg.version)
   .description("Access Wikidata in JSKOS format")
   .option("-l, --lang <lang>", "language(s), comma-separated")
+  .option("-n, --number <int>", "maximum number of mappings to return")
   .option("-s, --scheme <id>", "limit mappings to selected scheme")
   .option("-i, --simplify", "simplify Wikidata JSON")
   .option("-f, --force", "force reloading mapping schemes")
@@ -62,7 +63,7 @@ function schemesCommand () {
 }
 
 function mappingsCommand (from, to) {
-  const { both, lang, scheme } = program.opts()
+  const { both, lang, scheme, number: limit } = program.opts()
   let direction = both || to === undefined ? "both" : "forward"
 
   if (from === "-") {
@@ -75,7 +76,7 @@ function mappingsCommand (from, to) {
   let toScheme = (from || direction !== "forward") ? scheme : null
   getMappingSchemes()
     .then(schemes => new WikidataService(schemes))
-    .then(service => service.getMappings({ from, to, toScheme, direction, languages: lang }))
+    .then(service => service.getMappings({ from, to, toScheme, direction, languages: lang, limit }))
     .then(ndjson.write)
     .catch(e => error(e.message))
 }

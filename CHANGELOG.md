@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## next
+## 0.5.6
+
+- Add cli option: --number
+
+## 0.5.5
 
 - Update dependencies
 - Fix publication at npmjs
