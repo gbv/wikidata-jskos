@@ -1,7 +1,6 @@
 # Wikidata JSKOS
 
 [![GitHub release](https://img.shields.io/github/release/gbv/wikidata-jskos.svg)](https://github.com/gbv/wikidata-jskos/releases/latest)
-[![API Status](https://coli-conc-status.fly.dev/api/badge/19/status?label=API)](https://coli-conc.gbv.de/services/wikidata/)
 [![License](https://img.shields.io/github/license/gbv/wikidata-jskos.svg)](./LICENSE.md)
 [![Docker](https://img.shields.io/badge/Docker-ghcr.io%2Fgbv%2Fwikidata--jskos-informational)](./docker/README.md)
 [![Test](https://github.com/gbv/wikidata-jskos/actions/workflows/test.yml/badge.svg)](https://github.com/gbv/wikidata-jskos/actions/workflows/test.yml)
