@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.7
+
+- Update dependencies
+
 ## 0.5.6
 
 - Add cli option: --number

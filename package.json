@@ -61,13 +61,13 @@
   "author": "Jakob Voß",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^5.1.2",
+    "chai": "^6.3.0",
     "chai-http": "^5.1.1",
-    "eslint": "~9.16",
-    "eslint-config-gbv": "~2.6",
+    "eslint": "^10.13.0",
+    "eslint-config-gbv": "~2.7",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
-    "mocha": "^11.0.1",
+    "mocha": "^12.0.3",
     "yesno": "^0.4.0"
   },
   "dependencies": {
